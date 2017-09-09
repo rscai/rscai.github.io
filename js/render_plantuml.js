@@ -68,7 +68,7 @@ $(document).ready(function(){
    if (done==1) return;
    var u1 = $(this).parent().attr("custom-rendered");
    if (u1!=null) return;
-   var renderedContent = '<img class="diagram-plantuml" src="http://www.plantuml.com/plantuml/img/'+encode64(e.data)+'" />';
+   var renderedContent = '<img class="diagram-plantuml" src="http://www.plantuml.com/plantuml/svg/'+encode64(e.data)+'" />';
    $(this).parent().attr("custom-rendered",true);
    $(this).css("display","none");
    $(this).parent().append(renderedContent);
