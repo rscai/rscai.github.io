@@ -7,26 +7,47 @@ author: Ray Cai
 
 > for testing
 
-[TOC]
+* TOC
+{:toc}
 
 ## Overview
 
-## System and Software Information
+Many application is accessing database through handwrite SQL, even SQL dialect. For testing these code, it has to mock a real compatible database instance. Here I describe a soluition of mocking Oracle database by Docker.
+
+## Use Case
+
+Method `findById` of data access object `CategoryDao` query database by [Hierarchical Queries](https://docs.oracle.com/cd/B19306_01/server.102/b14200/queries003.htm). It need a unit test case to cover the implementation of `CategoryDao.findById`.
+
+```sql
+SELECT * FROM DEV.CATEGORY START WITH ID = :id CONNECT BY PRIOR ID=PARENT_ID
+```
+
+Because the Hierarchical Queries is not supported by in-memory databases (includes HSQLDB, H2). Therefore it has to mock database by real Oracle database instance. And for a well-designed unit test case, it should:
+
+* Repeatable, it is able to be executed on any environment and any time.
+* Do not depend on external resource, it should embbed all necessary resources.
+
+## Solution
+
+Take JUnit as test framework, create and destroy Oracle database instance on phases `BeforeClass` and `AfterClass` respectively. Here take advantage of Docker, to create and destory Oracle database instance fastly.
+On phase `BeforeClass`, it call Docker engine through Remote API, to create Oracle database instance. On phase `AfterClass`, it call Docker engine, to destroy the Oracle database instance.
+
+### System and Software Information
 
 Name|Version
 ----|-------
 OS  | Ubuntu 16.04.4 LTS (GNU/Linux 4.4.0-116-generic x86_64)
 Docker| 17.12.1-ce, build 7390fc6
 
-## Docker
+### Docker
 
 > Docker provides a way to run applications securely isolated in a container, packaged with all its dependencies and libraries.
 
-### Install Docker
+#### Install Docker
 
 See offical document [Install Docker](https://docs.docker.com/install/linux/docker-ce/ubuntu/#install-docker-ce-1).
 
-### Enable Remote API
+#### Enable Remote API
 
 Set the hosts array in the `/etc/docker/daemon.json` to connect to the UNIX socket and an IP address, as follows:
 
@@ -73,7 +94,7 @@ Then restart docker daemon
 service docker restart
 ```
 
-### Verify Docker Remote API
+#### Verify Docker Remote API
 
 List installed images by commandline client `docker`, it commuicates with docker daemon via sock `unix:///var/run/docker.sock`
 
@@ -133,11 +154,7 @@ Content-Length: 682
 }]
 ```
 
-## Docker Engine API
-
-[Docker Engine API](https://docs.docker.com/engine/api/latest/)
-
-## Dockerizing Oracle Database
+### Dockerizing Oracle Database
 
 Oracle does not offer offical docker image of Oracle Database, but provide [docker file](https://github.com/oracle/docker-images/tree/master/OracleDatabase/SingleInstance), allow users to build image by themselves. Besides, there are a lot of thrid party Oracle Database docker images. Here I use third party Oracle Database docker images [sath89/oracle-xe-11g](https://hub.docker.com/r/sath89/oracle-xe-11g/) for convience.
 
@@ -163,8 +180,7 @@ content-type: application/json
 
 {
     "Env":[
-        "WEB_CONSOLE=false"
-    ],
+        "WEB_CONSOLE=false"    ],
     "Image":"sath89/oracle-xe-11g",
     "HostConfig":{
         "PortBindings":{
@@ -179,7 +195,7 @@ content-type: application/json
 ```
 
 ```http
-201 Created
+HTTP/1.1 201 Created
 api-version: 1.35
 content-type: application/json
 docker-experimental: false
@@ -199,7 +215,7 @@ POST /containers/{containerId}/start HTTP/1.1
 ```
 
 ```http
-204 No Content
+HTTP/1.1 204 No Content
 api-version: 1.35
 docker-experimental: false
 ostype: linux
@@ -213,7 +229,7 @@ POST /containers/{containerId}/stop HTTP/1.1
 ```
 
 ```http
-204 No Content
+HTTP/1.1 204 No Content
 api-version: 1.35
 docker-experimental: false
 ostype: linux
@@ -227,7 +243,7 @@ DELETE /containers/{containerId} HTTP/1.1
 ```
 
 ```http
-204 No Content
+HTTP/1.1 204 No Content
 api-version: 1.35
 docker-experimental: false
 ostype: linux
@@ -243,7 +259,7 @@ DELETE /containers/{containerId}?force=true HTTP/1.1
 ```
 
 ```http
-204 No Content
+HTTP/1.1 204 No Content
 api-version: 1.35
 docker-experimental: false
 ostype: linux
@@ -251,8 +267,160 @@ server: Docker/17.12.1-ce (linux)
 date: Mon, 19 Mar 2018 14:09:53 GMT
 ```
 
+### Test Case
+
+JUnit defines below five phases for test case:
+
+* BeforeClass
+* SetUp
+* Test
+* TearDown
+* AfterClass
+
+Each **test case** is able to contain one or more **test**. It firstly executes **BeforeClass**, then executes **test** one by one, finally executes **AfterClass**. For each **test**, it executes **SetUp** and **TearDown** before and after.
+
+```puml
+@startuml
+start
+:BeforeClass;
+repeat
+    :SetUp;
+    :Test;
+    :TearDown;
+repeat while (more test?)
+:AfterClass;
+end
+@enduml
+```
+
+For keeping **test case** independent and reducing unneccessary overhead, it should create separate Oracle database instance for each **test case**, and all **test** share one instance. Thus it create Oracle database instance on phase **BeforeClass** and destroy it on phase **AfterClass**.
+[docker-client](https://github.com/spotify/docker-client) is
+
+> a simple docker client for JVM
+
+which contributed by [Spotify](https://spotify.github.io/). With [docker-client](https://github.com/spotify/docker-client), it is easy to access Docker API.
+
+#### Create Oracle Database Instance when BeforeClass
+
+Steps to create an Oracle database instance in Docker:
+
+1. create container, specify **image**, **port binding** and **evironment valirables**
+2. start container
+3. waiting for database up, Oracle database instance is not ready even **start container** request completed. Therefore it need to wait until Oracle database instance is really up
+4. pass database instance connection information, includes JDBC URL, username, password and driver class
+
+```java
+  @BeforeClass
+  public static void beforeClass() throws Exception {
+    String dockerHost = System.getProperty(DOCKER_HOST, "unix:///var/run/docker.sock");
+    String databaseHost = System.getProperty(DOCKER_DATABASE_HOST, "127.0.0.1");
+    String image = System.getProperty(DOCKER_IMAGE_ORACLE, "sath89/oracle-xe-11g");
+    String urlTemplate = System
+        .getProperty(DOCKER_DATABASE_URL_TEMPLATE, "jdbc:oracle:thin:@%s:%d:xe");
+    String databaseUsername = System.getProperty(DOCKER_DATABASE_USERNAME, "system");
+    String databasePassword = System.getProperty(DOCKER_DATABASE_PASSWORD, "oracle");
+    String driverClass = System
+        .getProperty(DOCKER_DATABASE_DRIVER_CLASS, "oracle.jdbc.driver.OracleDriver");
+
+    DefaultDockerClient docker = DefaultDockerClient.builder().uri(new URI(dockerHost)).build();
+    Map<String, List<PortBinding>> portBindings = new TreeMap<>();
+    portBindings.put("1521/tcp", Arrays.asList(PortBinding.randomPort("0.0.0.0")));
+    ContainerConfig config = ContainerConfig.builder().image(image)
+        .hostConfig(HostConfig.builder().portBindings(portBindings).build())
+        .env("WEB_CONSOLE=false")
+        .build();
+    ContainerCreation creation = docker.createContainer(config);
+    docker.startContainer(creation.id());
+    ContainerInfo info = docker.inspectContainer(creation.id());
+    final int port = Integer
+        .valueOf(info.networkSettings().ports().get("1521/tcp").get(0).hostPort());
+
+    System.setProperty(DOCKER_DATABASE_CONTAINER_ID, creation.id());
+
+    //Thread.sleep(60000);
+    final long MAX_WAIT_SECOND = 90;
+    long startCheckAt = System.currentTimeMillis() / 1000;
+    while (!checkIfUp(driverClass, String.format(urlTemplate, databaseHost, port), databaseUsername,
+        databasePassword)) {
+      long now = System.currentTimeMillis() / 1000;
+      LOGGER.info(
+          String.format("Checking if database is up for %d second", now - startCheckAt));
+      if (now - startCheckAt > MAX_WAIT_SECOND) {
+        throw new Exception(String
+            .format("Start database fail, not ready after %d seconds", now - startCheckAt));
+      }
+      Thread.sleep(5000);
+    }
+
+    System.setProperty(PropertiesBasedJdbcDatabaseTester.DBUNIT_CONNECTION_URL,
+        String.format(urlTemplate, databaseHost, port));
+    System.setProperty(PropertiesBasedJdbcDatabaseTester.DBUNIT_USERNAME, databaseUsername);
+    System.setProperty(PropertiesBasedJdbcDatabaseTester.DBUNIT_PASSWORD, databasePassword);
+    System.setProperty(PropertiesBasedJdbcDatabaseTester.DBUNIT_DRIVER_CLASS, driverClass);
+  }
+```
+
+#### Destory Oracle Database Instance when AfterClass
+
+An elegent way to destroy a container is that stop container firstly then remove it. But stopping a Oracle database instance is a time-consuming operation. Therefore I take a rude but efficient way, kill then remove.
+
+```java
+  @AfterClass
+  public static void afterClass() throws Exception {
+    String dockerHost = System.getProperty("docker.host", "unix:///var/run/docker.sock");
+    String containerId = System.getProperty("docker.database.containerId");
+
+    DefaultDockerClient docker = DefaultDockerClient.builder().uri(new URI(dockerHost)).build();
+    docker.killContainer(containerId);
+    docker.removeContainer(containerId);
+  }
+```
+
+### Continuous Integration
+
+#### Travis CI
+
+`.travis.yml`
+
+```yaml
+language: java
+sudo: required
+services:
+  - docker
+install: true
+addons:
+  sonarcloud:
+    organization: $SONAR_CLOUD_ORGANIZATION
+    token: $SONAR_CLOUD_TOKEN
+jdk:
+  - oraclejdk8
+before_install:
+  - docker pull sath89/oracle-xe-11g
+cache:
+  directories:
+    - '$HOME/.m2/repository'
+    - '$HOME/.sonar/cache'
+jobs:
+  include:
+    - stage: compile
+      script: mvn clean compile
+    - stage: verify
+      script: mvn org.jacoco:jacoco-maven-plugin:prepare-agent test sonar:sonar
+stages:
+  - compile
+  - verify
+```
+
+Build log:
+[https://travis-ci.org/rscai/docker-mock-db/builds/359397887](https://travis-ci.org/rscai/docker-mock-db/builds/359397887)
+
+#### Code Example
+
+[https://github.com/rscai/docker-mock-db](https://github.com/rscai/docker-mock-db)
+
 ## Reference
 
 * [Install Docker](https://docs.docker.com/install/linux/docker-ce/ubuntu/#install-docker-ce-1)
+* [Docker Engine API](https://docs.docker.com/engine/api/latest/)
 * [Examples using the Docker Engine SDKs and Docker API](https://docs.docker.com/develop/sdk/examples/)
 * [Quick Tip – How to enable Docker Remote API?](https://www.virtuallyghetto.com/2014/07/quick-tip-how-to-enable-docker-remote-api.html)
