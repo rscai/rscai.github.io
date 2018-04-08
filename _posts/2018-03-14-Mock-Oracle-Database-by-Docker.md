@@ -422,5 +422,5 @@ Build log:
 
 * [Install Docker](https://docs.docker.com/install/linux/docker-ce/ubuntu/#install-docker-ce-1)
 * [Docker Engine API](https://docs.docker.com/engine/api/latest/)
-* [Examples using the Docker Engine SDKs and Docker API](https://docs.docker.com/develop/sdk/examples/)
+* [Examples using the Docker Engine SDKs and Docker API](
 * [Quick Tip – How to enable Docker Remote API?](https://www.virtuallyghetto.com/2014/07/quick-tip-how-to-enable-docker-remote-api.html)
