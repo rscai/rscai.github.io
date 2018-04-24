@@ -1,5 +1,10 @@
 ---
 layout: post
+markdown:
+  image_dir: /assets
+  path: ../_posts/2018-04-8-Java-Collections-ArrayList-and-LinkedList.md
+  ignore_from_front_matter: true
+  absolute_image_path: true
 ---
 # Java Collections: ArrayList vs LinkedList
 
@@ -18,7 +23,7 @@ layout: post
 > * Implementations: These are the concrete implementations of the collection interfaces. In essence, they are reusable data structures.
 > * Algorithms: These are the methods that perform useful computations, such as searching and sorting, on objects that implement collection interfaces. The algorithms are said to be polymorphic: that is, the same method can be used on many different implementations of the appropriate collection interface. In essence, algorithms are reusable functionality.
 
-```puml
+```plantuml
 @startuml
 interface Collection
 interface Set
@@ -52,7 +57,7 @@ Map <|-- SortedMap
 >
 > The Java platform contains two general-purpose List implementations. ArrayList, which is usually the better-performing implementation, and LinkedList which offers better performance under certain circumstances.
 
-```puml
+```plantuml
 @startuml
 interface List
 class ArrayList
@@ -71,7 +76,7 @@ List <|-- LinkedList
 
 `ArrayList` maintains a native array, to store elements. As well known, native array is fixed length, but `List` is variable length. Therefore it cannot resue native array's length as list's length. `ArrayList` maintains a `size` which indicates the actual count of elements.
 
-```dot
+```plantuml
 graph g {
     storage [shape=record,label="<0>'W'|<1>'O'|<2>'R'|<3>'L'|<4>'D'|<5> |<6> |<7> |<8> |<9> "]
     size [shape=none,label="size = 5"]
@@ -107,7 +112,7 @@ $$
 To add `E` to `i`, it should shift i-th to size-th elements right by one step. 
 Take `add(2,E)` as an example, it should shift all right elements by one step.
 
-```dot
+```plantuml
 digraph g {
     storage [shape=record,label="<0>'W'|<1>'O'|<2> |<3>'R'|<4>'L'|<5>'D'|<6> |<7> |<8> |<9> "]
     size [shape=none,label="size = 5"]
@@ -120,7 +125,7 @@ digraph g {
 
 Then insert `E` at position `2`.
 
-```dot
+```plantuml
 digraph g {
     storage [shape=record,label="<0>'W'|<1>'O'|<2>'O'|<3>'R'|<4>'L'|<5>'D'|<6> |<7> |<8> |<9> "]
     size [shape=none,label="size = 6"]
@@ -159,7 +164,7 @@ $$
 Getting element by index is a primative operation of native array.
 Take `get(2)` as an example, it is able get access native array by index directly.
 
-```dot
+```plantuml
 digraph g {
     storage [shape=record,label="<0>'W'|<1>'O'|<2>'R'|<3>'L'|<4>'D'|<5> |<6> |<7> |<8> |<9> "]
     size [shape=none,label="size = 5"]
@@ -189,7 +194,7 @@ $$
 It should shift (i+1)-th to (size-1)-th left by one step.
 Take `remove(3)` as an example, it shift elements left by one step.
 
-```dot
+```plantuml
 digraph g {
     storage [shape=record,label="<0>'W'|<1>'O'|<2>'O'|<3>'R'|<4>'L'|<5>'D'|<6> |<7> |<8> |<9> "]
     size [shape=none,label="size = 6"]
@@ -200,7 +205,7 @@ digraph g {
 }
 ```
 
-```dot
+```plantuml
 digraph g {
     storage [shape=record,label="<0>'W'|<1>'O'|<2>'O'|<3>'L'|<4>'D'|<5>|<6> |<7> |<8> |<9> "]
     size [shape=none,label="size = 5"]
@@ -310,8 +315,8 @@ ArrayListBenchmark.measureSetAtIndex|      10000000| thrpt |  20|   5680297.795|
 
 ### Data Structure
 
-```dot
-digraph link{
+```plantuml
+digraph link {
     head [shape=none,label=head]
     tail [shape=none,label=tail]
 
@@ -347,7 +352,7 @@ LinkedList     |$\mathcal{O}(1)$|$\mathcal{O}(n)$|$\mathcal{O}(n)$|$\mathcal{O}(
 
 Given a link which has ntwo nodes A and B, node A is the head, and node B is the tail.
 
-```dot
+```plantuml
 digraph link {
     node_a [label=A]
     node_b [label=B]
@@ -363,7 +368,7 @@ digraph link {
 
 Add new node E, point node B's next to node E, and point previous of node E to node B.
 
-```dot
+```plantuml
 digraph link {
     node_a [label=A]
     node_b [label=B]
@@ -383,7 +388,7 @@ digraph link {
 
 Finally, point `tail` to node E.
 
-```dot
+```plantuml
 digraph link {
     node_a [label=A]
     node_b [label=B]
@@ -430,7 +435,7 @@ $$
 
 Given a link which has three nodes A, B and C.
 
-```dot
+```plantuml
 digraph link {
     node_a [label=A]
     node_b [label=B]
@@ -450,7 +455,7 @@ digraph link {
 
 Find the i-th node. Suppose `i` is `1`.
 
-```dot
+```plantuml
 digraph link {
     node_a [label=A]
     node_b [label=B]
@@ -477,7 +482,7 @@ insert node e between A and B.
 3. point E's next to current (B)
 4. point current node (B)'s previous to E
 
-```dot
+```plantuml
 digraph link {
     node_a [label=A]
     node_b [label=B]
@@ -525,7 +530,7 @@ Walk one by one until get i-th one.
 
 0-th
 
-```dot
+```plantuml
 digraph link {
     node_a [label=A]
     node_b [label=B]
@@ -547,7 +552,7 @@ digraph link {
 
 `1-th` one just is next of `0-th`
 
-```dot
+```plantuml
 digraph link {
     node_a [label=A]
     node_b [label=B]
@@ -595,7 +600,7 @@ $$
   2.1 point i-th's previous' next to i-th's next
   2.2 point i-th's next's previous to i-th's previous
 
-```dot
+```plantuml
 digraph link {
     node_a [label=A]
     node_b [label=B]
@@ -615,7 +620,7 @@ digraph link {
 }
 ```
 
-```dot
+```plantuml
 digraph link {
     node_a [label=A]
     node_b [label=B]
@@ -675,7 +680,7 @@ $$
 
 1. go through link until find object
 
-```dot
+```plantuml
 digraph link {
     node_a [label=A]
     node_b [label=object]
