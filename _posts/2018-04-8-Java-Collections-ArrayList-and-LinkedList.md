@@ -8,7 +8,8 @@ markdown:
 ---
 # Java Collections: ArrayList vs LinkedList
 
-[TOC]
+* TOC
+{:toc}
 
 ## Overview
 
