@@ -5,6 +5,9 @@ author: Ray Cai
 ---
 # Richardson Maturity Model
 
+* TOC
+{:toc}
+
 ## Overview
 
 ## Level 0 - HTTP
@@ -33,6 +36,7 @@ On level 0 API desgin, it exposes one URL endpoint to receive all request, and o
 Because it uses one URL endpoint to receive all request, it is not able to determine operation type by URL or HTTP method. Therefore it has to provide operation, action or command code in request body. And per business requirement, the parameters are different among operation/action/command. Considering of code simplification, it usually defines a generic structure to contain various parameters, likes type-free key-value list.
 
 **Request Payload:**
+
 Path|Type|Description
 ----|----|-----------
 command|String|must be 'createPost'
@@ -84,10 +88,6 @@ Content-Length: 164
   }
 }
 ```
-
-**Cons:**
-
-TODO
 
 ## Level 1 - Resources
 
@@ -179,6 +179,7 @@ Content-Length: 117
 Correspondingly, the struct of response payload is fixed too.
 
 **Response Payload:**
+
 Path|Type|Description
 ----|----|-----------
 status|String|result status
@@ -203,10 +204,6 @@ Content-Length: 160
 }
 ```
 
-**Cons:**
-
-TODO
-
 ## level 2 - HTTP Verbs
 
 It uses HTTP POST verbs for interactions in level 0 and 1. At these levels it doesn't make much difference, they are both being used as tunneling mechanisms allowing you to tunnel your interactions through HTTP. Level 2 moves away from this, using the HTTP verbs as closely as possible to how they are used in HTTP itself.
@@ -220,14 +217,106 @@ Compared to level, level 2 has features:
 5. ~~Contain status in response body, likes SUCESS, FAIL, etc.~~
 6. Each URL endpoint only accept fixed structure request payload and response fixed structure payload
 7. Define resources which used in many reqeuest/response paylaod
+8. **Use HTTP Verbs to represent action**
+9. **Use HTTP Status to represent result**
 
-**CRUD**
+Action|HTTP Verb|URL
+------|---------|----------------------
+Create|POST     |/collectionName
+Update|PUT      |/collectionName/{id}
+Delete|DELETE   |/collectionName/{id}
+Read  |GET      |/collectionName/{id}
+Query |GET      |/collectionName?{queryString}
 
-**HTTP Verbs**
+HTTP Status| Description
+------|-------------
+200 | OK
+201 |Created
+204 | No Content
+404 |Not Found
+500 |Internal Server Error
+
+### Create Resource
+
+Example request:
+
+```http
+POST /api/level2/post HTTP/1.1
+Content-Type: application/json
+Accept: application/json
+Host: localhost:8080
+Content-Length: 73
+
+{
+  "id" : null,
+  "content" : "New Post content",
+  "createdAt" : null
+}
+```
+
+Example response:
+
+```http
+HTTP/1.1 201 Created
+Content-Type: application/json;charset=UTF-8
+Content-Length: 97
+
+{
+  "id" : 21,
+  "content" : "New Post content",
+  "createdAt" : "2018-04-30T12:02:08.667+0000"
+}
+```
+
+### Update Resource
+
+Example request:
+
+```http
+PUT /api/level2/post/28 HTTP/1.1
+Content-Type: application/json
+Accept: application/json
+Host: localhost:8080
+Content-Length: 79
+
+{
+  "id" : 28,
+  "content" : "Updated Content",
+  "createdAt" : 1525089728910
+}
+```
+
+Example response:
+
+```http
+HTTP/1.1 200 OK
+Content-Type: application/json;charset=UTF-8
+Content-Length: 96
+
+{
+  "id" : 28,
+  "content" : "Updated Content",
+  "createdAt" : "2018-04-30T12:02:08.910+0000"
+}
+```
 
 ## level 3 -- Hypermedia Controls
+
+TBD
+
+## Comparison
+
+Feature| Level 0| Level 1| Level 2| Level 3
+-----|--------|--------|--------|---------
+HTTP |✔︎|✔︎|✔︎|✔︎
+Domain Model| |✔︎|✔︎|✔︎
+HTTP Verbs| | |✔︎|✔︎
+HTTP Status| | |✔︎|✔︎
 
 ## Reference
 
 * [Richardson Maturity Model](https://www.martinfowler.com/articles/richardsonMaturityModel.html)
 * [Remote Procedure Invocation](http://www.enterpriseintegrationpatterns.com/patterns/messaging/EncapsulatedSynchronousIntegration.html)
+* [Hypertext Transfer Protocol -- HTTP/1.1](https://tools.ietf.org/rfc/rfc2616.txt)
+* [The text/uri-list Internet Media Type](https://tools.ietf.org/html/rfc2483#section-5)
+* [Ricahrdson Maturity Model Example](https://github.com/rscai/richardson-maturity-model-example)
