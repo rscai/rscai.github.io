@@ -311,6 +311,21 @@ ArrayListBenchmark.measureSetAtIndex|        100000|  thrpt|   20|  13126047.419
 ArrayListBenchmark.measureSetAtIndex|       1000000|  thrpt|   20|  12518930.786| ±   170425.857|  ops/s
 ArrayListBenchmark.measureSetAtIndex|      10000000| thrpt |  20|   5680297.795| ±  1946148.153|  ops/s
 
+### Space Complexity
+
+```java
+private void grow(int minCapacity) {
+        // overflow-conscious code
+        int oldCapacity = elementData.length;
+        int newCapacity = oldCapacity + (oldCapacity >> 1);
+        if (newCapacity - minCapacity < 0)
+            newCapacity = minCapacity;
+        if (newCapacity - MAX_ARRAY_SIZE > 0)
+            newCapacity = hugeCapacity(minCapacity);
+        // minCapacity is usually close to size, so this is a win:
+        elementData = Arrays.copyOf(elementData, newCapacity);
+    }
+```
 
 ## LinkedList
 
