@@ -222,11 +222,11 @@ Compared to level, level 2 has features:
 
 Action|HTTP Verb|URL
 ------|---------|----------------------
-Create|POST     |/collectionName
-Update|PUT      |/collectionName/{id}
-Delete|DELETE   |/collectionName/{id}
-Read  |GET      |/collectionName/{id}
-Query |GET      |/collectionName?{queryString}
+Create|POST     |/resourceType
+Update|PUT      |/resourceType/{id}
+Delete|DELETE   |/resourceType/{id}
+Read  |GET      |/resourceType/{id}
+Query |GET      |/resourceType?{queryString}
 
 HTTP Status| Description
 ------|-------------
@@ -300,9 +300,437 @@ Content-Length: 96
 }
 ```
 
+### Delete Resource
+
+Request example:
+
+```http
+DELETE /api/level2/post/22 HTTP/1.1
+Content-Type: application/json
+Accept: application/json
+Host: localhost:8080
+```
+
+Response example:
+
+```http
+HTTP/1.1 200 OK
+Content-Type: application/json;charset=UTF-8
+Content-Length: 97
+
+{
+  "id" : 22,
+  "content" : "Original Content",
+  "createdAt" : "2018-04-30T12:02:08.719+0000"
+}
+```
+
+### Get Resource
+
+Request example:
+
+```http
+GET /api/level2/post/20 HTTP/1.1
+Content-Type: application/json
+Accept: application/json
+Host: localhost:8080
+```
+
+Response example:
+
+```http
+HTTP/1.1 200 OK
+Content-Type: application/json;charset=UTF-8
+Content-Length: 97
+
+{
+  "id" : 20,
+  "content" : "Original Content",
+  "createdAt" : "2018-04-30T12:02:08.626+0000"
+}
+```
+
+### Query Resource
+
+Request example:
+
+```http
+GET /api/level2/post HTTP/1.1
+Content-Type: application/json
+Accept: application/json
+Host: localhost:8080
+```
+
+Response example:
+
+```http
+HTTP/1.1 200 OK
+Content-Type: application/json;charset=UTF-8
+Content-Length: 497
+
+[ {
+  "id" : 23,
+  "content" : "Original Content",
+  "createdAt" : "2018-04-30T12:02:08.845+0000"
+}, {
+  "id" : 24,
+  "content" : "Original Content",
+  "createdAt" : "2018-04-30T12:02:08.856+0000"
+}, {
+  "id" : 25,
+  "content" : "Original Content",
+  "createdAt" : "2018-04-30T12:02:08.862+0000"
+}, {
+  "id" : 26,
+  "content" : "Original Content",
+  "createdAt" : "2018-04-30T12:02:08.866+0000"
+}, {
+  "id" : 27,
+  "content" : "Original Content",
+  "createdAt" : "2018-04-30T12:02:08.873+0000"
+} ]
+```
+
+### Sub Resource
+
+Action|HTTP Verb|URL
+------|---------|----------------------
+Create|POST     |/resourceType/{id}/subResourceType
+Update|PUT      |/resourceType/{id}/subResourceType/{subResourceId}
+Delete|DELETE   |/resourceType/{id}/subResourceType/{subResourceId}
+Read  |GET      |/resourceType/{id}/subResourceType/{subResourceTypeId}
+Query |GET      |/resourceType/{id}/subResourceType?{queryString}
+
+#### Create Sub Resource
+
+Request example:
+
+```http
+POST /api/level2/post/6/comment HTTP/1.1
+Content-Type: application/json
+Accept: application/json
+Host: localhost:8080
+Content-Length: 174
+
+{
+  "id" : null,
+  "content" : "Comment's content",
+  "createdAt" : null,
+  "post" : {
+    "id" : 6,
+    "content" : "Original Content",
+    "createdAt" : 1525089727497
+  }
+}
+```
+
+Response example:
+
+```http
+HTTP/1.1 201 Created
+Content-Type: application/json;charset=UTF-8
+Content-Length: 214
+
+{
+  "id" : 7,
+  "content" : "Comment's content",
+  "createdAt" : "2018-04-30T12:02:07.578+0000",
+  "post" : {
+    "id" : 6,
+    "content" : "Original Content",
+    "createdAt" : "2018-04-30T12:02:07.497+0000"
+  }
+}
+```
+
+#### Update Sub Resource
+
+Request example:
+
+```http
+PUT /api/level2/post/18/comment/19 HTTP/1.1
+Content-Type: application/json
+Accept: application/json
+Host: localhost:8080
+Content-Length: 180
+
+{
+  "id" : 19,
+  "content" : "Updated content",
+  "createdAt" : 1525089728552,
+  "post" : {
+    "id" : 18,
+    "content" : "Original Content",
+    "createdAt" : 1525089728534
+  }
+}
+```
+
+Response example:
+
+```http
+HTTP/1.1 200 OK
+Content-Type: application/json;charset=UTF-8
+Content-Length: 214
+
+{
+  "id" : 19,
+  "content" : "Updated content",
+  "createdAt" : "2018-04-30T12:02:08.552+0000",
+  "post" : {
+    "id" : 18,
+    "content" : "Original Content",
+    "createdAt" : "2018-04-30T12:02:08.534+0000"
+  }
+}
+```
+
+#### Delete Sub Resource
+
+Request example:
+
+```http
+DELETE /api/level2/post/8/comment/9 HTTP/1.1
+Content-Type: application/json
+Accept: application/json
+Host: localhost:8080
+```
+
+Response example:
+
+```http
+HTTP/1.1 200 OK
+Content-Type: application/json;charset=UTF-8
+Content-Length: 217
+
+{
+  "id" : 9,
+  "content" : "New Comment's conent",
+  "createdAt" : "2018-04-30T12:02:07.678+0000",
+  "post" : {
+    "id" : 8,
+    "content" : "Original Content",
+    "createdAt" : "2018-04-30T12:02:07.648+0000"
+  }
+}
+```
+
+#### Get Sub Resource
+
+Request example:
+
+```http
+GET /api/level2/post/16/comment/17 HTTP/1.1
+Content-Type: application/json
+Accept: application/json
+Host: localhost:8080
+```
+
+Response example:
+
+```http
+HTTP/1.1 200 OK
+Content-Type: application/json;charset=UTF-8
+Content-Length: 219
+
+{
+  "id" : 17,
+  "content" : "New Comment's conent",
+  "createdAt" : "2018-04-30T12:02:08.462+0000",
+  "post" : {
+    "id" : 16,
+    "content" : "Original Content",
+    "createdAt" : "2018-04-30T12:02:08.445+0000"
+  }
+}
+```
+
+#### Query Sub Resource
+
+Request example:
+
+```http
+GET /api/level2/post/10/comment HTTP/1.1
+Content-Type: application/json
+Accept: application/json
+Host: localhost:8080
+```
+
+Response example:
+
+```http
+HTTP/1.1 200 OK
+Content-Type: application/json;charset=UTF-8
+Content-Length: 1107
+
+[ {
+  "id" : 11,
+  "content" : "New Comment's conent",
+  "createdAt" : "2018-04-30T12:02:07.822+0000",
+  "post" : {
+    "id" : 10,
+    "content" : "Original Content",
+    "createdAt" : "2018-04-30T12:02:07.785+0000"
+  }
+}, {
+  "id" : 12,
+  "content" : "New Comment's conent",
+  "createdAt" : "2018-04-30T12:02:07.848+0000",
+  "post" : {
+    "id" : 10,
+    "content" : "Original Content",
+    "createdAt" : "2018-04-30T12:02:07.785+0000"
+  }
+}, {
+  "id" : 13,
+  "content" : "New Comment's conent",
+  "createdAt" : "2018-04-30T12:02:07.872+0000",
+  "post" : {
+    "id" : 10,
+    "content" : "Original Content",
+    "createdAt" : "2018-04-30T12:02:07.785+0000"
+  }
+}, {
+  "id" : 14,
+  "content" : "New Comment's conent",
+  "createdAt" : "2018-04-30T12:02:07.895+0000",
+  "post" : {
+    "id" : 10,
+    "content" : "Original Content",
+    "createdAt" : "2018-04-30T12:02:07.785+0000"
+  }
+}, {
+  "id" : 15,
+  "content" : "New Comment's conent",
+  "createdAt" : "2018-04-30T12:02:07.919+0000",
+  "post" : {
+    "id" : 10,
+    "content" : "Original Content",
+    "createdAt" : "2018-04-30T12:02:07.785+0000"
+  }
+} ]
+```
+
 ## level 3 -- Hypermedia Controls
 
-TBD
+All resources are connected.
+
+```puml
+digraph d {
+  collection_1 [label=collection]
+  resource_11 [label=resource]
+  resource_12 [label=resource]
+  collection_2 [label=collection]
+  resource_21 [label=resource]
+  resource_22 [label=resource]
+  resource_23 [label=resource]
+
+  collection_1 -> resource_11
+  collection_1 -> resource_12
+
+  collection_2 -> resource_21
+  collection_2 -> resource_22
+  collection_2 -> resource_23
+
+  resource_23 -> resource_11
+}
+```
+
+For example:
+
+```puml
+digraph d {
+  post_collection [label=posts]
+  post_1 [label="post#1"]
+  post_2 [label="post#2"]
+  comment_collection [label=comments]
+  comment_11 [label="comment#11"]
+  comment_12 [label="comment#12"]
+  comment_21 [label="comment#21"]
+
+  post_collection -> post_1 [label="/posts/1"]
+  post_collection -> post_2 [label="/posts/2"]
+
+  comment_collection -> comment_11 [label="/comments/11"]
+  comment_collection -> comment_12 [label="/comments/12"]
+  comment_collection -> comment_21 [label="/comments/21"]
+
+  comment_11 -> post_1 [label="/comments/11/post"]
+  comment_12 -> post_1 [label="/comments/12/post"]
+  comment_21 -> post_2 [label="/comments/21/post"]
+
+  university [style=dotted,label=""]
+
+  university -> post_collection [label="/posts"]
+  university -> comment_collection [label="/comments"]
+
+  {rank=same;post_collection,comment_collection}
+  {rank=same;post_1,post_2}
+  {rank=same;comment_11,comment_12,comment_21}
+}
+```
+
+### Create Resource
+
+#### Create resource node
+
+Request example:
+
+```http
+POST /comments HTTP/1.1
+Content-Type: application/json
+Accept: application/json
+Host: localhost:8080
+Content-Length: 66
+
+{
+  "id" : null,
+  "content" : "comment 1",
+  "createdAt" : null
+}
+```
+
+Response example:
+
+```http
+HTTP/1.1 201 Created
+Location: http://localhost:8080/comments/5af80a6f18151728a745b2ae
+Content-Type: application/json;charset=UTF-8
+Content-Length: 263
+
+{
+  "content" : "comment 1",
+  "createdAt" : null,
+  "_links" : {
+    "self" : {
+      "href" : "http://localhost:8080/comments/5af80a6f18151728a745b2ae"
+    },
+    "comment" : {
+      "href" : "http://localhost:8080/comments/5af80a6f18151728a745b2ae"
+    }
+  }
+}
+```
+
+#### Link to other resource
+
+Request example:
+
+```http
+POST /posts/5af80a6f18151728a745b2ad/comments HTTP/1.1
+Content-Type: text/uri-list
+Host: localhost:8080
+Content-Length: 55
+
+http://localhost:8080/comments/5af80a6f18151728a745b2ae
+```
+
+Response example:
+
+```http
+HTTP/1.1 204 No Content
+
+```
 
 ## Comparison
 
