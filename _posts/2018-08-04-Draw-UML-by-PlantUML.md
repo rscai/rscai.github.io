@@ -4,7 +4,8 @@ date: August 4, 2018
 ---
 # Draw UML by PlantUML
 
-[TOC]
+* TOC
+{:toc}
 
 ## Overview
 
