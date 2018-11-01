@@ -2,6 +2,7 @@
 title: Java Persistence API
 date: Oct 28, 2018
 author: Ray Cai
+tags: java jpa orm
 ---
 # Java Persistence API
 
