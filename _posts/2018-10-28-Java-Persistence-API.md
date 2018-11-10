@@ -11,55 +11,35 @@ tags: java jpa orm
 
 ## Overview
 
->The techincal objective of this work is to provide an object/relational mapping facility for the Java application developer using a Java domain model to manage a relational database.
+The techincal objective of JPA is to provide an object/relational mapping facility for the Java application developer using a Java domain model to manage a relational database.
 
-## Entity Table Mapping
+## Entity
 
 > An entity is a lightweight persistent domain object.
 >
 >The primary programming artifact is the entity class. An entity class may make use of auxiliary classes that serve as helper classes or that are used to represent the state of the entity.[5]
 
-JPA is designed to **map Object-Oriented model to Relational model**, NOT ~~map Relational model to Object-Oriented model~~.
+JPA is designed to map Object-Oriented model to Relational model, **NOT** map Relational model to Object-Oriented model.
 
-### Object-Oriented Model
+>The entity class must be annotated with the `Entity` annotation or denoted in the XML descriptor  as an entity.[5]
 
-In object-oriented model, everything is object. An object is a unit which contains states and behaviors. In most implementation, the states of object are stored in **instance variables(field)**; and the behaviors of object are declared as **methods**. Objects comunicate through sending and receiving messages. The behaviors of object are response to these messages, and change internal states or send new messages.
+The `Entity` to `Relation` mapping could be denoted by XML or Java annotation. Considering of readablity, maintainability and static validation, it recommends describing mapping by Java annotation.
 
->Languages that support object-oriented programming typically use inheritance for code reuse and extensibility in the form of either classes or prototypes.[6]
+> The entity  class must have a no-arg constructor. The entity class may have other constructors as well. The no-arg constructor msut be public or protected.[5]
+>
+>The persistent state of an entity is accessed by the persistence provider runtime either via JavaBeans style property accessors ("property access") or via instance variables ("field access"). [5]
+>
+>Terminology Note: The persistent fields and properties of an entity class are generically referred to in this document as the "attributes" of the class.[5]
 
-Java is a class-based Object Oriented programming language. Java support two main concepts:
+[JavaBeans style property accessors](https://docs.oracle.com/javase/tutorial/javabeans/writing/properties.html)
 
-* Class - the definitions for fields and methods
-* Object - instance of class
-
-Classes relate to others in many ways:
-
-* Inheritance
-* Association
-* Composition
-* Aggregation
-
-### Relational Model
-
->The term `relation` is used here in its accepted mathematical sense. Given sets $S_1, S_2, ..., S_n$ (not neccessarily distinct), `R` is a relation on these n sets if it is a set of n-tuples each of which has its first element from $S_1$, its second element from $S_2$, and son on. We shall refer to $S_1$ as the jth domain of R. As defined above, R is said to have degree n. Relations of degree 1 are often called unary, degree 2 binary, degree 3 ternary, and degree n n-ary.[2]
-
-
-### Map Entity
-
-Objeject Oriented Model|Relational Model
------------------------|----------------
-Entity|Table
-Field|Column
-Property|Column
-Identifier|Primary Key
-
-#### Single entity to one table
+### Single entity to one table
 
 The simplest entity/table mapping is single entity to one table mapping. All attributes of entity are mapped to columns of one table.
 
 ```puml
 @startuml
-class Account {
+class Account <<Entity>> {
     -id: String
     -firstName: String
     -lastName: String
@@ -91,14 +71,14 @@ public class Account {
 }
 ```
 
-#### Single entity to primary and secondary tables
+### Single entity to primary and secondary tables
 
 More complex case is that mapping all attributes of entity to columns of more than one.
 Considered of database IO tuning, it sometimes split a long table into multiple short tables. For example, entity `Account` has five fields, three of them (`id`, `firstName` and `lastName`) are always not empty, another two fields are nullable. If map all of them to one table, it will get a sparse table. Database IO operation will get more inefficient on sparse table. Therefore, it usually is splitted into two tables in practice.
 
 ```puml
 @startuml
-class Account {
+class Account <<Entity>> {
     -id: String
     -firstName: String
     -lastName: String
@@ -155,7 +135,7 @@ class Contact {
     -telphone: String
     -address: String
 }
-class Account {
+class Account <<Entity>> {
     -id: String
     -firstName: String
     -lastName: String
@@ -221,12 +201,12 @@ Unlike composition relationship, entities of aggregation are independent. For ex
 
 ```puml
 @startuml
-class Category {
+class Category <<Entity>> {
     -id: String
     -name: String
     -products: List<Product>
 }
-class Product {
+class Product <<Entity>> {
     -id: String
     -subject: String
 }
@@ -283,11 +263,11 @@ public class Category {
 
 ```puml
 @startuml
-class Category {
+class Category <<Entity>> {
     -id: String
     -name: String
 }
-class Product {
+class Product <<Entity>> {
     -id: String
     -subject: String
     -category: Category
@@ -325,12 +305,12 @@ public class Category {
 
 ```puml
 @startuml
-class Category {
+class Category <<Entity>> {
     -id: String
     -name: String
     -products: List<Product>
 }
-class Product {
+class Product <<Entity>> {
     -id: String
     -subject: String
     -category: Category
@@ -450,12 +430,12 @@ abstract class Delivery <<Entity>> {
     #id: String
     #status: DeliveryStatus
 }
-class CustomDelivery {
+class CustomDelivery <<Entity>> {
 }
-class EmailDelivery {
+class EmailDelivery <<Entity>> {
     -email: String
 }
-class ExpressDelivery {
+class ExpressDelivery <<Entity>> {
     -vendor: String
     -trackId: String
     -recipient: Contact
@@ -680,15 +660,155 @@ public class ExpressDelivery extends Delivery {
 
 ## Entity Operation
 
-TBD
+### EntityManager
 
-## Query Interface
+>An EntityManager instance is associated with a persistence context. A persistence context is a set of entity instances in which for any persistent entity identity there is a unique entity instance. Within the persistence context, the entity instances and their lifecycle are managed. The `EntityManager` interface defines the methods that are used to interact with the persistence context. The `EntityManager` API is used to create and remove persistent entity instances, to find persistent entities by primary key, and to query over persistent entities.[5]
+>
+>The set of entities that cna be managed by a given `EntityManager` instance is defined by a persistence unit. A persistence unit defines the set of all classes that are related or grouped by the application, and which must be colocated in their mapping to a single database.[5]
 
-TBD
+### Entity Instance's Life Cycle
+
+>An entity instance can be characterized as being new, managed, detached and removed.
+>
+>* A `new` entity instance has no persistent identity, and is not yet associcated with a persistence context.
+>* A `managed` entity instance is an instance with a persistent identity that is currently associated with a persistence context.
+>* A `detached` entity instance is an instance with a persistent identity that is not (or no longer) associated with a persistence context.
+>* A `removed` entity instance is an instance with a persistent identity, assiciated with a persistence context, that will be removed from the database upon transaction commit.[5]
+
+```puml
+@startuml
+[*]->new
+new-->managed: persist
+new->new: remove
+new->new: detach
+managed->managed: persist
+managed->removed: remove
+managed-->detached: detach
+removed-->managed: persist
+removed->removed: remove
+removed-->detached: detach
+detached->[*]: persist
+detached->[*]: remove
+@enduml
+```
+
+Entity instance starts from state `new`, it will transist to state `managed` when invoked the `persist` method on it or by cascading the persist operation.
+
+When invoked the `remove` method on `managed` entity instance, it will transist to state `removed`. Similarly, when invoked the `detach` method on `managed` entity instance, it will transist to state `detached`.
+
+When invoked the `persist` method on `removed` entity instance, it will transist to state `managed`. If invoked `detach` method on entity instance, it will transist to state `detached`.
+
+`detached` is the final state of entity instance. Even it is allowed to invoke `merge` method on `detached` entity instance, but it is creating new one entityn instance than transisting `detached` to another state.
+
+### Transaction
+
+PersistenceContextType:
+
+* TRANSACTION
+* EXTENDED
+
+SynchronizationType:
+
+* SYNCHRONIZED
+* UNSYNCHRONIZED
+
+>The managed entities of a transaction-scoped persistence context become detached when the transaction commits; the managed entities of an extended persistence context remain managed.
+>
+>For both transaction-scoped persistence contexts and for extended persistence contexts that are joined to the current transction, transaction rollback causes all `pre-existing` managed instances and removed instances to become detached. The instances' state will be the state of the instances at the point at which the transaction was rolled back. Transaction rollback typically causes the persistence context to be in an inconsistent state at the point of rollback. In particular , the state of version attributes and generated state (e.g., generated primary keys) may be inconsistent. Instances that were formerly managed by the persistence context (including new instances that were made persistent in that transaction) may therefore not be reusable in the same manner as other detached objects -- for example, they may fail when passed to the merge operation.
+
+### Entity Listeners and Callback Methods
+
+Entity lifecycle events:
+
+* `Prepersist`
+* `PostPersist`
+* `PreRemove`
+* `PostRemove`
+* `PreUpdate`
+* `PostUpdate`
+* `PostLoad`
+
+>Entity lifecycle callback methods can be defined on an entity listener class and/or directly on an entity class or mapped superclass.
+>
+>Callback methods defined on an entity class or mapped superclass have the following signature:
+>
+>`void <METHOD>()`
+>
+>Callback methods defined on an entity listener class have the following signature:
+>
+>`void <METHOD>(Object)`
+>
+>The `Object` argument is the entity instance for which the callback method is invoked. It may be declared as the actual entity type.
+>
+>The callback methods can have public, private, protected, or package level access, but must not be `static` or `final`.[5]
+>
+>The following rules apply to lifecycle callback methods:
+>
+>* Lifecycle callback methods may throw unchecked/runtime exceptions. A runtime exception thrown by a callback method that executes within a transaction causes that transaction to be marked for rollback if the persistence context is joined to the transaction.
+>* Lifecycle callbacks can invoke JNDI, JDBC, JMS, and enterprise beans.
+>* In general, the lifecycle method of a portable application should not invoke `EntityManager` or query operations, access other entity instances, or modify relationships whithin the same persistence context. A lifecycle method may modify the non-relationship state of the entity on which it is invoked.[5]
+
+## Query
+
+### Query Language
+
+>The Java Persistence query language is a string-based query language used to define queries over entities and their persistent state. It enbales the application developer to specify the semantics of queries in a portable way, independent of the particular database schema in use in an enterprise environment. The full range of the langauge may be used in both static and dynamic queries.
+>
+>The query language uses the absdtract persistence schema of entities, including their embedded objects and relationships, for its data model, and it defines operators and expressions based on this data model. It uses a SQL-like syntax to select objects or values based on abstract schema types and relationships. It is possible to parse and validate queries before entities are deployed.[5]
+
+In BNF syntax, a query language statement is defined as:
+`QL_statement ::= select_statement|update_statement|delete_statement`
+
+a select statement is a string which contains of the following clauses:
+
+* SELECT, required. Which determines the type of the objects or values to be selected.
+* FROM, required. Which declares what domains the query apply on.
+* WHERE, optional. Which declares the restrict on the results that retured by the query.
+* GROUP BY, optional. Which allows query results to be aggregated in terms of groups.
+* HAVING, optional. Which allows filtering over aggregated groups.
+* OVER BY, optional. Which declares the order of the returns that returned by the query.
+
+>In BNF syntax, a select statement is defined as:
+>`select_statement ::= select_clause from_clause [where_clause] [group_clause] [having_clause] [orderby_clause]`[5]
+
+In BNF syntax, a update statement is defined as:
+`update_statement ::= update_clause [where_clasue]`
+
+In BNF syntax, a delete statement is defined as:
+`delete_statement ::= delete_clause [where_clause]`
+
+### Criteria API
+
+>The Java Persistence Criteria API, like the Java Persistence query language is based on the abstract persistence schema of entities, their embedded objects, and their relationships as its data model. This abstract persistence schema is materialized in the form of metamodel objects over which the Criteria API operates. The semantics of criteria queries are designed to reflect those of Jave Persistence query language queries.
+>
+>The syntax of the Criteria API is designed to allow the construction of an object-based query "graph", whose nodes correspond to the semantic query elements.[5]
 
 ## Caching
 
-TBD
+>This specification supports the use of the second-level cache by the persistence provider. The second-level cache, if used, underlies the persistence context, and is largely transparent to the application.
+>
+>A second-level cache is typically used to enhance performance. Use of a cache, however, may have consequences in terms of the up-to-dateness of data seen by the application, resulting in "stale reads". A stale read is defined as the reading of entities or entity state that is older than the point at which the persistence context was started.
+
+JPA's caching behavior could be configured y options `shared-cache-mode`, `CacheRetriveMode` and `CacheStoreMode`.
+
+`shared-cache-mode` options:
+
+* ALL
+* NONE
+* ENABLE_SELECTIVE
+* DISABLE_SELECTIVE
+* UNSPECIFIED
+
+`CacheRetriveMode` options:
+
+* USE
+* BYPASS
+
+`CacheStoreMode` options:
+
+* USE
+* BYPASS
+* REFRESH
 
 ## Appendix
 
@@ -735,4 +855,4 @@ An entity class should be mapped to one ore more relational tables. Entity may h
 2. [A Relational Model of Data for Large Shared Data Banks, E. F. Codd, IBM Research Laboratory, San Jose, California](https://www.seas.upenn.edu/~zives/03f/cis550/codd.pdf)
 3. [Second normal form](https://en.wikipedia.org/wiki/Second_normal_form)
 4. [Third normal form](https://en.wikipedia.org/wiki/Third_normal_form)
-5. [Java Persistence API]()
+5. [JSR 338: Java(TM) Persistence API, Version 2.1](https://jcp.org/aboutJava/communityprocess/final/jsr338/index.html)
