@@ -51,3 +51,5 @@ kramdown:
   hard_wrap: true
 
 exclude: ['README.md', 'LICENSE','vendor']
+
+theme: jekyll-theme-minimal
