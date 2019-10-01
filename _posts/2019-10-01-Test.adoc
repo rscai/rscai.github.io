@@ -1,0 +1,13 @@
+= Test Asciidoc Preview
+:backend: revealjs
+:page-layout: false
+
+== Plantuml
+
+[plantuml, diagram-classes, png]     
+....
+class BlockProcessor
+class DiagramBlock
+class DitaaBlock
+class PlantUmlBlock
+....
