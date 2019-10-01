@@ -1,0 +1,574 @@
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Ray Cai | Microservice </title>
+  <meta name="theme-color" content="#222222" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="/js/jquery.min.js"></script>
+  <script src="/js/bootstrap.min.js"></script>
+  <script src="/js/header.js"></script>
+  <script src="/js/toc.js"></script>
+  <link href="/css/bootstrap.min.css" rel="stylesheet">
+  <link href="/css/theme.css" rel="stylesheet">
+  <link href="/css/syntax.css" rel="stylesheet">
+  <link href="/css/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+  <script src="/js/rawdeflate.js"></script>
+<script src="/js/render_plantuml.js"></script>
+<script src="/js/viz.js"></script>
+<script src="/js/render_dot.js"></script>
+<link href="/css/diagram.css" rel="stylesheet">
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
+  </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-AMS_CHTML"></script>
+</head>
+
+<body>
+
+  
+
+  
+
+
+ <script type="text/javascript">
+  WebFontConfig = {
+    google: {
+      families: ['Ubuntu::latin']
+    }
+  };
+  (function() {
+    var wf = document.createElement('script');
+    wf.src = ('https:' == document.location.protocol ? 'https' : 'http') +
+      '://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
+    wf.type = 'text/javascript';
+    wf.async = 'true';
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(wf, s);
+  })();
+</script>
+
+  <nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="/">Ray Cai</a>
+      </div>
+      <div class="collapse navbar-collapse">
+        <ul class="nav navbar-nav">
+          <li><a href="/">/home</a></li>
+          <li><a href="/archive.html">/archive</a></li>
+          <li><a href="/tags.html">/tags</a></li>
+          <li><a href="/about.html">/about</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+    <div class="wrapper">
+      <div class="content">
+        <div class="container container-center">
+          <div class="row">
+            <div class="col-md-8">
+              <div class="article">
+                <div class="well">
+                  <h1><a href="/2019/08/Microservice">Microservice</a></h1>
+                  <div class="post-meta">
+                    <div class="post-time">
+                      <i class="fa fa-calendar"></i>
+                      <time>25 Aug 2019</time>
+                    </div>
+                    <ul>
+                      
+                    </ul>
+                  </div>
+                  <div class="post-content">
+                    <div id="toc" class="toc"></div>
+                    <!-- slide -->
+<h2 id="design-microservices-by-ddd">Design Microservices by DDD</h2>
+
+<!-- slide data-notes="今天，我分享使用領域驅動設計方法設計担供RESTful風格API的微服務。今天的內容分為四個部份，我會先簡單介紹一下微服務、RESTful和DDD領域驅動設設，最後再舉個例子，將三者結合起來。" -->
+<h2 id="agenda">Agenda</h2>
+
+<ul>
+  <li>Microservices</li>
+  <li>RESTful</li>
+  <li>Domain Driven Design (DDD)</li>
+  <li>Example</li>
+</ul>
+
+<!-- slide data-notes="首先，介紹一下微服務。這是維基百科上對微服務的描述。從這包話𥚃可以發現兩個重點：variant of the service oriented architecture, 微服務是SOA的一個變種；a collection of loosely coupled services, 一組鬆耦合的服務。SOA簡單地講就是把業務功能劃分為多個服務，服務和服務之間通過統一的通信協議集成，比如通過message bus。微服務就是把服務分得更細。" -->
+<h2 id="whats-microservices">What’s Microservices</h2>
+
+<blockquote>
+  <p>Microservices are a software development technique—a <strong>variant of the service-oriented architecture (SOA)</strong> architectural style that structures an application as <strong>a collection of loosely coupled services</strong>.</p>
+</blockquote>
+
+<p><a href="https://en.wikipedia.org/wiki/Microservices">Microservices</a></p>
+
+<!-- slide data-notes="SOA對服務的劃分粒度較大。比如，對於一個電子商務業務，SOA可能就會將其劃分為在線商店服務、營銷服務、審計服務等。所有服務都通過統一的通信通道，比如EBS。而微服務則將服務劃分得更細。" -->
+<h2 id="soa">SOA</h2>
+
+<pre><code class="language-plantuml">@startuml
+component OnlineStore
+component Marketing
+component Auditing
+
+queue EBS
+
+OnlineStore --&gt; EBS
+OnlineStore &lt;-- EBS
+Marketing -&gt; EBS
+Marketing &lt;- EBS
+Auditing --&gt; EBS
+Auditing &lt;-- EBS
+@enduml
+</code></pre>
+
+<!-- slide data-notes="Monolith單體這個詞是相對的。以在線商店模块為例，在SOA中，已經是一個細分的服務了；而在微服務中，其就是一個巨大的單體應用。" -->
+<h2 id="monolith">Monolith</h2>
+
+<pre><code class="language-plantuml">@startuml
+title Monolith Architecture
+
+package "OnlineStore" {
+    HTTP -- [Catalog]
+    HTTP -- [Inventory]
+    HTTP -- [User Management]
+    HTTP -- [Order]
+}
+
+database DB
+
+[Catalog] --&gt; DB
+[Inventory] --&gt; DB
+[User Management] --&gt; DB
+[Order] --&gt; DB
+
+[Inventory] -&gt; [Catalog]:call
+[Order] -&gt; [Inventory]:call
+[Order] -&gt; [User Management]:call
+
+@enduml
+</code></pre>
+
+<!-- slide data-notes="要應用微服務架構，在線商度模块需被進一步細分。比如分為Catalog, Inventory, Order和User management。每個微服務都應拥有獨立的數據存儲。服務和服務之間也是按需依賴。" -->
+<h2 id="microservices">Microservices</h2>
+
+<pre><code class="language-plantuml">@startuml
+title Microservices Architecture
+
+package "Catalog Service" {
+    catalogAPI -- [Catalog]
+}
+
+database CatalogDB
+[Catalog] --&gt; CatalogDB
+
+package "Inventory Service" {
+    inventoryAPI -- [Inventory]
+}
+database InventoryDB
+[Inventory] --&gt; InventoryDB
+
+package "User Management Service" {
+    userManagementAPI -- [User Management]
+}
+database UserManagementDB
+[User Management] --&gt; UserManagementDB
+
+package "Order Service" {
+    orderAPI -- [Order]
+}
+database OrderDB
+[Order] --&gt; OrderDB
+
+[Inventory] -&gt; catalogAPI
+[Order] -&gt; inventoryAPI
+[Order] -&gt; userManagementAPI
+
+@enduml
+</code></pre>
+
+<!-- slide data-notes="微服務有很多特性。我覺得讓Developer受益最大的是：Decentralized Governance, Decentralized Data management, Evolutionary Design." -->
+<h2 id="characteristics">Characteristics</h2>
+
+<ul>
+  <li>Componentization via Services</li>
+  <li>Organized around Business Capabilities</li>
+  <li>Products not Projects</li>
+  <li>Smart endpoints and dump pipes</li>
+  <li>Decentralized Governance</li>
+  <li>Decentralized Data Management</li>
+  <li>Infrastructure Automation</li>
+  <li>Design for failure</li>
+  <li>Evolutionary Design</li>
+</ul>
+
+<!-- slide -->
+<h2 id="restful">RESTFul</h2>
+
+<blockquote>
+  <p>Representational State Transfer (REST) is a software architectural style that defines a set of constraints to be used for creating Web services.</p>
+</blockquote>
+
+<p><a href="https://en.wikipedia.org/wiki/Representational_state_transfer">Representational state transfer</a></p>
+
+<!-- slide -->
+<h2 id="constraints">Constraints</h2>
+
+<ul>
+  <li>Client-server architecture</li>
+  <li>Statelessness</li>
+  <li>Cacheability</li>
+  <li>Layered system</li>
+  <li>Uniform interface</li>
+</ul>
+
+<!-- slide -->
+<h2 id="richardson-maturity-model">Richardson Maturity Model</h2>
+
+<p><img src="https://martinfowler.com/articles/images/richardsonMaturityModel/overview.png" alt="Richardson Maturity Model" /></p>
+
+<!-- slide -->
+<h2 id="level-0">Level 0</h2>
+
+<div class="language-http highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">POST</span> <span class="nn">/api/level0/operation</span> <span class="k">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+<span class="na">Content-Type</span><span class="p">:</span> <span class="s">application/json;charset=UTF-8</span>
+<span class="na">Accept</span><span class="p">:</span> <span class="s">application/json</span>
+<span class="na">Host</span><span class="p">:</span> <span class="s">localhost:8080</span>
+<span class="na">Content-Length</span><span class="p">:</span> <span class="s">86</span>
+
+<span class="p">{</span><span class="w">
+  </span><span class="s2">"command"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"createPost"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"parameters"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"content"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"Test post 123"</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<!-- slide -->
+<h2 id="level-0-1">Level 0</h2>
+
+<div class="language-http highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">HTTP</span><span class="o">/</span><span class="m">1.1</span> <span class="m">200</span> <span class="ne">OK</span>
+<span class="na">Content-Type</span><span class="p">:</span> <span class="s">application/json</span>
+<span class="na">Content-Length</span><span class="p">:</span> <span class="s">164</span>
+
+<span class="p">{</span><span class="w">
+  </span><span class="s2">"status"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"SUCCESS"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"message"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"parameters"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"id"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"content"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"Test post 123"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"createdAt"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"Sun Mar 11 15:43:11 CST 2018"</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<!-- slide -->
+<h2 id="level-1">Level 1</h2>
+
+<div class="language-http highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">POST</span> <span class="nn">/api/level1/post</span> <span class="k">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+<span class="na">Content-Type</span><span class="p">:</span> <span class="s">application/json</span>
+<span class="na">Accept</span><span class="p">:</span> <span class="s">application/json</span>
+<span class="na">Host</span><span class="p">:</span> <span class="s">localhost:8080</span>
+<span class="na">Content-Length</span><span class="p">:</span> <span class="s">117</span>
+
+<span class="p">{</span><span class="w">
+  </span><span class="s2">"command"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"create"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"data"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"id"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"content"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"Test Post 123"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"createdAt"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<!-- slide -->
+<h2 id="level-1-1">Level 1</h2>
+
+<div class="language-http highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">HTTP</span><span class="o">/</span><span class="m">1.1</span> <span class="m">200</span> <span class="ne">OK</span>
+<span class="na">Content-Type</span><span class="p">:</span> <span class="s">application/json;charset=UTF-8</span>
+<span class="na">Content-Length</span><span class="p">:</span> <span class="s">160</span>
+
+<span class="p">{</span><span class="w">
+  </span><span class="s2">"status"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"SUCCESS"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"message"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"data"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"id"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"content"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"Test Post 123"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"createdAt"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-03-11T07:43:11.840+0000"</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<!-- slide -->
+<h2 id="level-2">Level 2</h2>
+
+<div class="language-http highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">POST</span> <span class="nn">/api/level2/post</span> <span class="k">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+<span class="na">Content-Type</span><span class="p">:</span> <span class="s">application/json</span>
+<span class="na">Accept</span><span class="p">:</span> <span class="s">application/json</span>
+<span class="na">Host</span><span class="p">:</span> <span class="s">localhost:8080</span>
+<span class="na">Content-Length</span><span class="p">:</span> <span class="s">73</span>
+
+<span class="p">{</span><span class="w">
+  </span><span class="s2">"id"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"content"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"New Post content"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"createdAt"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<!-- slide -->
+<h2 id="level-2-1">Level 2</h2>
+
+<div class="language-http highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">HTTP</span><span class="o">/</span><span class="m">1.1</span> <span class="m">201</span> <span class="ne">Created</span>
+<span class="na">Content-Type</span><span class="p">:</span> <span class="s">application/json;charset=UTF-8</span>
+<span class="na">Content-Length</span><span class="p">:</span> <span class="s">97</span>
+
+<span class="p">{</span><span class="w">
+  </span><span class="s2">"id"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="mi">21</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"content"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"New Post content"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"createdAt"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-04-30T12:02:08.667+0000"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<!-- slide -->
+<h2 id="level-3">Level 3</h2>
+
+<div class="language-http highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">POST</span> <span class="nn">/comments</span> <span class="k">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+<span class="na">Content-Type</span><span class="p">:</span> <span class="s">application/json</span>
+<span class="na">Accept</span><span class="p">:</span> <span class="s">application/json</span>
+<span class="na">Host</span><span class="p">:</span> <span class="s">localhost:8080</span>
+<span class="na">Content-Length</span><span class="p">:</span> <span class="s">66</span>
+
+<span class="p">{</span><span class="w">
+  </span><span class="s2">"id"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"content"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"comment 1"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"createdAt"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<!-- slide -->
+<h2 id="level-3-1">Level 3</h2>
+
+<div class="language-http highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">HTTP</span><span class="o">/</span><span class="m">1.1</span> <span class="m">201</span> <span class="ne">Created</span>
+<span class="na">Location</span><span class="p">:</span> <span class="s">http://localhost:8080/comments/5af80a6f18151728a745b2ae</span>
+<span class="na">Content-Type</span><span class="p">:</span> <span class="s">application/json;charset=UTF-8</span>
+<span class="na">Content-Length</span><span class="p">:</span> <span class="s">263</span>
+
+<span class="p">{</span><span class="w">
+  </span><span class="s2">"content"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"comment 1"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"createdAt"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"_links"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"self"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"href"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"http://localhost:8080/comments/5af80a6f18151728a745b2ae"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="s2">"comment"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"href"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"http://localhost:8080/comments/5af80a6f18151728a745b2ae"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<!-- slide -->
+<h2 id="level-3-2">Level 3</h2>
+
+<div class="language-http highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">POST</span> <span class="nn">/posts/5af80a6f18151728a745b2ad/comments</span> <span class="k">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+<span class="na">Content-Type</span><span class="p">:</span> <span class="s">text/uri-list</span>
+<span class="na">Host</span><span class="p">:</span> <span class="s">localhost:8080</span>
+<span class="na">Content-Length</span><span class="p">:</span> <span class="s">55</span>
+
+http://localhost:8080/comments/5af80a6f18151728a745b2ae
+</code></pre></div></div>
+
+<!-- slide -->
+<h2 id="domain-driven-design-ddd">Domain Driven Design (DDD)</h2>
+
+<blockquote>
+  <p>Domain-driven design (DDD) is an approach to software development for complex needs by connecting the implementation to an evolving model.</p>
+</blockquote>
+
+<p><a href="https://en.wikipedia.org/wiki/Domain-driven_design">Domain-driven-design</a></p>
+
+<!-- slide -->
+<h2 id="domain-driven-design-ddd-1">Domain Driven Design (DDD)</h2>
+
+<ul>
+  <li>placing the project’s primary focus on the core domain and domain logic;</li>
+  <li>basing complex designs on a model of the domain;</li>
+  <li>initiating a creative collaboration between technical and domain experts to iteratively refine a conceptual model that addresses particular domain problems.</li>
+</ul>
+
+<!-- slide -->
+<h2 id="building-blocks">Building blocks</h2>
+
+<ul>
+  <li>Bounded context</li>
+  <li>Entity</li>
+  <li>Value object</li>
+  <li>Aggregate</li>
+</ul>
+
+<!-- slide -->
+<h2 id="example">Example</h2>
+
+<pre><code class="language-plantuml">@startuml
+class Soi &lt;&lt;Entity&gt;&gt;
+class SoiList &lt;&lt;Entity&gt;&gt;
+class Hierarchy &lt;&lt;Entity&gt;&gt;
+class Portfolio &lt;&lt;Entity&gt;&gt;
+
+Soi "*" -- "1" SoiList
+SoiList "*" -- "1" Portfolio
+Hierarchy "*" -- "*" Portfolio
+@enduml
+</code></pre>
+
+<!-- slide -->
+<h2 id="example-1">Example</h2>
+
+<pre><code class="language-plantuml">@startuml
+package Metadata {
+    class SoiList &lt;&lt;Entity&gt;&gt;
+    class Hierarchy &lt;&lt;Entity&gt;&gt;
+    class Portfolio &lt;&lt;Entity&gt;&gt;
+}
+package ClientSoi {
+    class Soi &lt;&lt;Entity&gt;&gt; {
+        -soiListId
+    }
+}
+
+ClientSoi -&gt; Metadata: depends
+@enduml
+</code></pre>
+
+<!-- slide -->
+<h2 id="example-2">Example</h2>
+
+<pre><code class="language-plantuml">@startuml
+component MetadataService
+interface MetadataRest
+MetadataService - MetadataRest
+component ClientSoiService
+interface ClientSoiRest
+ClientSoiService - ClientSoiRest
+
+ClientSoiService --&gt; MetadataRest: HTTP
+@enduml
+</code></pre>
+
+<!-- slide -->
+<h2 id="example-3">Example</h2>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>http://metadata/soiList
+http://metadata/hierarchy
+http://metadata/portfolio
+
+http://clientSoi/soi?soiListId=...
+</code></pre></div></div>
+
+                    
+
+                  </div>
+                  
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4 hidden-xs">
+              <div class="sidebar ">
+  <h2>Recent Posts</h2>
+  <ul>
+    
+    <li><a href="/2019/10/Test">Test Asciidoc Preview</a></li>
+    
+    <li><a href="/2019/08/Microservice">Microservice</a></li>
+    
+    <li><a href="/2019/02/Coder-Self-Cultivation">Coder Self Cultivation</a></li>
+    
+    <li><a href="/2018/11/After-Reading-Migrating-to-Microservices-Databases">After Reading Migrating To Microservices Databases</a></li>
+    
+    <li><a href="/2018/10/Java-Persistence-API">Java Persistence API</a></li>
+    
+  </ul>
+</div>
+
+<div class="sidebar">
+  <h2>Tags</h2>
+  <ul class="sideBarTags">
+    
+    
+    <li>
+      <a href="/tag/java" data-toggle="tooltip" data-placement="right" title="1">
+        <span>java</span></a></li>
+    
+    <li>
+      <a href="/tag/jpa" data-toggle="tooltip" data-placement="right" title="1">
+        <span>jpa</span></a></li>
+    
+    <li>
+      <a href="/tag/orm" data-toggle="tooltip" data-placement="right" title="1">
+        <span>orm</span></a></li>
+    
+  </ul>
+</div>
+
+            </div>
+          </div>
+        </div>
+        
+
+      </div>
+          <footer class="footer-distributed">
+      <div class="container">
+        <div class="footer">
+          <p>Template Powered by Pavel Makhov &copy; 2015</p>
+          <h6>Follow me</h6>
+
+<ul class="social-media">
+
+  
+    <li>
+      <a title="rscai on Github" href="https://github.com/rscai" target="_blank"><i class="fa fa-github fa-2x"></i></a>
+    </li>
+  
+
+  
+    <li>
+      <a title=" on StackOverflow" href="https://stackoverflow.com/users/" target="_blank"><i class="fa fa-stack-overflow fa-2x"></i></a>
+    </li>
+  
+
+  
+
+  
+    <li>
+      <a title=" on Instagram" href="https://instagram.com/" target="_blank"><i class="fa fa-instagram fa-2x"></i></a>
+    </li>
+  
+
+  
+    <li>
+      <a title=" on Last.fm" href="https://www.lastfm.com/user/" target="_blank"><i class="fa fa-lastfm fa-2x"></i></a>
+    </li>
+  
+
+  
+    <li>
+      <a title="feed.xml RSS" href="/feed.xml" target="_blank"><i class="fa fa-rss fa-2x"></i></a>
+    </li>
+  
+
+</ul>
+
+        </div>
+      </div>
+    </footer>
+
+    </div>
+  </body>
+</html>

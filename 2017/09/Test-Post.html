@@ -2,7 +2,7 @@
 
 <head>
   <meta charset="UTF-8">
-  <title>Ray Cai</title>
+  <title>Ray Cai | Test Post </title>
   <meta name="theme-color" content="#222222" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script src="/js/jquery.min.js"></script>
@@ -69,248 +69,83 @@
     </div>
   </nav>
 
-
     <div class="wrapper">
       <div class="content">
         <div class="container container-center">
           <div class="row">
             <div class="col-md-8">
-              <div class="well">
-                
-  <h2 class="post-title">
-    <a href="http://rscai.github.io/2019/10/Test">
-      Test Asciidoc Preview
-    </a>
-  </h2>
+              <div class="article">
+                <div class="well">
+                  <h1><a href="/2017/09/Test-Post">Test Post</a></h1>
+                  <div class="post-meta">
+                    <div class="post-time">
+                      <i class="fa fa-calendar"></i>
+                      <time>07 Sep 2017</time>
+                    </div>
+                    <ul>
+                      
+                    </ul>
+                  </div>
+                  <div class="post-content">
+                    <div id="toc" class="toc"></div>
+                    <h2 id="overview">Overview</h2>
 
-  <div class="post-meta">
-  <div class="post-time">
-    <i class="fa fa-calendar"></i>
-    <time datetime='2019-10-01'>01 Oct 2019</time>
-  </div>
-  <ul>
-    
-  </ul>
-</div>
+<p>Jekyll on <a href="github.com">GitHub</a> test.</p>
 
-  <div class="post-descr">
-    <p>
-      
-    </p>
-  </div>
-  
-  <h2 class="post-title">
-    <a href="http://rscai.github.io/2019/08/Microservice">
-      Microservice
-    </a>
-  </h2>
+<h2 id="code-highlight">Code Highlight</h2>
 
-  <div class="post-meta">
-  <div class="post-time">
-    <i class="fa fa-calendar"></i>
-    <time datetime='2019-08-25'>25 Aug 2019</time>
-  </div>
-  <ul>
-    
-  </ul>
-</div>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">package</span> <span class="n">me</span><span class="o">.</span><span class="na">raycai</span><span class="o">.</span><span class="na">test</span><span class="o">.</span><span class="na">model</span><span class="o">;</span>
 
-  <div class="post-descr">
-    <p>
-      
-    </p>
-  </div>
-  
-  <h2 class="post-title">
-    <a href="http://rscai.github.io/2019/02/Coder-Self-Cultivation">
-      Coder Self Cultivation
-    </a>
-  </h2>
+<span class="kn">import</span> <span class="nn">java.persistence.Entity</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.persistence.Id</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.persistence.Column</span><span class="o">;</span>
 
-  <div class="post-meta">
-  <div class="post-time">
-    <i class="fa fa-calendar"></i>
-    <time datetime='2019-02-23'>23 Feb 2019</time>
-  </div>
-  <ul>
-    
-  </ul>
-</div>
+<span class="nd">@Entity</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Product</span> <span class="o">{</span>
+    <span class="nd">@Id</span>
+    <span class="kd">private</span> <span class="n">Long</span> <span class="n">id</span><span class="o">;</span>
 
-  <div class="post-descr">
-    <p>
-      
-    </p>
-  </div>
-  
-  <h2 class="post-title">
-    <a href="http://rscai.github.io/2018/11/After-Reading-Migrating-to-Microservices-Databases">
-      After Reading Migrating To Microservices Databases
-    </a>
-  </h2>
+    <span class="nd">@Column</span>
+    <span class="kd">private</span> <span class="n">String</span> <span class="n">name</span><span class="o">;</span>
 
-  <div class="post-meta">
-  <div class="post-time">
-    <i class="fa fa-calendar"></i>
-    <time datetime='2018-11-11'>11 Nov 2018</time>
-  </div>
-  <ul>
-    
-  </ul>
-</div>
+    <span class="kd">public</span> <span class="n">Long</span> <span class="nf">getId</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="n">id</span><span class="o">;</span>
+    <span class="o">}</span>
 
-  <div class="post-descr">
-    <p>
-      
-    </p>
-  </div>
-  
-  <h2 class="post-title">
-    <a href="http://rscai.github.io/2018/10/Java-Persistence-API">
-      Java Persistence API
-    </a>
-  </h2>
+    <span class="kd">public</span> <span class="n">String</span> <span class="nf">getName</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="n">name</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
 
-  <div class="post-meta">
-  <div class="post-time">
-    <i class="fa fa-calendar"></i>
-    <time datetime='2018-10-28'>28 Oct 2018</time>
-  </div>
-  <ul>
-    
-    <li><a href="http://rscai.github.io/tag/java">java</a></li>
-    
-    <li><a href="http://rscai.github.io/tag/jpa">jpa</a></li>
-    
-    <li><a href="http://rscai.github.io/tag/orm">orm</a></li>
-    
-  </ul>
-</div>
+<figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="kn">package</span> <span class="n">me</span><span class="o">.</span><span class="na">raycai</span><span class="o">.</span><span class="na">test</span><span class="o">.</span><span class="na">model</span><span class="o">;</span>
 
-  <div class="post-descr">
-    <p>
-      
-    </p>
-  </div>
-  
-  <h2 class="post-title">
-    <a href="http://rscai.github.io/2018/10/Spring-Boot-Learning-Path">
-      Spring Boot Learning Path
-    </a>
-  </h2>
+<span class="kn">import</span> <span class="nn">java.persistence.Entity</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.persistence.Id</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.persistence.Column</span><span class="o">;</span>
 
-  <div class="post-meta">
-  <div class="post-time">
-    <i class="fa fa-calendar"></i>
-    <time datetime='2018-10-06'>06 Oct 2018</time>
-  </div>
-  <ul>
-    
-  </ul>
-</div>
+<span class="nd">@Entity</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Product</span> <span class="o">{</span>
+    <span class="nd">@Id</span>
+    <span class="kd">private</span> <span class="n">Long</span> <span class="n">id</span><span class="o">;</span>
 
-  <div class="post-descr">
-    <p>
-      
-    </p>
-  </div>
-  
-  <h2 class="post-title">
-    <a href="http://rscai.github.io/2018/08/Draw-UML-by-PlantUML">
-      Draw Uml By Plantuml
-    </a>
-  </h2>
+    <span class="nd">@Column</span>
+    <span class="kd">private</span> <span class="n">String</span> <span class="n">name</span><span class="o">;</span>
 
-  <div class="post-meta">
-  <div class="post-time">
-    <i class="fa fa-calendar"></i>
-    <time datetime='2018-08-04'>04 Aug 2018</time>
-  </div>
-  <ul>
-    
-  </ul>
-</div>
+    <span class="kd">public</span> <span class="n">Long</span> <span class="nf">getId</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="n">id</span><span class="o">;</span>
+    <span class="o">}</span>
 
-  <div class="post-descr">
-    <p>
-      
-    </p>
-  </div>
-  
-  <h2 class="post-title">
-    <a href="http://rscai.github.io/2018/04/Java-Collections-ArrayList-and-LinkedList">
-      Java Collections Arraylist And Linkedlist
-    </a>
-  </h2>
+    <span class="kd">public</span> <span class="n">String</span> <span class="nf">getName</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="n">name</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}</span></code></pre></figure>
 
-  <div class="post-meta">
-  <div class="post-time">
-    <i class="fa fa-calendar"></i>
-    <time datetime='2018-04-08'>08 Apr 2018</time>
-  </div>
-  <ul>
-    
-  </ul>
-</div>
+                    
 
-  <div class="post-descr">
-    <p>
-      
-    </p>
-  </div>
-  
-  <h2 class="post-title">
-    <a href="http://rscai.github.io/2018/03/Mock-Oracle-Database-by-Docker">
-      Mock Oracle Database by Docker
-    </a>
-  </h2>
-
-  <div class="post-meta">
-  <div class="post-time">
-    <i class="fa fa-calendar"></i>
-    <time datetime='2018-03-14'>14 Mar 2018</time>
-  </div>
-  <ul>
-    
-  </ul>
-</div>
-
-  <div class="post-descr">
-    <p>
-      
-    </p>
-  </div>
-  
-  <h2 class="post-title">
-    <a href="http://rscai.github.io/2018/02/Richardson-Maturity-Model">
-      Richardson Maturity Model
-    </a>
-  </h2>
-
-  <div class="post-meta">
-  <div class="post-time">
-    <i class="fa fa-calendar"></i>
-    <time datetime='2018-02-28'>28 Feb 2018</time>
-  </div>
-  <ul>
-    
-  </ul>
-</div>
-
-  <div class="post-descr">
-    <p>
-      
-    </p>
-  </div>
-  
-
-
-<div class="post-footer">
-  <div class="column-full">
-    <h3><a href="http://rscai.github.io/archive.html">Blog archive</a></h3>
-  </div>
-</div>
-
+                  </div>
+                  
+                </div>
               </div>
             </div>
             <div class="col-md-4 hidden-xs">
@@ -354,6 +189,8 @@
             </div>
           </div>
         </div>
+        
+
       </div>
           <footer class="footer-distributed">
       <div class="container">

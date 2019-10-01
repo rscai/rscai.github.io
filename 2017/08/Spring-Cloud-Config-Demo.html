@@ -1,0 +1,357 @@
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Ray Cai | Spring Cloud Config Demo </title>
+  <meta name="theme-color" content="#222222" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="/js/jquery.min.js"></script>
+  <script src="/js/bootstrap.min.js"></script>
+  <script src="/js/header.js"></script>
+  <script src="/js/toc.js"></script>
+  <link href="/css/bootstrap.min.css" rel="stylesheet">
+  <link href="/css/theme.css" rel="stylesheet">
+  <link href="/css/syntax.css" rel="stylesheet">
+  <link href="/css/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+  <script src="/js/rawdeflate.js"></script>
+<script src="/js/render_plantuml.js"></script>
+<script src="/js/viz.js"></script>
+<script src="/js/render_dot.js"></script>
+<link href="/css/diagram.css" rel="stylesheet">
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
+  </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-AMS_CHTML"></script>
+</head>
+
+<body>
+
+  
+
+  
+
+
+ <script type="text/javascript">
+  WebFontConfig = {
+    google: {
+      families: ['Ubuntu::latin']
+    }
+  };
+  (function() {
+    var wf = document.createElement('script');
+    wf.src = ('https:' == document.location.protocol ? 'https' : 'http') +
+      '://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
+    wf.type = 'text/javascript';
+    wf.async = 'true';
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(wf, s);
+  })();
+</script>
+
+  <nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="/">Ray Cai</a>
+      </div>
+      <div class="collapse navbar-collapse">
+        <ul class="nav navbar-nav">
+          <li><a href="/">/home</a></li>
+          <li><a href="/archive.html">/archive</a></li>
+          <li><a href="/tags.html">/tags</a></li>
+          <li><a href="/about.html">/about</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+    <div class="wrapper">
+      <div class="content">
+        <div class="container container-center">
+          <div class="row">
+            <div class="col-md-8">
+              <div class="article">
+                <div class="well">
+                  <h1><a href="/2017/08/Spring-Cloud-Config-Demo">Spring Cloud Config Demo</a></h1>
+                  <div class="post-meta">
+                    <div class="post-time">
+                      <i class="fa fa-calendar"></i>
+                      <time>20 Aug 2017</time>
+                    </div>
+                    <ul>
+                      
+                    </ul>
+                  </div>
+                  <div class="post-content">
+                    <div id="toc" class="toc"></div>
+                    <h2 id="summary">Summary</h2>
+
+<ul>
+  <li>Centralizing configuration</li>
+  <li>Decoupling changes/deployment of code and configuration</li>
+  <li>Control and audit configuration changes</li>
+  <li>Configuration as Code</li>
+</ul>
+
+<h2 id="deployment">Deployment</h2>
+
+<pre><code class="language-puml">@startuml
+left to right direction
+node node1 {
+    component app_a_instance_1
+    component app_b_instance_1
+}
+node node2 {
+    component app_a_instance_2
+    component app_b_instance_2
+}
+
+
+
+[app_a_instance_1] ..&gt; REST: GET
+[app_b_instance_1] ..&gt; REST: GET
+[app_a_instance_2] ..&gt; REST: GET
+[app_b_instance_2] ..&gt; REST: GET
+
+node node3 {
+    REST &lt;-- [config_server]: provided
+}
+database git_repo
+git_repo &lt;. config_server: read
+@enduml
+</code></pre>
+
+<p>Configuration is wrote in property and yaml files, and stored in Git repository. Config server is reading content of Git repository, and expose content as read only REST API. Application read specific configuration by request corresponding URL to config server.</p>
+
+<h2 id="rest-api">REST API</h2>
+
+<p>Expose two types of resources:</p>
+
+<ol>
+  <li>Profile</li>
+  <li>File</li>
+</ol>
+
+<p><strong>Profile</strong></p>
+
+<table>
+  <thead>
+    <tr>
+      <th>HTTP Method</th>
+      <th>URI Pattern</th>
+      <th>Response MIME</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>GET</td>
+      <td>/{application-name}/{profile-name}</td>
+      <td>application/json</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><strong>File</strong></p>
+
+<table>
+  <thead>
+    <tr>
+      <th>HTTP Method</th>
+      <th>URI Pattern</th>
+      <th>Response MIME</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>GET</td>
+      <td>/{application-name}-{profile-name}.{suffix}</td>
+      <td>text/plain</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="application-read-configuration">Application Read Configuration</h2>
+
+<pre><code class="language-puml">@startuml
+participant app_a_instance_1
+participant config_server
+database git_repo
+
+activate config_server
+activate app_a_instance_1
+
+app_a_instance_1 -&gt; config_server: GET(/{application-name}/{profile-name})
+config_server -&gt; git_repo: pull
+app_a_instance_1 &lt;-- config_server: json
+note left
+{  
+   "name":"app1",
+   "profiles":[  
+      "default"
+   ],
+   "label":null,
+   "version":"40215a6f5b25f2315a4d2fa3f62f67d031aacbff",
+   "state":null,
+   "propertySources":[  
+      {  
+         "name":"git@github.com:rscai/config-repo-dev.git/app1.yml",
+         "source":{  
+            "datasource.driverClass":"com.oracle.jdbc.Driver",
+            "datasource.url":"jdbc:thin://hostname:port/serviceName",
+            "pool.max":10,
+            "pool.min":2
+         }
+      }
+   ]
+}
+end note
+@enduml
+</code></pre>
+
+<h2 id="change-configuration">Change Configuration</h2>
+
+<pre><code class="language-puml">@startuml
+|Maker|
+start
+:create feature branch from master;
+:commit changes to feature branch;
+:create pull request from feature branch to master;
+|Checker|
+:review pull request;
+if (approve?) then (yes)
+    :merge into master;
+else (no)
+    :reject;
+endif
+end
+@enduml
+</code></pre>
+
+<p>Config server is only reading master branch. <br />
+Maker must not commit configuration changes to master branch directly. Instead, Maker should create a feature branch from master branch, then commit configuration changes to the feature branch.<br />
+After all configuration changes is ready on feature branch, then maker create a pull request from feature branch to master branch.<br />
+Checker review the pull request and decide if accept these changes.</p>
+
+<h2 id="promote-configuration-changes">Promote Configuration Changes</h2>
+
+<p>All code changes must go through mature verification process. Same for configuration changes.</p>
+
+<pre><code class="language-puml">@startuml
+database dev_repo
+database sit_repo
+database uat_repo
+database prod_repo
+
+[dev_repo] .&gt; [sit_repo]: pull request
+[sit_repo] .&gt; [uat_repo]: pull request
+[uat_repo] .&gt; [prod_repo]: pull request
+@enduml
+</code></pre>
+
+<p>Maker create pull request from lower environment configuration repository (master branch) to higher environment configuration repository (master branch).<br />
+Checker review pull request and decide if accept changes.</p>
+
+                    
+
+                  </div>
+                  
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4 hidden-xs">
+              <div class="sidebar ">
+  <h2>Recent Posts</h2>
+  <ul>
+    
+    <li><a href="/2019/10/Test">Test Asciidoc Preview</a></li>
+    
+    <li><a href="/2019/08/Microservice">Microservice</a></li>
+    
+    <li><a href="/2019/02/Coder-Self-Cultivation">Coder Self Cultivation</a></li>
+    
+    <li><a href="/2018/11/After-Reading-Migrating-to-Microservices-Databases">After Reading Migrating To Microservices Databases</a></li>
+    
+    <li><a href="/2018/10/Java-Persistence-API">Java Persistence API</a></li>
+    
+  </ul>
+</div>
+
+<div class="sidebar">
+  <h2>Tags</h2>
+  <ul class="sideBarTags">
+    
+    
+    <li>
+      <a href="/tag/java" data-toggle="tooltip" data-placement="right" title="1">
+        <span>java</span></a></li>
+    
+    <li>
+      <a href="/tag/jpa" data-toggle="tooltip" data-placement="right" title="1">
+        <span>jpa</span></a></li>
+    
+    <li>
+      <a href="/tag/orm" data-toggle="tooltip" data-placement="right" title="1">
+        <span>orm</span></a></li>
+    
+  </ul>
+</div>
+
+            </div>
+          </div>
+        </div>
+        
+
+      </div>
+          <footer class="footer-distributed">
+      <div class="container">
+        <div class="footer">
+          <p>Template Powered by Pavel Makhov &copy; 2015</p>
+          <h6>Follow me</h6>
+
+<ul class="social-media">
+
+  
+    <li>
+      <a title="rscai on Github" href="https://github.com/rscai" target="_blank"><i class="fa fa-github fa-2x"></i></a>
+    </li>
+  
+
+  
+    <li>
+      <a title=" on StackOverflow" href="https://stackoverflow.com/users/" target="_blank"><i class="fa fa-stack-overflow fa-2x"></i></a>
+    </li>
+  
+
+  
+
+  
+    <li>
+      <a title=" on Instagram" href="https://instagram.com/" target="_blank"><i class="fa fa-instagram fa-2x"></i></a>
+    </li>
+  
+
+  
+    <li>
+      <a title=" on Last.fm" href="https://www.lastfm.com/user/" target="_blank"><i class="fa fa-lastfm fa-2x"></i></a>
+    </li>
+  
+
+  
+    <li>
+      <a title="feed.xml RSS" href="/feed.xml" target="_blank"><i class="fa fa-rss fa-2x"></i></a>
+    </li>
+  
+
+</ul>
+
+        </div>
+      </div>
+    </footer>
+
+    </div>
+  </body>
+</html>
