@@ -1,0 +1,557 @@
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Ray Cai | Introduction to Microservices </title>
+  <meta name="theme-color" content="#222222" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="/js/jquery.min.js"></script>
+  <script src="/js/bootstrap.min.js"></script>
+  <script src="/js/header.js"></script>
+  <script src="/js/toc.js"></script>
+  <link href="/css/bootstrap.min.css" rel="stylesheet">
+  <link href="/css/theme.css" rel="stylesheet">
+  <link href="/css/syntax.css" rel="stylesheet">
+  <link href="/css/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+  <script src="/js/rawdeflate.js"></script>
+<script src="/js/render_plantuml.js"></script>
+<script src="/js/viz.js"></script>
+<script src="/js/render_dot.js"></script>
+<link href="/css/diagram.css" rel="stylesheet">
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
+  </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-AMS_CHTML"></script>
+</head>
+
+<body>
+
+  
+
+  
+
+
+ <script type="text/javascript">
+  WebFontConfig = {
+    google: {
+      families: ['Ubuntu::latin']
+    }
+  };
+  (function() {
+    var wf = document.createElement('script');
+    wf.src = ('https:' == document.location.protocol ? 'https' : 'http') +
+      '://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
+    wf.type = 'text/javascript';
+    wf.async = 'true';
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(wf, s);
+  })();
+</script>
+
+  <nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="/">Ray Cai</a>
+      </div>
+      <div class="collapse navbar-collapse">
+        <ul class="nav navbar-nav">
+          <li><a href="/">/home</a></li>
+          <li><a href="/archive.html">/archive</a></li>
+          <li><a href="/tags.html">/tags</a></li>
+          <li><a href="/about.html">/about</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+    <div class="wrapper">
+      <div class="content">
+        <div class="container container-center">
+          <div class="row">
+            <div class="col-md-8">
+              <div class="article">
+                <div class="well">
+                  <h1><a href="/2017/12/Introduction-to-Microservices">Introduction to Microservices</a></h1>
+                  <div class="post-meta">
+                    <div class="post-time">
+                      <i class="fa fa-calendar"></i>
+                      <time>01 Dec 2017</time>
+                    </div>
+                    <ul>
+                      
+                    </ul>
+                  </div>
+                  <div class="post-content">
+                    <div id="toc" class="toc"></div>
+                    <h2 id="overview">Overview</h2>
+
+<p>The term “Microservice Architecture” has sprung up over the last few years to describe a particular way of designing software applications as suites of independently deployable services. While there is no precise definition of this architectural style, there are certain common characteristics around organization around business capability, automated deployment, intelligence in the endpoints, and decentralized control of languages and data.</p>
+
+<h2 id="monolith-vs-microservices">Monolith vs Microservices</h2>
+
+<h2 id="monolith-architecture">Monolith Architecture</h2>
+
+<pre><code class="language-puml">@startuml
+title Monolith Architecture
+
+package "ECommerce Process" {
+    HTTP -- [Catalog]
+    HTTP -- [Inventory]
+    HTTP -- [User Management]
+    HTTP -- [Order]
+}
+
+database DB
+
+[Catalog] --&gt; DB
+[Inventory] --&gt; DB
+[User Management] --&gt; DB
+[Order] --&gt; DB
+
+[Inventory] -&gt; [Catalog]:call
+[Order] -&gt; [Inventory]:call
+[Order] -&gt; [User Management]:call
+
+@enduml
+</code></pre>
+
+<p>A classic monolith application maybe split functionalities into components, but components will be assembled into one package and executed as single process at the end. Because components are assembled into one process, therefore it intends to communicate via internal-process approach, likes directly method invocation.</p>
+
+<h3 id="microservices-architecture">Microservices Architecture</h3>
+
+<pre><code class="language-puml">@startuml
+title Microservices Architecture
+
+package "Catalog Service" {
+    catalogAPI -- [Catalog]
+}
+
+database CatalogDB
+[Catalog] --&gt; CatalogDB
+
+package "Inventory Service" {
+    inventoryAPI -- [Inventory]
+}
+database InventoryDB
+[Inventory] --&gt; InventoryDB
+
+package "User Management Service" {
+    userManagementAPI -- [User Management]
+}
+database UserManagementDB
+[User Management] --&gt; UserManagementDB
+
+package "Order Service" {
+    orderAPI -- [Order]
+}
+database OrderDB
+[Order] --&gt; OrderDB
+
+[Inventory] -&gt; catalogAPI
+[Order] -&gt; inventoryAPI
+[Order] -&gt; userManagementAPI
+
+@enduml
+</code></pre>
+
+<p>In microservices architecture, entire application consists of multiple processes. Each process only respond to single functionality, and processes are communicating through well-defined interface, likes HTTP, RESTFul, message mechanism, etc. Each one process could be called a service.</p>
+
+<p>Generally services do not share data store. Instead, each service own separate data store.</p>
+
+<h2 id="benefit">Benefit</h2>
+
+<h3 id="componentization-via-services">Componentization via Services</h3>
+
+<p>Microservices application split functionality into multiple single and small services, each service is running in separate process, and services are communicating to each other through well-defined, cross-networking interface. So that it is capable to change and deploy functionality/service independently.</p>
+
+<p>For example, it want to change component <code class="highlighter-rouge">Catalog</code>. Because component <code class="highlighter-rouge">Inventory</code> is calling <code class="highlighter-rouge">Catalog</code> through <code class="highlighter-rouge">method invocation</code> which provided by programming language, therefore it maybe change <code class="highlighter-rouge">Inventory</code> too, at least recompile. And <code class="highlighter-rouge">Order</code> is depending on <code class="highlighter-rouge">Inventory</code>, thus has to recompile <code class="highlighter-rouge">Order</code> too.</p>
+
+<pre><code class="language-puml">@startuml
+title Changing in Monolith Architecture
+
+package "ECommerce Process" {
+    component [Catalog] #Green
+    component [Inventory] #Yellow
+    component [Order] #Yellow
+    HTTP -- [Catalog] 
+    HTTP -- [Inventory]
+    HTTP -- [User Management]
+    HTTP -- [Order]
+}
+
+database DB
+
+[Catalog] --&gt; DB
+[Inventory] --&gt; DB
+[User Management] --&gt; DB
+[Order] --&gt; DB
+
+[Inventory] -&gt; [Catalog]:call
+[Order] -&gt; [Inventory]:call
+[Order] -&gt; [User Management]:call
+
+@enduml
+</code></pre>
+
+<p>Let us see what will happen if change <code class="highlighter-rouge">Catalog</code> in microservices application.<br />
+In microservices, <code class="highlighter-rouge">Inventory</code> is not depending on <code class="highlighter-rouge">Catalog</code> directly. Instead, <code class="highlighter-rouge">Inventory</code> is depending on <code class="highlighter-rouge">catalogAPI</code>. <code class="highlighter-rouge">catalogAPI</code> is a well-defined interface, it could be HTTP/RESTFul or message queue. If this change does not modify <code class="highlighter-rouge">catalogAPI</code>, it would not break anything. Therefore <code class="highlighter-rouge">Catalog</code> could be changed independently.<br />
+And all services are deployed in separate process, therefor it only need build and deploy <code class="highlighter-rouge">Catalog Service</code>.</p>
+
+<pre><code class="language-puml">@startuml
+title Change in Microservices Architecture
+
+package "Catalog Service" {
+    component [Catalog] #Green
+    catalogAPI -- [Catalog]
+}
+
+database CatalogDB
+[Catalog] --&gt; CatalogDB
+
+package "Inventory Service" {
+    inventoryAPI -- [Inventory]
+}
+database InventoryDB
+[Inventory] --&gt; InventoryDB
+
+package "User Management Service" {
+    userManagementAPI -- [User Management]
+}
+database UserManagementDB
+[User Management] --&gt; UserManagementDB
+
+package "Order Service" {
+    orderAPI -- [Order]
+}
+database OrderDB
+[Order] --&gt; OrderDB
+
+[Inventory] -&gt; catalogAPI
+[Order] -&gt; inventoryAPI
+[Order] -&gt; userManagementAPI
+
+@enduml
+</code></pre>
+
+<h3 id="organized-around-business-capabilities">Organized around Business Capabilities</h3>
+
+<blockquote>
+  <p>Any organization that designs a system (defined broadly) will produce a design whose structure is a copy of the organization’s communication structure.</p>
+
+  <p>– Melvyn Conway, 1967</p>
+</blockquote>
+
+<pre><code class="language-puml">@startuml
+
+folder Code {
+    component [UI]
+    node MW {
+        component [Catalog]
+        component [Inventory]
+        component [Order]
+    }
+    database DB
+    [UI] ... MW
+    MW ... DB
+}
+folder Team {
+    actor UIDeveloper
+    actor MWDeveloper
+    actor DBAs
+    UIDeveloper ... MWDeveloper
+    MWDeveloper ... DBAs
+}
+
+@enduml
+</code></pre>
+
+<blockquote>
+  <p>Siloed functional teams …<br />
+lead to siloed application architecture.<br />
+Because of Conway’s Law</p>
+</blockquote>
+
+<p>When adopted monolith architecture, teams are usually split based on functions, code are organized by layers. Each business change request need changes on all layers. It means that, each change has to involve entire team (global team).</p>
+
+<pre><code class="language-puml">@startuml
+folder Code {
+    folder CatalogService {
+        catalogAPI -- [Catalog]
+        database CatalogDB
+        [Catalog] -- CatalogDB
+    }
+    folder InventoryService {
+        inventoryAPI -- [Inventory]
+        database InventoryDB
+        [Inventory] -- InventoryDB
+    }
+    folder OrderService {
+        orderAPI -- [Order]
+        database OrderDB
+        [Order] -- OrderDB
+    }
+}
+
+folder Team {
+    folder CatalogTeam {
+        actor CatalogUI
+        actor CatalogMW
+        actor CatalogDBA
+    }
+    folder InventoryTeam {
+        actor InventoryUI
+        actor InventoryMW
+        actor InventoryDBA
+    }
+    folder OrderTeam {
+        actor OrderUI
+        actor OrderMW
+        actor OrderDBA
+    }
+}
+@enduml
+</code></pre>
+
+<p>When adopted microservices architecture, because application is split into many small service, and each service is built and ran on independent technology stack. Therefore team should be split into small cross-functional team, based on business/functionality. One service is only maintained by one small team in principle. One small team may and usually respond to multiple services.<br />
+Per services are split based on business/functionality, the boundaries of services are well-defined, and each small team is cross-functional, thus it is able to reduce overhead cross-team/region communication as well as possible.</p>
+
+<h3 id="decentralized-data-management">Decentralized Data Management</h3>
+
+<pre><code class="language-puml">@startuml
+title Monolith: Single Database
+package "ECommerce Process" {
+    HTTP -- [Catalog]
+    HTTP -- [Inventory]
+    HTTP -- [User Management]
+    HTTP -- [Order]
+}
+
+database DB {
+    [Catalog Schema]
+    [Inventory Schema]
+    [Order Schema]
+    [User Schema]
+}
+
+[Catalog] --&gt; [Catalog Schema]
+[Inventory] --&gt; [Inventory Schema]
+[Inventory] --&gt; [Catalog Schema]
+[User Management] --&gt; [User Schema]
+[Order] --&gt; [Order Schema]
+[Order] --&gt; [Inventory Schema]
+[Order] --&gt; [User Schema]
+
+@enduml
+</code></pre>
+
+<p>In monolith architecture, all data is stored in a single, centre database. All components access to the single database.</p>
+
+<p><strong>Pros:</strong></p>
+
+<ol>
+  <li>Strong consistency</li>
+</ol>
+
+<p><strong>Cons:</strong></p>
+
+<ol>
+  <li>Hard to scale out</li>
+  <li>Hard to update schema</li>
+</ol>
+
+<pre><code class="language-puml">@startuml
+title Microservices: application database
+
+package "Catalog Service" {
+    catalogAPI -- [Catalog]
+}
+
+database CatalogDB
+[Catalog] --&gt; CatalogDB
+
+package "Inventory Service" {
+    inventoryAPI -- [Inventory]
+}
+database InventoryDB
+[Inventory] --&gt; InventoryDB
+
+package "User Management Service" {
+    userManagementAPI -- [User Management]
+}
+database UserManagementDB
+[User Management] --&gt; UserManagementDB
+
+package "Order Service" {
+    orderAPI -- [Order]
+}
+database OrderDB
+[Order] --&gt; OrderDB
+
+[Inventory] -&gt; catalogAPI
+[Order] -&gt; inventoryAPI
+[Order] -&gt; userManagementAPI
+
+@enduml
+</code></pre>
+
+<p>In microservices, each service has separate database, and there is not directly connection between databases.</p>
+
+<p><strong>Pros:</strong></p>
+
+<ol>
+  <li>Easy to scale out</li>
+  <li>Support hybrid databases</li>
+  <li>Easy to update schema</li>
+</ol>
+
+<p><strong>Cons:</strong></p>
+
+<ol>
+  <li>No strong consistency</li>
+  <li>Application respond for transaction</li>
+</ol>
+
+<h2 id="how-to-survive">How to Survive</h2>
+
+<h3 id="12-factor-application">12 Factor Application</h3>
+
+<blockquote>
+  <p>The twelve-factor app is a methodology for building software-as-a-service apps that:</p>
+
+  <ul>
+    <li>Use declarative formats for setup automation, to minimize time and cost for new developers joining the project;</li>
+    <li>Have a clean contract with the underlying operating system, offering maximum portability between execution environments;</li>
+    <li>Are suitable for deployment on modern cloud platforms, obviating the need for servers and systems administration;</li>
+    <li>Minimize divergence between development and production, enabling continuous deployment for maximum agility;</li>
+    <li>And can scale up without significant changes to tooling, architecture, or development practices.</li>
+  </ul>
+</blockquote>
+
+<ol>
+  <li><strong>Codebase</strong> One codebase tracked in revision control, many deploys</li>
+  <li><strong>Dependencies</strong> Explicitly declare and isolate dependencies</li>
+  <li><strong>Config</strong> Store config in the environment</li>
+  <li><strong>Backing services</strong> Treat backing services as attached resources</li>
+  <li><strong>Build, release, run</strong> Strictly separate build and run stages</li>
+  <li><strong>Processes</strong> Execute the app as one or more stateless processes</li>
+  <li><strong>Port binding</strong> Export services via port binding</li>
+  <li><strong>Concurrency</strong> Scale out via the process model</li>
+  <li><strong>Disposability</strong> Maximize robustness with fast startup and graceful shutdown</li>
+  <li><strong>Dev/prod parity</strong> Keep development, staging, and production as similar as possible</li>
+  <li><strong>Logs</strong> Treat logs as event streams</li>
+  <li><strong>Admin processes</strong> Run admin/management tasks as one-off processes</li>
+</ol>
+
+<h2 id="reference">Reference</h2>
+
+<ol>
+  <li><a href="https://martinfowler.com/articles/microservices.html">Microservices</a></li>
+  <li><a href="https://12factor.net/">The twelve-factor app</a></li>
+</ol>
+
+
+                    
+
+                  </div>
+                  
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4 hidden-xs">
+              <div class="sidebar ">
+  <h2>Recent Posts</h2>
+  <ul>
+    
+    <li><a href="/2019/10/Test">Test Asciidoc Preview</a></li>
+    
+    <li><a href="/2019/08/Microservice">Microservice</a></li>
+    
+    <li><a href="/2019/02/Coder-Self-Cultivation">Coder Self Cultivation</a></li>
+    
+    <li><a href="/2018/11/After-Reading-Migrating-to-Microservices-Databases">After Reading Migrating To Microservices Databases</a></li>
+    
+    <li><a href="/2018/10/Java-Persistence-API">Java Persistence API</a></li>
+    
+  </ul>
+</div>
+
+<div class="sidebar">
+  <h2>Tags</h2>
+  <ul class="sideBarTags">
+    
+    
+    <li>
+      <a href="/tag/java" data-toggle="tooltip" data-placement="right" title="1">
+        <span>java</span></a></li>
+    
+    <li>
+      <a href="/tag/jpa" data-toggle="tooltip" data-placement="right" title="1">
+        <span>jpa</span></a></li>
+    
+    <li>
+      <a href="/tag/orm" data-toggle="tooltip" data-placement="right" title="1">
+        <span>orm</span></a></li>
+    
+  </ul>
+</div>
+
+            </div>
+          </div>
+        </div>
+        
+
+      </div>
+          <footer class="footer-distributed">
+      <div class="container">
+        <div class="footer">
+          <p>Template Powered by Pavel Makhov &copy; 2015</p>
+          <h6>Follow me</h6>
+
+<ul class="social-media">
+
+  
+    <li>
+      <a title="rscai on Github" href="https://github.com/rscai" target="_blank"><i class="fa fa-github fa-2x"></i></a>
+    </li>
+  
+
+  
+    <li>
+      <a title=" on StackOverflow" href="https://stackoverflow.com/users/" target="_blank"><i class="fa fa-stack-overflow fa-2x"></i></a>
+    </li>
+  
+
+  
+
+  
+    <li>
+      <a title=" on Instagram" href="https://instagram.com/" target="_blank"><i class="fa fa-instagram fa-2x"></i></a>
+    </li>
+  
+
+  
+    <li>
+      <a title=" on Last.fm" href="https://www.lastfm.com/user/" target="_blank"><i class="fa fa-lastfm fa-2x"></i></a>
+    </li>
+  
+
+  
+    <li>
+      <a title="feed.xml RSS" href="/feed.xml" target="_blank"><i class="fa fa-rss fa-2x"></i></a>
+    </li>
+  
+
+</ul>
+
+        </div>
+      </div>
+    </footer>
+
+    </div>
+  </body>
+</html>

@@ -1,0 +1,536 @@
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Ray Cai | After Reading Migrating To Microservices Databases </title>
+  <meta name="theme-color" content="#222222" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="/js/jquery.min.js"></script>
+  <script src="/js/bootstrap.min.js"></script>
+  <script src="/js/header.js"></script>
+  <script src="/js/toc.js"></script>
+  <link href="/css/bootstrap.min.css" rel="stylesheet">
+  <link href="/css/theme.css" rel="stylesheet">
+  <link href="/css/syntax.css" rel="stylesheet">
+  <link href="/css/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+  <script src="/js/rawdeflate.js"></script>
+<script src="/js/render_plantuml.js"></script>
+<script src="/js/viz.js"></script>
+<script src="/js/render_dot.js"></script>
+<link href="/css/diagram.css" rel="stylesheet">
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
+  </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-AMS_CHTML"></script>
+</head>
+
+<body>
+
+  
+
+  
+
+
+ <script type="text/javascript">
+  WebFontConfig = {
+    google: {
+      families: ['Ubuntu::latin']
+    }
+  };
+  (function() {
+    var wf = document.createElement('script');
+    wf.src = ('https:' == document.location.protocol ? 'https' : 'http') +
+      '://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
+    wf.type = 'text/javascript';
+    wf.async = 'true';
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(wf, s);
+  })();
+</script>
+
+  <nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="/">Ray Cai</a>
+      </div>
+      <div class="collapse navbar-collapse">
+        <ul class="nav navbar-nav">
+          <li><a href="/">/home</a></li>
+          <li><a href="/archive.html">/archive</a></li>
+          <li><a href="/tags.html">/tags</a></li>
+          <li><a href="/about.html">/about</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+    <div class="wrapper">
+      <div class="content">
+        <div class="container container-center">
+          <div class="row">
+            <div class="col-md-8">
+              <div class="article">
+                <div class="well">
+                  <h1><a href="/2018/11/After-Reading-Migrating-to-Microservices-Databases">After Reading Migrating To Microservices Databases</a></h1>
+                  <div class="post-meta">
+                    <div class="post-time">
+                      <i class="fa fa-calendar"></i>
+                      <time>11 Nov 2018</time>
+                    </div>
+                    <ul>
+                      
+                    </ul>
+                  </div>
+                  <div class="post-content">
+                    <div id="toc" class="toc"></div>
+                    <h1 id="after-reading-migrating-to-microservices-databases">After Reading Migrating to Microservices Databases</h1>
+
+<p>Mini book <strong>Migrating to Microservice Databases</strong> describes an approach to archive <strong>Zero Downtime</strong> deployment for Microservices Architectural application.</p>
+
+<h2 id="service-deployment">Service Deployment</h2>
+
+<p>Tranditional deployment arhcitectures have the clients issuing requests directly to server deployment.</p>
+
+<pre><code class="language-puml">@startuml
+actor client
+node Host {
+    [service]
+}
+database database
+
+client -&gt; [service]
+[service] -&gt; database
+@enduml
+</code></pre>
+
+<p>It has to undeploy current version of application and then deploy new one to the running system. This will result in an undesirable amount of downtime.</p>
+
+<p>To archive Zero Downtime deployment, we need to add another component. Instead of allowing users to directly connect to application services, we now have another process receiving the client’s requests and forwarding them to services. The new addition to the architecture is usually called a <strong>proxy</strong> or a <strong>load balancer</strong>. And the services must be redundant. So that when we shutted down them one by one for deploying new version, there are still active service instances to accept requests.</p>
+
+<pre><code class="language-puml">@startuml
+actor client
+boundary proxy
+node Host1 {
+    [service1]
+}
+node Host2 {
+    [service2]
+}
+database database
+
+client -&gt; proxy
+proxy ..&gt; [service1]
+proxy ..&gt; [service2]
+[service1] --&gt; database
+[service2] --&gt; database
+@enduml
+</code></pre>
+
+<p>Changes deployment is not one exit operation. It may end with rollback. Therefore a completed deployment plan must include rollback plan.</p>
+
+<pre><code class="language-puml">@startuml
+start
+:shut down old version instance;
+:deploy new version package;
+:bring up new version instance;
+:post implementation check;
+if(PIT fail?) then (yes)
+    :shut down new version instance;
+    :rollback to old version package;
+    :bring up old version instance;
+    :PIT;
+endif
+end
+@enduml
+</code></pre>
+
+<p>Take updating service from version <code class="highlighter-rouge">v1</code> to <code class="highlighter-rouge">v2</code> as example, firstly shut down instance <code class="highlighter-rouge">service1</code>.</p>
+
+<pre><code class="language-puml">@startuml
+actor client
+boundary proxy
+node Host1 {
+    component [service1 v1] as service1 #LightGrey
+}
+node Host2 {
+    component [service2 v1] as service2
+}
+database database
+
+client -&gt; proxy
+proxy ..&gt; [service1]#White
+proxy ..&gt; [service2]
+[service1] --&gt; database #White
+[service2] --&gt; database
+@enduml
+</code></pre>
+
+<p>Because <code class="highlighter-rouge">service</code> instances are redudant. When instance <code class="highlighter-rouge">service1</code> is down, instance <code class="highlighter-rouge">service2</code> is still alive, therefore the <code class="highlighter-rouge">service</code> is still available.</p>
+
+<p>Then, deploy <code class="highlighter-rouge">v2</code> package and bring up instance <code class="highlighter-rouge">service1</code>. Two versions of service are running at same time. Certain client request may be routed to certain version one. Well known, <code class="highlighter-rouge">v1</code> is compatible with client and database. <code class="highlighter-rouge">v2</code> must be compatible with client and database too. Shortly, the changes which introduced by <code class="highlighter-rouge">v2</code> must be backward-compatible.</p>
+
+<pre><code class="language-puml">@startuml
+actor client
+boundary proxy
+node Host1 {
+    component [service1 v2] as service1
+}
+node Host2 {
+    component [service2 v1] as service2
+}
+database database
+
+client -&gt; proxy
+proxy ..&gt; [service1]
+proxy ..&gt; [service2]
+[service1] --&gt; database
+[service2] --&gt; database
+@enduml
+</code></pre>
+
+<p>And then, do post-implementation-check. If everything is working as expected, then apply update on other instances gradually. In our case, it should apply update on <code class="highlighter-rouge">service2</code>.</p>
+
+<pre><code class="language-puml">@startuml
+actor client
+boundary proxy
+node Host1 {
+    component [service1 v2] as service1
+}
+node Host2 {
+    component [service2 v2] as service2
+}
+database database
+
+client -&gt; proxy
+proxy ..&gt; [service1]
+proxy ..&gt; [service2]
+[service1] --&gt; database
+[service2] --&gt; database
+@enduml
+</code></pre>
+
+<p>If changes on instance <code class="highlighter-rouge">service1</code> does not match expected, it has to rollback <code class="highlighter-rouge">service1</code> from <code class="highlighter-rouge">v2</code> to <code class="highlighter-rouge">v1</code>.</p>
+
+<pre><code class="language-puml">@startuml
+actor client
+boundary proxy
+node Host1 {
+    component [service1 v1] as service1
+}
+node Host2 {
+    component [service2 v1] as service2
+}
+database database
+
+client -&gt; proxy
+proxy ..&gt; [service1]
+proxy ..&gt; [service2]
+[service1] --&gt; database
+[service2] --&gt; database
+@enduml
+</code></pre>
+
+<h3 id="backward-compatible-service-change">Backward-Compatible Service Change</h3>
+
+<p>To archive Zero Downtime deployment, the changes of service must be backward-compatible. Service cooperate with others through API contract. In our example, service cooperate with client through RESTful API contract, with database through JDBC and schema contract.</p>
+
+<h4 id="backward-compatible-restful-api-change">Backward-Compatible RESTFul API Change</h4>
+
+<p>RESTFul API is resource-centric. The key components of RESTFul API contract are:</p>
+
+<ul>
+  <li>Resource
+    <ul>
+      <li>name</li>
+      <li>property
+        <ul>
+          <li>name</li>
+          <li>type</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>Method</li>
+</ul>
+
+<p>All potential changes:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Component</th>
+      <th>Add</th>
+      <th>Change</th>
+      <th>Remove</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Resource name</td>
+      <td>Y</td>
+      <td>Y</td>
+      <td>Y</td>
+    </tr>
+    <tr>
+      <td>Property name</td>
+      <td>Y</td>
+      <td>Y</td>
+      <td>Y</td>
+    </tr>
+    <tr>
+      <td>Property type</td>
+      <td>Y</td>
+      <td>Y</td>
+      <td>Y</td>
+    </tr>
+    <tr>
+      <td>Method</td>
+      <td>A</td>
+      <td> </td>
+      <td>Y</td>
+    </tr>
+  </tbody>
+</table>
+
+<h5 id="add-resource-name">Add Resource Name</h5>
+
+<p>In RESTFul API, it identifys resource name by URL, and each resource has itself URL endpoint. Therefore adding a new resource would not cause any backward-compatible issue.</p>
+
+<h5 id="change-resource-name">Change Resource Name</h5>
+
+<p>Changing resource name is implemented as changing URL endpoint. Changing URL ednpoint will break consumer components. it should take create-migration-destroy process. Firstly expose new resource with new name; then migrate all consumer component to new resource endpoint; finally destroy old resource endpoint.</p>
+
+<pre><code class="language-puml">@startuml
+actor client
+component [service]
+interface "/oldResourceName" as old
+interface "/newResourceName" as new
+old -- [service]
+[service] -- new
+client -&gt; old
+@enduml
+</code></pre>
+
+<pre><code class="language-puml">@startuml
+actor client
+component [service]
+interface "/oldResourceName" as old
+interface "/newResourceName" as new
+old -- [service]
+[service] -- new
+client -&gt; new
+@enduml
+</code></pre>
+
+<pre><code class="language-puml">@startuml
+actor client
+component [service]
+interface "/newResourceName" as new
+[service] -- new
+client -&gt; new
+@enduml
+</code></pre>
+
+<h2 id="database-schema-deployment">Database Schema Deployment</h2>
+
+<p>To archive Zero Downtime deployment, services are updated gradually. It means that two versions of serivce are accessing database simultaneously.</p>
+
+<p>TBD</p>
+
+<p>Code changes and database(schema) changes must be decoupled, so that they could be released and rolled back independnetly.</p>
+
+<p>For example, assume the version of code and database are 1.0 and 1.0 respectively. Now we want to make cahnges which involve code and schema changes. It should release schema changes in database release 1.1 firstly, then release code changes in code release 1.1.</p>
+
+<p>With decoupling code changes and schema changes, it’s able to minimize the changes batch size, and reduce down time.</p>
+
+<pre><code class="language-puml">@startuml
+concise "Code Release" as codeRelease
+concise "Database Release" as databaseRelease
+
+@0
+codeRelease is 1.0
+databaseRelease is 1.0
+
+@100
+databaseRelease is 1.1
+
+@200
+codeRelease is 1.1
+
+@300
+databaseRelease is 1.2
+
+@400
+codeRelease is 1.2
+
+@500
+databaseRelease is 1.3
+
+@600
+codeRelease is 1.3
+@enduml
+</code></pre>
+
+<h2 id="mutually-compatible-schema-change">Mutually Compatible Schema Change</h2>
+
+<blockquote>
+  <p>Schema versions between consecutive releases must be mutually compatible. It also means that we can’t create database migrations that are destructive. Destructive here means that we can’t afford to lose any data, so we can’t issue any steatement that can potentially cuase the loss of data.</p>
+</blockquote>
+
+<h3 id="add-a-column-migration">Add a Column Migration</h3>
+
+<p>Adding a column should follow steps:</p>
+
+<ol>
+  <li>Add column in schema, the new column must be NULLABLE</li>
+  <li>release code which populates the new column</li>
+  <li>set new column to NOT NULL if business logic required</li>
+</ol>
+
+<h3 id="rename-a-column-migration">Rename a column Migration</h3>
+
+<h3 id="drop-table">Drop Table</h3>
+
+<p>Dropping table is destroyed. It must remove reference from code, then drop table from database. Supposed that we want to drop table in database 1.3, it must remove all reference from code in code release 1.2. Then when we dropped table in database, it would not break anything.</p>
+
+<pre><code class="language-puml">@startuml
+concise "Code Release" as codeRelease
+concise "Database Release" as databaseRelease
+
+@0
+codeRelease is 1.0
+databaseRelease is 1.0
+
+@100
+databaseRelease is 1.1
+
+@200
+codeRelease is 1.1
+
+@300
+databaseRelease is 1.2
+
+@400
+codeRelease is 1.2
+
+@500
+databaseRelease is 1.3
+
+@600
+codeRelease is 1.3
+@enduml
+</code></pre>
+
+<h3 id="add-a-column">Add a Column</h3>
+
+<h2 id="integration-strategies">Integration Strategies</h2>
+
+<p>TBD</p>
+
+<p>app</p>
+
+                    
+
+                  </div>
+                  
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4 hidden-xs">
+              <div class="sidebar ">
+  <h2>Recent Posts</h2>
+  <ul>
+    
+    <li><a href="/2019/10/Test">Test Asciidoc Preview</a></li>
+    
+    <li><a href="/2019/08/Microservice">Microservice</a></li>
+    
+    <li><a href="/2019/02/Coder-Self-Cultivation">Coder Self Cultivation</a></li>
+    
+    <li><a href="/2018/11/After-Reading-Migrating-to-Microservices-Databases">After Reading Migrating To Microservices Databases</a></li>
+    
+    <li><a href="/2018/10/Java-Persistence-API">Java Persistence API</a></li>
+    
+  </ul>
+</div>
+
+<div class="sidebar">
+  <h2>Tags</h2>
+  <ul class="sideBarTags">
+    
+    
+    <li>
+      <a href="/tag/java" data-toggle="tooltip" data-placement="right" title="1">
+        <span>java</span></a></li>
+    
+    <li>
+      <a href="/tag/jpa" data-toggle="tooltip" data-placement="right" title="1">
+        <span>jpa</span></a></li>
+    
+    <li>
+      <a href="/tag/orm" data-toggle="tooltip" data-placement="right" title="1">
+        <span>orm</span></a></li>
+    
+  </ul>
+</div>
+
+            </div>
+          </div>
+        </div>
+        
+
+      </div>
+          <footer class="footer-distributed">
+      <div class="container">
+        <div class="footer">
+          <p>Template Powered by Pavel Makhov &copy; 2015</p>
+          <h6>Follow me</h6>
+
+<ul class="social-media">
+
+  
+    <li>
+      <a title="rscai on Github" href="https://github.com/rscai" target="_blank"><i class="fa fa-github fa-2x"></i></a>
+    </li>
+  
+
+  
+    <li>
+      <a title=" on StackOverflow" href="https://stackoverflow.com/users/" target="_blank"><i class="fa fa-stack-overflow fa-2x"></i></a>
+    </li>
+  
+
+  
+
+  
+    <li>
+      <a title=" on Instagram" href="https://instagram.com/" target="_blank"><i class="fa fa-instagram fa-2x"></i></a>
+    </li>
+  
+
+  
+    <li>
+      <a title=" on Last.fm" href="https://www.lastfm.com/user/" target="_blank"><i class="fa fa-lastfm fa-2x"></i></a>
+    </li>
+  
+
+  
+    <li>
+      <a title="feed.xml RSS" href="/feed.xml" target="_blank"><i class="fa fa-rss fa-2x"></i></a>
+    </li>
+  
+
+</ul>
+
+        </div>
+      </div>
+    </footer>
+
+    </div>
+  </body>
+</html>
