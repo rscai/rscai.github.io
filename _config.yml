@@ -53,3 +53,12 @@ kramdown:
 exclude: ['README.md', 'LICENSE','vendor']
 
 theme: jekyll-theme-minimal
+
+keep_files:
+- assets/generated_diagrams
+asciidoctor:
+  base_dir: :docdir
+  safe: unsafe
+  attributes:
+    imagesdir: /assets/generated_diagrams
+    revealjsdir: https://cdn.jsdelivr.net/npm/reveal.js@3.8.0
