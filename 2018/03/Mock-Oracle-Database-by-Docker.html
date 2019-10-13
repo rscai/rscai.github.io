@@ -183,7 +183,7 @@ On phase <code class="highlighter-rouge">BeforeClass</code>, it call Docker engi
 <p>Set the hosts array in the <code class="highlighter-rouge">/etc/docker/daemon.json</code> to connect to the UNIX socket and an IP address, as follows:</p>
 
 <div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
-  </span><span class="s2">"hosts"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"fd://"</span><span class="p">,</span><span class="w"> </span><span class="s2">"tcp://0.0.0.0:4243"</span><span class="p">]</span><span class="w">
+  </span><span class="nl">"hosts"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"fd://"</span><span class="p">,</span><span class="w"> </span><span class="s2">"tcp://0.0.0.0:4243"</span><span class="p">]</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div></div>
 
@@ -252,27 +252,27 @@ hello-world         latest              f2a91732366c        3 months ago        
 <span class="na">Content-Length</span><span class="p">:</span> <span class="s">682</span>
 
 <span class="p">[{</span><span class="w">
-    </span><span class="s2">"Containers"</span><span class="p">:</span><span class="w"> </span><span class="mi">-1</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"Created"</span><span class="p">:</span><span class="w"> </span><span class="mi">1512650278</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"Id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"sha256:17cd1ab9d9a7faf883ec2a0b3be19c221fe38212961c925f289e88823ed24a9c"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"Labels"</span><span class="p">:</span><span class="w"> </span><span class="p">{},</span><span class="w">
-    </span><span class="s2">"ParentId"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"RepoDigests"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"sath89/oracle-12c@sha256:a0f6f1cfd3738b0c00f4025a656335b53c205b3bfc0722908ee7b1469111665b"</span><span class="p">],</span><span class="w">
-    </span><span class="s2">"RepoTags"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"sath89/oracle-12c:latest"</span><span class="p">],</span><span class="w">
-    </span><span class="s2">"SharedSize"</span><span class="p">:</span><span class="w"> </span><span class="mi">-1</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"Size"</span><span class="p">:</span><span class="w"> </span><span class="mi">5703441170</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"VirtualSize"</span><span class="p">:</span><span class="w"> </span><span class="mi">5703441170</span><span class="w">
+    </span><span class="nl">"Containers"</span><span class="p">:</span><span class="w"> </span><span class="mi">-1</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"Created"</span><span class="p">:</span><span class="w"> </span><span class="mi">1512650278</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"Id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"sha256:17cd1ab9d9a7faf883ec2a0b3be19c221fe38212961c925f289e88823ed24a9c"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"Labels"</span><span class="p">:</span><span class="w"> </span><span class="p">{},</span><span class="w">
+    </span><span class="nl">"ParentId"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"RepoDigests"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"sath89/oracle-12c@sha256:a0f6f1cfd3738b0c00f4025a656335b53c205b3bfc0722908ee7b1469111665b"</span><span class="p">],</span><span class="w">
+    </span><span class="nl">"RepoTags"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"sath89/oracle-12c:latest"</span><span class="p">],</span><span class="w">
+    </span><span class="nl">"SharedSize"</span><span class="p">:</span><span class="w"> </span><span class="mi">-1</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"Size"</span><span class="p">:</span><span class="w"> </span><span class="mi">5703441170</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"VirtualSize"</span><span class="p">:</span><span class="w"> </span><span class="mi">5703441170</span><span class="w">
 </span><span class="p">},</span><span class="w"> </span><span class="p">{</span><span class="w">
-    </span><span class="s2">"Containers"</span><span class="p">:</span><span class="w"> </span><span class="mi">-1</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"Created"</span><span class="p">:</span><span class="w"> </span><span class="mi">1511223798</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"Id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"sha256:f2a91732366c0332ccd7afd2a5c4ff2b9af81f549370f7a19acd460f87686bc7"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"Labels"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"ParentId"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"RepoDigests"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"hello-world@sha256:97ce6fa4b6cdc0790cda65fe7290b74cfebd9fa0c9b8c38e979330d547d22ce1"</span><span class="p">],</span><span class="w">
-    </span><span class="s2">"RepoTags"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"hello-world:latest"</span><span class="p">],</span><span class="w">
-    </span><span class="s2">"SharedSize"</span><span class="p">:</span><span class="w"> </span><span class="mi">-1</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"Size"</span><span class="p">:</span><span class="w"> </span><span class="mi">1848</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"VirtualSize"</span><span class="p">:</span><span class="w"> </span><span class="mi">1848</span><span class="w">
+    </span><span class="nl">"Containers"</span><span class="p">:</span><span class="w"> </span><span class="mi">-1</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"Created"</span><span class="p">:</span><span class="w"> </span><span class="mi">1511223798</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"Id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"sha256:f2a91732366c0332ccd7afd2a5c4ff2b9af81f549370f7a19acd460f87686bc7"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"Labels"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"ParentId"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"RepoDigests"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"hello-world@sha256:97ce6fa4b6cdc0790cda65fe7290b74cfebd9fa0c9b8c38e979330d547d22ce1"</span><span class="p">],</span><span class="w">
+    </span><span class="nl">"RepoTags"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"hello-world:latest"</span><span class="p">],</span><span class="w">
+    </span><span class="nl">"SharedSize"</span><span class="p">:</span><span class="w"> </span><span class="mi">-1</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"Size"</span><span class="p">:</span><span class="w"> </span><span class="mi">1848</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"VirtualSize"</span><span class="p">:</span><span class="w"> </span><span class="mi">1848</span><span class="w">
 </span><span class="p">}]</span><span class="w">
 </span></code></pre></div></div>
 
@@ -297,14 +297,14 @@ password: oracle
 <span class="na">content-type</span><span class="p">:</span> <span class="s">application/json</span>
 
 <span class="p">{</span><span class="w">
-    </span><span class="s2">"Env"</span><span class="p">:[</span><span class="w">
+    </span><span class="nl">"Env"</span><span class="p">:[</span><span class="w">
         </span><span class="s2">"WEB_CONSOLE=false"</span><span class="w">    </span><span class="p">],</span><span class="w">
-    </span><span class="s2">"Image"</span><span class="p">:</span><span class="s2">"sath89/oracle-xe-11g"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"HostConfig"</span><span class="p">:{</span><span class="w">
-        </span><span class="s2">"PortBindings"</span><span class="p">:{</span><span class="w">
-            </span><span class="s2">"1521/tcp"</span><span class="p">:[</span><span class="w">
+    </span><span class="nl">"Image"</span><span class="p">:</span><span class="s2">"sath89/oracle-xe-11g"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"HostConfig"</span><span class="p">:{</span><span class="w">
+        </span><span class="nl">"PortBindings"</span><span class="p">:{</span><span class="w">
+            </span><span class="nl">"1521/tcp"</span><span class="p">:[</span><span class="w">
                 </span><span class="p">{</span><span class="w">
-                    </span><span class="s2">"HostPort"</span><span class="p">:</span><span class="s2">"1521"</span><span class="w">
+                    </span><span class="nl">"HostPort"</span><span class="p">:</span><span class="s2">"1521"</span><span class="w">
                 </span><span class="p">}</span><span class="w">
             </span><span class="p">]</span><span class="w">
         </span><span class="p">}</span><span class="w">
@@ -322,8 +322,8 @@ password: oracle
 <span class="na">content-length</span><span class="p">:</span> <span class="s">90</span>
 
 <span class="p">{</span><span class="w">
-</span><span class="s2">"Id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0eb6f3bfcdeba9fd604bae3f684d077a59b8a5c8daad0fa947977a284e80ac93"</span><span class="p">,</span><span class="w">
-</span><span class="s2">"Warnings"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
+</span><span class="nl">"Id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0eb6f3bfcdeba9fd604bae3f684d077a59b8a5c8daad0fa947977a284e80ac93"</span><span class="p">,</span><span class="w">
+</span><span class="nl">"Warnings"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div></div>
 
@@ -424,52 +424,52 @@ end
 </ol>
 
 <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="nd">@BeforeClass</span>
-  <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">beforeClass</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
-    <span class="n">String</span> <span class="n">dockerHost</span> <span class="o">=</span> <span class="n">System</span><span class="o">.</span><span class="na">getProperty</span><span class="o">(</span><span class="n">DOCKER_HOST</span><span class="o">,</span> <span class="s">"unix:///var/run/docker.sock"</span><span class="o">);</span>
-    <span class="n">String</span> <span class="n">databaseHost</span> <span class="o">=</span> <span class="n">System</span><span class="o">.</span><span class="na">getProperty</span><span class="o">(</span><span class="n">DOCKER_DATABASE_HOST</span><span class="o">,</span> <span class="s">"127.0.0.1"</span><span class="o">);</span>
-    <span class="n">String</span> <span class="n">image</span> <span class="o">=</span> <span class="n">System</span><span class="o">.</span><span class="na">getProperty</span><span class="o">(</span><span class="n">DOCKER_IMAGE_ORACLE</span><span class="o">,</span> <span class="s">"sath89/oracle-xe-11g"</span><span class="o">);</span>
-    <span class="n">String</span> <span class="n">urlTemplate</span> <span class="o">=</span> <span class="n">System</span>
-        <span class="o">.</span><span class="na">getProperty</span><span class="o">(</span><span class="n">DOCKER_DATABASE_URL_TEMPLATE</span><span class="o">,</span> <span class="s">"jdbc:oracle:thin:@%s:%d:xe"</span><span class="o">);</span>
-    <span class="n">String</span> <span class="n">databaseUsername</span> <span class="o">=</span> <span class="n">System</span><span class="o">.</span><span class="na">getProperty</span><span class="o">(</span><span class="n">DOCKER_DATABASE_USERNAME</span><span class="o">,</span> <span class="s">"system"</span><span class="o">);</span>
-    <span class="n">String</span> <span class="n">databasePassword</span> <span class="o">=</span> <span class="n">System</span><span class="o">.</span><span class="na">getProperty</span><span class="o">(</span><span class="n">DOCKER_DATABASE_PASSWORD</span><span class="o">,</span> <span class="s">"oracle"</span><span class="o">);</span>
-    <span class="n">String</span> <span class="n">driverClass</span> <span class="o">=</span> <span class="n">System</span>
-        <span class="o">.</span><span class="na">getProperty</span><span class="o">(</span><span class="n">DOCKER_DATABASE_DRIVER_CLASS</span><span class="o">,</span> <span class="s">"oracle.jdbc.driver.OracleDriver"</span><span class="o">);</span>
+  <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">beforeClass</span><span class="o">()</span> <span class="kd">throws</span> <span class="nc">Exception</span> <span class="o">{</span>
+    <span class="nc">String</span> <span class="n">dockerHost</span> <span class="o">=</span> <span class="nc">System</span><span class="o">.</span><span class="na">getProperty</span><span class="o">(</span><span class="no">DOCKER_HOST</span><span class="o">,</span> <span class="s">"unix:///var/run/docker.sock"</span><span class="o">);</span>
+    <span class="nc">String</span> <span class="n">databaseHost</span> <span class="o">=</span> <span class="nc">System</span><span class="o">.</span><span class="na">getProperty</span><span class="o">(</span><span class="no">DOCKER_DATABASE_HOST</span><span class="o">,</span> <span class="s">"127.0.0.1"</span><span class="o">);</span>
+    <span class="nc">String</span> <span class="n">image</span> <span class="o">=</span> <span class="nc">System</span><span class="o">.</span><span class="na">getProperty</span><span class="o">(</span><span class="no">DOCKER_IMAGE_ORACLE</span><span class="o">,</span> <span class="s">"sath89/oracle-xe-11g"</span><span class="o">);</span>
+    <span class="nc">String</span> <span class="n">urlTemplate</span> <span class="o">=</span> <span class="nc">System</span>
+        <span class="o">.</span><span class="na">getProperty</span><span class="o">(</span><span class="no">DOCKER_DATABASE_URL_TEMPLATE</span><span class="o">,</span> <span class="s">"jdbc:oracle:thin:@%s:%d:xe"</span><span class="o">);</span>
+    <span class="nc">String</span> <span class="n">databaseUsername</span> <span class="o">=</span> <span class="nc">System</span><span class="o">.</span><span class="na">getProperty</span><span class="o">(</span><span class="no">DOCKER_DATABASE_USERNAME</span><span class="o">,</span> <span class="s">"system"</span><span class="o">);</span>
+    <span class="nc">String</span> <span class="n">databasePassword</span> <span class="o">=</span> <span class="nc">System</span><span class="o">.</span><span class="na">getProperty</span><span class="o">(</span><span class="no">DOCKER_DATABASE_PASSWORD</span><span class="o">,</span> <span class="s">"oracle"</span><span class="o">);</span>
+    <span class="nc">String</span> <span class="n">driverClass</span> <span class="o">=</span> <span class="nc">System</span>
+        <span class="o">.</span><span class="na">getProperty</span><span class="o">(</span><span class="no">DOCKER_DATABASE_DRIVER_CLASS</span><span class="o">,</span> <span class="s">"oracle.jdbc.driver.OracleDriver"</span><span class="o">);</span>
 
-    <span class="n">DefaultDockerClient</span> <span class="n">docker</span> <span class="o">=</span> <span class="n">DefaultDockerClient</span><span class="o">.</span><span class="na">builder</span><span class="o">().</span><span class="na">uri</span><span class="o">(</span><span class="k">new</span> <span class="n">URI</span><span class="o">(</span><span class="n">dockerHost</span><span class="o">)).</span><span class="na">build</span><span class="o">();</span>
-    <span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">PortBinding</span><span class="o">&gt;&gt;</span> <span class="n">portBindings</span> <span class="o">=</span> <span class="k">new</span> <span class="n">TreeMap</span><span class="o">&lt;&gt;();</span>
-    <span class="n">portBindings</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">"1521/tcp"</span><span class="o">,</span> <span class="n">Arrays</span><span class="o">.</span><span class="na">asList</span><span class="o">(</span><span class="n">PortBinding</span><span class="o">.</span><span class="na">randomPort</span><span class="o">(</span><span class="s">"0.0.0.0"</span><span class="o">)));</span>
-    <span class="n">ContainerConfig</span> <span class="n">config</span> <span class="o">=</span> <span class="n">ContainerConfig</span><span class="o">.</span><span class="na">builder</span><span class="o">().</span><span class="na">image</span><span class="o">(</span><span class="n">image</span><span class="o">)</span>
-        <span class="o">.</span><span class="na">hostConfig</span><span class="o">(</span><span class="n">HostConfig</span><span class="o">.</span><span class="na">builder</span><span class="o">().</span><span class="na">portBindings</span><span class="o">(</span><span class="n">portBindings</span><span class="o">).</span><span class="na">build</span><span class="o">())</span>
+    <span class="nc">DefaultDockerClient</span> <span class="n">docker</span> <span class="o">=</span> <span class="nc">DefaultDockerClient</span><span class="o">.</span><span class="na">builder</span><span class="o">().</span><span class="na">uri</span><span class="o">(</span><span class="k">new</span> <span class="no">URI</span><span class="o">(</span><span class="n">dockerHost</span><span class="o">)).</span><span class="na">build</span><span class="o">();</span>
+    <span class="nc">Map</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">,</span> <span class="nc">List</span><span class="o">&lt;</span><span class="nc">PortBinding</span><span class="o">&gt;&gt;</span> <span class="n">portBindings</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">TreeMap</span><span class="o">&lt;&gt;();</span>
+    <span class="n">portBindings</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">"1521/tcp"</span><span class="o">,</span> <span class="nc">Arrays</span><span class="o">.</span><span class="na">asList</span><span class="o">(</span><span class="nc">PortBinding</span><span class="o">.</span><span class="na">randomPort</span><span class="o">(</span><span class="s">"0.0.0.0"</span><span class="o">)));</span>
+    <span class="nc">ContainerConfig</span> <span class="n">config</span> <span class="o">=</span> <span class="nc">ContainerConfig</span><span class="o">.</span><span class="na">builder</span><span class="o">().</span><span class="na">image</span><span class="o">(</span><span class="n">image</span><span class="o">)</span>
+        <span class="o">.</span><span class="na">hostConfig</span><span class="o">(</span><span class="nc">HostConfig</span><span class="o">.</span><span class="na">builder</span><span class="o">().</span><span class="na">portBindings</span><span class="o">(</span><span class="n">portBindings</span><span class="o">).</span><span class="na">build</span><span class="o">())</span>
         <span class="o">.</span><span class="na">env</span><span class="o">(</span><span class="s">"WEB_CONSOLE=false"</span><span class="o">)</span>
         <span class="o">.</span><span class="na">build</span><span class="o">();</span>
-    <span class="n">ContainerCreation</span> <span class="n">creation</span> <span class="o">=</span> <span class="n">docker</span><span class="o">.</span><span class="na">createContainer</span><span class="o">(</span><span class="n">config</span><span class="o">);</span>
+    <span class="nc">ContainerCreation</span> <span class="n">creation</span> <span class="o">=</span> <span class="n">docker</span><span class="o">.</span><span class="na">createContainer</span><span class="o">(</span><span class="n">config</span><span class="o">);</span>
     <span class="n">docker</span><span class="o">.</span><span class="na">startContainer</span><span class="o">(</span><span class="n">creation</span><span class="o">.</span><span class="na">id</span><span class="o">());</span>
-    <span class="n">ContainerInfo</span> <span class="n">info</span> <span class="o">=</span> <span class="n">docker</span><span class="o">.</span><span class="na">inspectContainer</span><span class="o">(</span><span class="n">creation</span><span class="o">.</span><span class="na">id</span><span class="o">());</span>
-    <span class="kd">final</span> <span class="kt">int</span> <span class="n">port</span> <span class="o">=</span> <span class="n">Integer</span>
+    <span class="nc">ContainerInfo</span> <span class="n">info</span> <span class="o">=</span> <span class="n">docker</span><span class="o">.</span><span class="na">inspectContainer</span><span class="o">(</span><span class="n">creation</span><span class="o">.</span><span class="na">id</span><span class="o">());</span>
+    <span class="kd">final</span> <span class="kt">int</span> <span class="n">port</span> <span class="o">=</span> <span class="nc">Integer</span>
         <span class="o">.</span><span class="na">valueOf</span><span class="o">(</span><span class="n">info</span><span class="o">.</span><span class="na">networkSettings</span><span class="o">().</span><span class="na">ports</span><span class="o">().</span><span class="na">get</span><span class="o">(</span><span class="s">"1521/tcp"</span><span class="o">).</span><span class="na">get</span><span class="o">(</span><span class="mi">0</span><span class="o">).</span><span class="na">hostPort</span><span class="o">());</span>
 
-    <span class="n">System</span><span class="o">.</span><span class="na">setProperty</span><span class="o">(</span><span class="n">DOCKER_DATABASE_CONTAINER_ID</span><span class="o">,</span> <span class="n">creation</span><span class="o">.</span><span class="na">id</span><span class="o">());</span>
+    <span class="nc">System</span><span class="o">.</span><span class="na">setProperty</span><span class="o">(</span><span class="no">DOCKER_DATABASE_CONTAINER_ID</span><span class="o">,</span> <span class="n">creation</span><span class="o">.</span><span class="na">id</span><span class="o">());</span>
 
     <span class="c1">//Thread.sleep(60000);</span>
-    <span class="kd">final</span> <span class="kt">long</span> <span class="n">MAX_WAIT_SECOND</span> <span class="o">=</span> <span class="mi">90</span><span class="o">;</span>
-    <span class="kt">long</span> <span class="n">startCheckAt</span> <span class="o">=</span> <span class="n">System</span><span class="o">.</span><span class="na">currentTimeMillis</span><span class="o">()</span> <span class="o">/</span> <span class="mi">1000</span><span class="o">;</span>
-    <span class="k">while</span> <span class="o">(!</span><span class="n">checkIfUp</span><span class="o">(</span><span class="n">driverClass</span><span class="o">,</span> <span class="n">String</span><span class="o">.</span><span class="na">format</span><span class="o">(</span><span class="n">urlTemplate</span><span class="o">,</span> <span class="n">databaseHost</span><span class="o">,</span> <span class="n">port</span><span class="o">),</span> <span class="n">databaseUsername</span><span class="o">,</span>
+    <span class="kd">final</span> <span class="kt">long</span> <span class="no">MAX_WAIT_SECOND</span> <span class="o">=</span> <span class="mi">90</span><span class="o">;</span>
+    <span class="kt">long</span> <span class="n">startCheckAt</span> <span class="o">=</span> <span class="nc">System</span><span class="o">.</span><span class="na">currentTimeMillis</span><span class="o">()</span> <span class="o">/</span> <span class="mi">1000</span><span class="o">;</span>
+    <span class="k">while</span> <span class="o">(!</span><span class="n">checkIfUp</span><span class="o">(</span><span class="n">driverClass</span><span class="o">,</span> <span class="nc">String</span><span class="o">.</span><span class="na">format</span><span class="o">(</span><span class="n">urlTemplate</span><span class="o">,</span> <span class="n">databaseHost</span><span class="o">,</span> <span class="n">port</span><span class="o">),</span> <span class="n">databaseUsername</span><span class="o">,</span>
         <span class="n">databasePassword</span><span class="o">))</span> <span class="o">{</span>
-      <span class="kt">long</span> <span class="n">now</span> <span class="o">=</span> <span class="n">System</span><span class="o">.</span><span class="na">currentTimeMillis</span><span class="o">()</span> <span class="o">/</span> <span class="mi">1000</span><span class="o">;</span>
-      <span class="n">LOGGER</span><span class="o">.</span><span class="na">info</span><span class="o">(</span>
-          <span class="n">String</span><span class="o">.</span><span class="na">format</span><span class="o">(</span><span class="s">"Checking if database is up for %d second"</span><span class="o">,</span> <span class="n">now</span> <span class="o">-</span> <span class="n">startCheckAt</span><span class="o">));</span>
-      <span class="k">if</span> <span class="o">(</span><span class="n">now</span> <span class="o">-</span> <span class="n">startCheckAt</span> <span class="o">&gt;</span> <span class="n">MAX_WAIT_SECOND</span><span class="o">)</span> <span class="o">{</span>
-        <span class="k">throw</span> <span class="k">new</span> <span class="nf">Exception</span><span class="o">(</span><span class="n">String</span>
+      <span class="kt">long</span> <span class="n">now</span> <span class="o">=</span> <span class="nc">System</span><span class="o">.</span><span class="na">currentTimeMillis</span><span class="o">()</span> <span class="o">/</span> <span class="mi">1000</span><span class="o">;</span>
+      <span class="no">LOGGER</span><span class="o">.</span><span class="na">info</span><span class="o">(</span>
+          <span class="nc">String</span><span class="o">.</span><span class="na">format</span><span class="o">(</span><span class="s">"Checking if database is up for %d second"</span><span class="o">,</span> <span class="n">now</span> <span class="o">-</span> <span class="n">startCheckAt</span><span class="o">));</span>
+      <span class="k">if</span> <span class="o">(</span><span class="n">now</span> <span class="o">-</span> <span class="n">startCheckAt</span> <span class="o">&gt;</span> <span class="no">MAX_WAIT_SECOND</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">throw</span> <span class="k">new</span> <span class="nf">Exception</span><span class="o">(</span><span class="nc">String</span>
             <span class="o">.</span><span class="na">format</span><span class="o">(</span><span class="s">"Start database fail, not ready after %d seconds"</span><span class="o">,</span> <span class="n">now</span> <span class="o">-</span> <span class="n">startCheckAt</span><span class="o">));</span>
       <span class="o">}</span>
-      <span class="n">Thread</span><span class="o">.</span><span class="na">sleep</span><span class="o">(</span><span class="mi">5000</span><span class="o">);</span>
+      <span class="nc">Thread</span><span class="o">.</span><span class="na">sleep</span><span class="o">(</span><span class="mi">5000</span><span class="o">);</span>
     <span class="o">}</span>
 
-    <span class="n">System</span><span class="o">.</span><span class="na">setProperty</span><span class="o">(</span><span class="n">PropertiesBasedJdbcDatabaseTester</span><span class="o">.</span><span class="na">DBUNIT_CONNECTION_URL</span><span class="o">,</span>
-        <span class="n">String</span><span class="o">.</span><span class="na">format</span><span class="o">(</span><span class="n">urlTemplate</span><span class="o">,</span> <span class="n">databaseHost</span><span class="o">,</span> <span class="n">port</span><span class="o">));</span>
-    <span class="n">System</span><span class="o">.</span><span class="na">setProperty</span><span class="o">(</span><span class="n">PropertiesBasedJdbcDatabaseTester</span><span class="o">.</span><span class="na">DBUNIT_USERNAME</span><span class="o">,</span> <span class="n">databaseUsername</span><span class="o">);</span>
-    <span class="n">System</span><span class="o">.</span><span class="na">setProperty</span><span class="o">(</span><span class="n">PropertiesBasedJdbcDatabaseTester</span><span class="o">.</span><span class="na">DBUNIT_PASSWORD</span><span class="o">,</span> <span class="n">databasePassword</span><span class="o">);</span>
-    <span class="n">System</span><span class="o">.</span><span class="na">setProperty</span><span class="o">(</span><span class="n">PropertiesBasedJdbcDatabaseTester</span><span class="o">.</span><span class="na">DBUNIT_DRIVER_CLASS</span><span class="o">,</span> <span class="n">driverClass</span><span class="o">);</span>
+    <span class="nc">System</span><span class="o">.</span><span class="na">setProperty</span><span class="o">(</span><span class="nc">PropertiesBasedJdbcDatabaseTester</span><span class="o">.</span><span class="na">DBUNIT_CONNECTION_URL</span><span class="o">,</span>
+        <span class="nc">String</span><span class="o">.</span><span class="na">format</span><span class="o">(</span><span class="n">urlTemplate</span><span class="o">,</span> <span class="n">databaseHost</span><span class="o">,</span> <span class="n">port</span><span class="o">));</span>
+    <span class="nc">System</span><span class="o">.</span><span class="na">setProperty</span><span class="o">(</span><span class="nc">PropertiesBasedJdbcDatabaseTester</span><span class="o">.</span><span class="na">DBUNIT_USERNAME</span><span class="o">,</span> <span class="n">databaseUsername</span><span class="o">);</span>
+    <span class="nc">System</span><span class="o">.</span><span class="na">setProperty</span><span class="o">(</span><span class="nc">PropertiesBasedJdbcDatabaseTester</span><span class="o">.</span><span class="na">DBUNIT_PASSWORD</span><span class="o">,</span> <span class="n">databasePassword</span><span class="o">);</span>
+    <span class="nc">System</span><span class="o">.</span><span class="na">setProperty</span><span class="o">(</span><span class="nc">PropertiesBasedJdbcDatabaseTester</span><span class="o">.</span><span class="na">DBUNIT_DRIVER_CLASS</span><span class="o">,</span> <span class="n">driverClass</span><span class="o">);</span>
   <span class="o">}</span>
 </code></pre></div></div>
 
@@ -478,11 +478,11 @@ end
 <p>An elegent way to destroy a container is that stop container firstly then remove it. But stopping a Oracle database instance is a time-consuming operation. Therefore I take a rude but efficient way, kill then remove.</p>
 
 <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="nd">@AfterClass</span>
-  <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">afterClass</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
-    <span class="n">String</span> <span class="n">dockerHost</span> <span class="o">=</span> <span class="n">System</span><span class="o">.</span><span class="na">getProperty</span><span class="o">(</span><span class="s">"docker.host"</span><span class="o">,</span> <span class="s">"unix:///var/run/docker.sock"</span><span class="o">);</span>
-    <span class="n">String</span> <span class="n">containerId</span> <span class="o">=</span> <span class="n">System</span><span class="o">.</span><span class="na">getProperty</span><span class="o">(</span><span class="s">"docker.database.containerId"</span><span class="o">);</span>
+  <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">afterClass</span><span class="o">()</span> <span class="kd">throws</span> <span class="nc">Exception</span> <span class="o">{</span>
+    <span class="nc">String</span> <span class="n">dockerHost</span> <span class="o">=</span> <span class="nc">System</span><span class="o">.</span><span class="na">getProperty</span><span class="o">(</span><span class="s">"docker.host"</span><span class="o">,</span> <span class="s">"unix:///var/run/docker.sock"</span><span class="o">);</span>
+    <span class="nc">String</span> <span class="n">containerId</span> <span class="o">=</span> <span class="nc">System</span><span class="o">.</span><span class="na">getProperty</span><span class="o">(</span><span class="s">"docker.database.containerId"</span><span class="o">);</span>
 
-    <span class="n">DefaultDockerClient</span> <span class="n">docker</span> <span class="o">=</span> <span class="n">DefaultDockerClient</span><span class="o">.</span><span class="na">builder</span><span class="o">().</span><span class="na">uri</span><span class="o">(</span><span class="k">new</span> <span class="n">URI</span><span class="o">(</span><span class="n">dockerHost</span><span class="o">)).</span><span class="na">build</span><span class="o">();</span>
+    <span class="nc">DefaultDockerClient</span> <span class="n">docker</span> <span class="o">=</span> <span class="nc">DefaultDockerClient</span><span class="o">.</span><span class="na">builder</span><span class="o">().</span><span class="na">uri</span><span class="o">(</span><span class="k">new</span> <span class="no">URI</span><span class="o">(</span><span class="n">dockerHost</span><span class="o">)).</span><span class="na">build</span><span class="o">();</span>
     <span class="n">docker</span><span class="o">.</span><span class="na">killContainer</span><span class="o">(</span><span class="n">containerId</span><span class="o">);</span>
     <span class="n">docker</span><span class="o">.</span><span class="na">removeContainer</span><span class="o">(</span><span class="n">containerId</span><span class="o">);</span>
   <span class="o">}</span>
@@ -550,6 +550,8 @@ end
   <h2>Recent Posts</h2>
   <ul>
     
+    <li><a href="/2019/10/Python99-P204-a-List-of-Prime-Numbers">A List of Prime Numbers</a></li>
+    
     <li><a href="/2019/10/RESTFul">RESTFul</a></li>
     
     <li><a href="/2019/10/Test">Test Asciidoc Preview</a></li>
@@ -558,8 +560,6 @@ end
     
     <li><a href="/2019/08/Design-Microservice-by-DDD">Design Microservices by DDD</a></li>
     
-    <li><a href="/2019/02/Coder-Self-Cultivation">Coder Self Cultivation</a></li>
-    
   </ul>
 </div>
 
@@ -567,6 +567,10 @@ end
   <h2>Tags</h2>
   <ul class="sideBarTags">
     
+    
+    <li>
+      <a href="/tag/arithmetic" data-toggle="tooltip" data-placement="right" title="1">
+        <span>arithmetic</span></a></li>
     
     <li>
       <a href="/tag/java" data-toggle="tooltip" data-placement="right" title="1">
@@ -579,6 +583,18 @@ end
     <li>
       <a href="/tag/orm" data-toggle="tooltip" data-placement="right" title="1">
         <span>orm</span></a></li>
+    
+    <li>
+      <a href="/tag/prime" data-toggle="tooltip" data-placement="right" title="1">
+        <span>prime</span></a></li>
+    
+    <li>
+      <a href="/tag/python" data-toggle="tooltip" data-placement="right" title="1">
+        <span>python</span></a></li>
+    
+    <li>
+      <a href="/tag/python99" data-toggle="tooltip" data-placement="right" title="1">
+        <span>python99</span></a></li>
     
   </ul>
 </div>

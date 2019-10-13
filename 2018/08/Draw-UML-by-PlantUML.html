@@ -190,9 +190,9 @@
 
 <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@startuml</span>
 <span class="kd">class</span> <span class="nc">Category</span> <span class="o">{</span>
-    <span class="o">-</span><span class="nl">id:</span> <span class="n">Long</span>
-    <span class="o">-</span><span class="nl">name:</span> <span class="n">String</span>
-    <span class="o">-</span><span class="nl">parent:</span> <span class="n">Category</span>
+    <span class="o">-</span><span class="nl">id:</span> <span class="nc">Long</span>
+    <span class="o">-</span><span class="nl">name:</span> <span class="nc">String</span>
+    <span class="o">-</span><span class="nl">parent:</span> <span class="nc">Category</span>
 <span class="o">}</span>
 <span class="nd">@enduml</span>
 </code></pre></div></div>
@@ -256,9 +256,9 @@ class Category {
 
 <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@startuml</span>
 <span class="kd">class</span> <span class="nc">Class01</span> <span class="o">{</span>
-    <span class="o">-</span><span class="nl">privateField:</span> <span class="n">Long</span>
-    <span class="err">#</span><span class="nl">protectedField:</span> <span class="n">String</span>
-    <span class="o">+</span><span class="nl">publicField:</span> <span class="n">String</span>
+    <span class="o">-</span><span class="nl">privateField:</span> <span class="nc">Long</span>
+    <span class="err">#</span><span class="nl">protectedField:</span> <span class="nc">String</span>
+    <span class="o">+</span><span class="nl">publicField:</span> <span class="nc">String</span>
     <span class="o">---</span>
     <span class="o">-</span><span class="n">privateMethod</span><span class="o">():</span> <span class="kt">void</span>
     <span class="err">#</span><span class="n">protectedMethod</span><span class="o">():</span> <span class="kt">void</span>
@@ -313,8 +313,8 @@ class Class01 {
 
 <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@startuml</span>
 <span class="kd">class</span> <span class="nc">Class01</span> <span class="o">{</span>
-    <span class="nl">instanceField:</span> <span class="n">String</span>
-    <span class="o">{</span><span class="kd">static</span><span class="o">}</span> <span class="nl">staticField:</span> <span class="n">String</span>
+    <span class="nl">instanceField:</span> <span class="nc">String</span>
+    <span class="o">{</span><span class="kd">static</span><span class="o">}</span> <span class="nl">staticField:</span> <span class="nc">String</span>
     <span class="o">---</span>
     <span class="n">instanceMethod</span><span class="o">():</span> <span class="kt">void</span>
     <span class="o">{</span><span class="kd">static</span><span class="o">}</span> <span class="n">staticMethod</span><span class="o">():</span> <span class="kt">void</span>
@@ -399,10 +399,10 @@ class Class01 {
 <p>Example:</p>
 
 <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@startuml</span>
-<span class="n">Class01</span> <span class="o">..&gt;</span> <span class="nl">Class11:</span> <span class="n">dependency</span>
-<span class="n">Class02</span> <span class="o">--&gt;</span> <span class="nl">Class12:</span> <span class="n">association</span>
-<span class="n">Class03</span> <span class="o">--</span><span class="n">o</span> <span class="nl">Class13:</span> <span class="n">aggregation</span>
-<span class="n">Class04</span> <span class="o">--*</span> <span class="nl">Class14:</span> <span class="n">composition</span>
+<span class="nc">Class01</span> <span class="o">..&gt;</span> <span class="nl">Class11:</span> <span class="n">dependency</span>
+<span class="nc">Class02</span> <span class="o">--&gt;</span> <span class="nl">Class12:</span> <span class="n">association</span>
+<span class="nc">Class03</span> <span class="o">--</span><span class="n">o</span> <span class="nl">Class13:</span> <span class="n">aggregation</span>
+<span class="nc">Class04</span> <span class="o">--*</span> <span class="nl">Class14:</span> <span class="n">composition</span>
 <span class="nd">@enduml</span>
 </code></pre></div></div>
 
@@ -438,8 +438,8 @@ Class04 --* Class14: composition
 <p>Example:</p>
 
 <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@startuml</span>
-<span class="n">Class01</span> <span class="o">--|&gt;</span> <span class="nl">Class11:</span> <span class="n">generation</span><span class="o">/</span><span class="n">inheritance</span>
-<span class="n">Class02</span> <span class="o">..|&gt;</span> <span class="nl">Class12:</span> <span class="n">realization</span><span class="o">/</span><span class="n">implementation</span>
+<span class="nc">Class01</span> <span class="o">--|&gt;</span> <span class="nl">Class11:</span> <span class="n">generation</span><span class="o">/</span><span class="n">inheritance</span>
+<span class="nc">Class02</span> <span class="o">..|&gt;</span> <span class="nl">Class12:</span> <span class="n">realization</span><span class="o">/</span><span class="n">implementation</span>
 <span class="nd">@enduml</span>
 </code></pre></div></div>
 
@@ -493,7 +493,7 @@ Class02 ..|&gt; Class12: realization/implementation
 <p>Example:</p>
 
 <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@startuml</span>
-<span class="n">Class01</span> <span class="s">"1"</span> <span class="o">*--</span> <span class="s">"0..*"</span> <span class="nl">Class02:</span> <span class="n">contains</span>
+<span class="nc">Class01</span> <span class="s">"1"</span> <span class="o">*--</span> <span class="s">"0..*"</span> <span class="nl">Class02:</span> <span class="n">contains</span>
 <span class="nd">@enduml</span>
 </code></pre></div></div>
 
@@ -513,14 +513,14 @@ Class01 "1" *-- "0..*" Class02: contains
 <p>Example:</p>
 
 <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@startuml</span>
-<span class="kd">class</span> <span class="nc">Category</span> <span class="o">&lt;&lt;</span><span class="n">Enity</span><span class="o">&gt;&gt;</span> <span class="o">{</span>
-    <span class="o">-</span><span class="nl">id:</span> <span class="n">Long</span>
-    <span class="o">-</span><span class="nl">name:</span> <span class="n">String</span>
-    <span class="o">-</span><span class="nl">parent:</span> <span class="n">Category</span>
+<span class="kd">class</span> <span class="nc">Category</span> <span class="o">&lt;&lt;</span><span class="nc">Enity</span><span class="o">&gt;&gt;</span> <span class="o">{</span>
+    <span class="o">-</span><span class="nl">id:</span> <span class="nc">Long</span>
+    <span class="o">-</span><span class="nl">name:</span> <span class="nc">String</span>
+    <span class="o">-</span><span class="nl">parent:</span> <span class="nc">Category</span>
 <span class="o">}</span>
 
-<span class="kd">class</span> <span class="nc">CategoryRepository</span> <span class="o">&lt;&lt;</span><span class="n">Repository</span><span class="o">&gt;&gt;</span>
-<span class="n">Class</span> <span class="n">CatalogController</span> <span class="o">&lt;&lt;</span><span class="n">Controller</span><span class="o">&gt;&gt;</span>
+<span class="kd">class</span> <span class="nc">CategoryRepository</span> <span class="o">&lt;&lt;</span><span class="nc">Repository</span><span class="o">&gt;&gt;</span>
+<span class="nc">Class</span> <span class="nc">CatalogController</span> <span class="o">&lt;&lt;</span><span class="nc">Controller</span><span class="o">&gt;&gt;</span>
 <span class="nd">@enduml</span>
 </code></pre></div></div>
 
@@ -539,12 +539,12 @@ Class CatalogController &lt;&lt;Controller&gt;&gt;
 <p>PlantUML built-in two stereotypes: abstract class and interface.</p>
 
 <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@startuml</span>
-<span class="kd">interface</span> <span class="nc">List</span><span class="o">&lt;</span><span class="n">E</span><span class="o">&gt;</span>
-<span class="kd">abstract</span> <span class="kd">class</span> <span class="nc">AbstractList</span><span class="o">&lt;</span><span class="n">E</span><span class="o">&gt;</span>
-<span class="kd">class</span> <span class="nc">ArrayList</span><span class="o">&lt;</span><span class="n">E</span><span class="o">&gt;</span>
+<span class="kd">interface</span> <span class="nc">List</span><span class="o">&lt;</span><span class="no">E</span><span class="o">&gt;</span>
+<span class="kd">abstract</span> <span class="kd">class</span> <span class="nc">AbstractList</span><span class="o">&lt;</span><span class="no">E</span><span class="o">&gt;</span>
+<span class="kd">class</span> <span class="nc">ArrayList</span><span class="o">&lt;</span><span class="no">E</span><span class="o">&gt;</span>
 
-<span class="n">List</span> <span class="o">&lt;|..</span> <span class="n">ArrayList</span>
-<span class="n">AbstractList</span> <span class="o">&lt;|--</span> <span class="n">ArrayList</span>
+<span class="nc">List</span> <span class="o">&lt;|..</span> <span class="nc">ArrayList</span>
+<span class="nc">AbstractList</span> <span class="o">&lt;|--</span> <span class="nc">ArrayList</span>
 <span class="nd">@enduml</span>
 </code></pre></div></div>
 
@@ -660,13 +660,13 @@ usecase usecase
 
 <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@startuml</span>
 
-<span class="o">[*]</span> <span class="o">--&gt;</span> <span class="n">State1</span>
-<span class="n">State1</span> <span class="o">--&gt;</span> <span class="o">[*]</span>
-<span class="n">State1</span> <span class="o">:</span> <span class="k">this</span> <span class="n">is</span> <span class="n">a</span> <span class="n">string</span>
-<span class="n">State1</span> <span class="o">:</span> <span class="k">this</span> <span class="n">is</span> <span class="n">another</span> <span class="n">string</span>
+<span class="o">[*]</span> <span class="o">--&gt;</span> <span class="nc">State1</span>
+<span class="nc">State1</span> <span class="o">--&gt;</span> <span class="o">[*]</span>
+<span class="nc">State1</span> <span class="o">:</span> <span class="k">this</span> <span class="n">is</span> <span class="n">a</span> <span class="n">string</span>
+<span class="nc">State1</span> <span class="o">:</span> <span class="k">this</span> <span class="n">is</span> <span class="n">another</span> <span class="n">string</span>
 
-<span class="n">State1</span> <span class="o">-&gt;</span> <span class="n">State2</span>
-<span class="n">State2</span> <span class="o">--&gt;</span> <span class="o">[*]</span>
+<span class="nc">State1</span> <span class="o">-&gt;</span> <span class="nc">State2</span>
+<span class="nc">State2</span> <span class="o">--&gt;</span> <span class="o">[*]</span>
 
 <span class="nd">@enduml</span>
 </code></pre></div></div>
@@ -706,11 +706,11 @@ State2 --&gt; [*]
 <p>Example:</p>
 
 <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@startuml</span>
-<span class="n">Alice</span> <span class="o">-&gt;</span> <span class="nl">Bob:</span> <span class="n">Authentication</span> <span class="n">Request</span>
-<span class="n">Bob</span> <span class="o">--&gt;</span> <span class="nl">Alice:</span> <span class="n">Authentication</span> <span class="n">Response</span>
+<span class="nc">Alice</span> <span class="o">-&gt;</span> <span class="nl">Bob:</span> <span class="nc">Authentication</span> <span class="nc">Request</span>
+<span class="nc">Bob</span> <span class="o">--&gt;</span> <span class="nl">Alice:</span> <span class="nc">Authentication</span> <span class="nc">Response</span>
 
-<span class="n">Alice</span> <span class="o">-&gt;</span> <span class="nl">Bob:</span> <span class="n">Another</span> <span class="n">authentication</span> <span class="n">Request</span>
-<span class="n">Alice</span> <span class="o">&lt;--</span> <span class="nl">Bob:</span> <span class="n">another</span> <span class="n">authentication</span> <span class="n">Response</span>
+<span class="nc">Alice</span> <span class="o">-&gt;</span> <span class="nl">Bob:</span> <span class="nc">Another</span> <span class="n">authentication</span> <span class="nc">Request</span>
+<span class="nc">Alice</span> <span class="o">&lt;--</span> <span class="nl">Bob:</span> <span class="n">another</span> <span class="n">authentication</span> <span class="nc">Response</span>
 <span class="nd">@enduml</span>
 </code></pre></div></div>
 
@@ -738,17 +738,17 @@ Alice &lt;-- Bob: another authentication Response
 <p>PlantUML supports all five participant stereotypes, additionally support <strong>collections</strong>.</p>
 
 <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@startuml</span>
-<span class="n">actor</span> <span class="n">Foo1</span>
-<span class="n">boundary</span> <span class="n">Foo2</span>
-<span class="n">control</span> <span class="n">Foo3</span>
-<span class="n">entity</span> <span class="n">Foo4</span>
-<span class="n">database</span> <span class="n">Foo5</span>
-<span class="n">collections</span> <span class="n">Foo6</span>
-<span class="n">Foo1</span> <span class="o">-&gt;</span> <span class="n">Foo2</span> <span class="o">:</span> <span class="n">To</span> <span class="n">boundary</span>
-<span class="n">Foo1</span> <span class="o">-&gt;</span> <span class="n">Foo3</span> <span class="o">:</span> <span class="n">To</span> <span class="n">control</span>
-<span class="n">Foo1</span> <span class="o">-&gt;</span> <span class="n">Foo4</span> <span class="o">:</span> <span class="n">To</span> <span class="n">entity</span>
-<span class="n">Foo1</span> <span class="o">-&gt;</span> <span class="n">Foo5</span> <span class="o">:</span> <span class="n">To</span> <span class="n">database</span>
-<span class="n">Foo1</span> <span class="o">-&gt;</span> <span class="n">Foo6</span> <span class="o">:</span> <span class="n">To</span> <span class="n">collections</span>
+<span class="n">actor</span> <span class="nc">Foo1</span>
+<span class="n">boundary</span> <span class="nc">Foo2</span>
+<span class="n">control</span> <span class="nc">Foo3</span>
+<span class="n">entity</span> <span class="nc">Foo4</span>
+<span class="n">database</span> <span class="nc">Foo5</span>
+<span class="n">collections</span> <span class="nc">Foo6</span>
+<span class="nc">Foo1</span> <span class="o">-&gt;</span> <span class="nc">Foo2</span> <span class="o">:</span> <span class="nc">To</span> <span class="n">boundary</span>
+<span class="nc">Foo1</span> <span class="o">-&gt;</span> <span class="nc">Foo3</span> <span class="o">:</span> <span class="nc">To</span> <span class="n">control</span>
+<span class="nc">Foo1</span> <span class="o">-&gt;</span> <span class="nc">Foo4</span> <span class="o">:</span> <span class="nc">To</span> <span class="n">entity</span>
+<span class="nc">Foo1</span> <span class="o">-&gt;</span> <span class="nc">Foo5</span> <span class="o">:</span> <span class="nc">To</span> <span class="n">database</span>
+<span class="nc">Foo1</span> <span class="o">-&gt;</span> <span class="nc">Foo6</span> <span class="o">:</span> <span class="nc">To</span> <span class="n">collections</span>
 
 <span class="nd">@enduml</span>
 </code></pre></div></div>
@@ -807,15 +807,15 @@ Foo1 -&gt; Foo6 : To collections
 </table>
 
 <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@startuml</span>
-<span class="n">Alice</span> <span class="o">-&gt;</span> <span class="nl">Bob:</span> <span class="n">synchronous</span> <span class="n">message</span>
+<span class="nc">Alice</span> <span class="o">-&gt;</span> <span class="nl">Bob:</span> <span class="n">synchronous</span> <span class="n">message</span>
 <span class="o">[-&gt;</span> <span class="nl">Alice:</span> <span class="n">found</span> <span class="n">message</span>
-<span class="n">Alice</span> <span class="o">-&gt;&gt;</span> <span class="nl">Bob:</span> <span class="n">asynchronous</span> <span class="n">message</span>
-<span class="n">Alice</span> <span class="o">-&gt;</span> <span class="nl">Alice:</span> <span class="n">message</span> <span class="n">to</span> <span class="n">self</span>
-<span class="n">create</span> <span class="n">Entity</span>
-<span class="n">Alice</span> <span class="o">-&gt;</span> <span class="nl">Entity:</span> <span class="n">creation</span>
-<span class="n">Alice</span> <span class="o">-&gt;</span> <span class="nl">Entity:</span> <span class="n">destruction</span>
-<span class="n">Alice</span> <span class="o">&lt;--</span> <span class="n">Entity</span>
-<span class="n">destroy</span> <span class="n">Entity</span>
+<span class="nc">Alice</span> <span class="o">-&gt;&gt;</span> <span class="nl">Bob:</span> <span class="n">asynchronous</span> <span class="n">message</span>
+<span class="nc">Alice</span> <span class="o">-&gt;</span> <span class="nl">Alice:</span> <span class="n">message</span> <span class="n">to</span> <span class="n">self</span>
+<span class="n">create</span> <span class="nc">Entity</span>
+<span class="nc">Alice</span> <span class="o">-&gt;</span> <span class="nl">Entity:</span> <span class="n">creation</span>
+<span class="nc">Alice</span> <span class="o">-&gt;</span> <span class="nl">Entity:</span> <span class="n">destruction</span>
+<span class="nc">Alice</span> <span class="o">&lt;--</span> <span class="nc">Entity</span>
+<span class="n">destroy</span> <span class="nc">Entity</span>
 <span class="nd">@enduml</span>
 </code></pre></div></div>
 
@@ -913,6 +913,8 @@ user &lt;-- orderService: success
   <h2>Recent Posts</h2>
   <ul>
     
+    <li><a href="/2019/10/Python99-P204-a-List-of-Prime-Numbers">A List of Prime Numbers</a></li>
+    
     <li><a href="/2019/10/RESTFul">RESTFul</a></li>
     
     <li><a href="/2019/10/Test">Test Asciidoc Preview</a></li>
@@ -921,8 +923,6 @@ user &lt;-- orderService: success
     
     <li><a href="/2019/08/Design-Microservice-by-DDD">Design Microservices by DDD</a></li>
     
-    <li><a href="/2019/02/Coder-Self-Cultivation">Coder Self Cultivation</a></li>
-    
   </ul>
 </div>
 
@@ -930,6 +930,10 @@ user &lt;-- orderService: success
   <h2>Tags</h2>
   <ul class="sideBarTags">
     
+    
+    <li>
+      <a href="/tag/arithmetic" data-toggle="tooltip" data-placement="right" title="1">
+        <span>arithmetic</span></a></li>
     
     <li>
       <a href="/tag/java" data-toggle="tooltip" data-placement="right" title="1">
@@ -942,6 +946,18 @@ user &lt;-- orderService: success
     <li>
       <a href="/tag/orm" data-toggle="tooltip" data-placement="right" title="1">
         <span>orm</span></a></li>
+    
+    <li>
+      <a href="/tag/prime" data-toggle="tooltip" data-placement="right" title="1">
+        <span>prime</span></a></li>
+    
+    <li>
+      <a href="/tag/python" data-toggle="tooltip" data-placement="right" title="1">
+        <span>python</span></a></li>
+    
+    <li>
+      <a href="/tag/python99" data-toggle="tooltip" data-placement="right" title="1">
+        <span>python99</span></a></li>
     
   </ul>
 </div>

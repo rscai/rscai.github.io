@@ -1,0 +1,399 @@
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Ray Cai | A List of Prime Numbers </title>
+  <meta name="theme-color" content="#222222" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="/js/jquery.min.js"></script>
+  <script src="/js/bootstrap.min.js"></script>
+  <script src="/js/header.js"></script>
+  <script src="/js/toc.js"></script>
+  <link href="/css/bootstrap.min.css" rel="stylesheet">
+  <link href="/css/theme.css" rel="stylesheet">
+  <link href="/css/syntax.css" rel="stylesheet">
+  <link href="/css/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+  <script src="/js/rawdeflate.js"></script>
+<script src="/js/render_plantuml.js"></script>
+<script src="/js/viz.js"></script>
+<script src="/js/render_dot.js"></script>
+<link href="/css/diagram.css" rel="stylesheet">
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
+  </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-AMS_CHTML"></script>
+</head>
+
+<body>
+
+  
+
+  
+
+
+ <script type="text/javascript">
+  WebFontConfig = {
+    google: {
+      families: ['Ubuntu::latin']
+    }
+  };
+  (function() {
+    var wf = document.createElement('script');
+    wf.src = ('https:' == document.location.protocol ? 'https' : 'http') +
+      '://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
+    wf.type = 'text/javascript';
+    wf.async = 'true';
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(wf, s);
+  })();
+</script>
+
+  <nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="/">Ray Cai</a>
+      </div>
+      <div class="collapse navbar-collapse">
+        <ul class="nav navbar-nav">
+          <li><a href="/">/home</a></li>
+          <li><a href="/archive.html">/archive</a></li>
+          <li><a href="/tags.html">/tags</a></li>
+          <li><a href="/about.html">/about</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+    <div class="wrapper">
+      <div class="content">
+        <div class="container container-center">
+          <div class="row">
+            <div class="col-md-8">
+              <div class="article">
+                <div class="well">
+                  <h1><a href="/2019/10/Python99-P204-a-List-of-Prime-Numbers">A List of Prime Numbers</a></h1>
+                  <div class="post-meta">
+                    <div class="post-time">
+                      <i class="fa fa-calendar"></i>
+                      <time>13 Oct 2019</time>
+                    </div>
+                    <ul>
+                      
+                        <li><a href="/tag/python">python</a></li>
+                      
+                        <li><a href="/tag/python99">python99</a></li>
+                      
+                        <li><a href="/tag/arithmetic">arithmetic</a></li>
+                      
+                        <li><a href="/tag/prime">prime</a></li>
+                      
+                    </ul>
+                  </div>
+                  <div class="post-content">
+                    <div id="toc" class="toc"></div>
+                    <div class="sect1">
+<h2 id="problem">Problem</h2>
+<div class="sectionbody">
+<div class="quoteblock">
+<blockquote>
+Given a range of integers by its lower and upper limit, construct a list of all prime numbers in that range.
+</blockquote>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="test">Test</h2>
+<div class="sectionbody">
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="python"><span class="kn">from</span> <span class="nn">python99.arithmetic.p204</span> <span class="kn">import</span> <span class="n">prime</span>
+
+<span class="k">def</span> <span class="nf">test_prime</span><span class="p">():</span>
+    <span class="k">assert</span> <span class="n">prime</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">7</span><span class="p">)</span> <span class="o">==</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">7</span><span class="p">]</span>
+    <span class="k">assert</span> <span class="n">prime</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">)</span> <span class="o">==</span> <span class="p">[</span><span class="mi">11</span><span class="p">,</span> <span class="mi">13</span><span class="p">,</span> <span class="mi">17</span><span class="p">,</span> <span class="mi">19</span><span class="p">]</span></code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="resolution">Resolution</h2>
+<div class="sectionbody">
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="python"><span class="c1"># A list of prime numbers
+# Given a range of integers by its lower and upper limit, construct a list of all prime numbers in that range
+</span><span class="kn">from</span> <span class="nn">python99.arithmetic.p201</span> <span class="kn">import</span> <span class="n">is_prime</span>
+
+<span class="k">def</span> <span class="nf">prime</span><span class="p">(</span><span class="n">lower</span><span class="p">,</span> <span class="n">upper</span><span class="p">):</span>
+    <span class="k">return</span> <span class="p">[</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">prime_generator</span><span class="p">(</span><span class="n">lower</span><span class="p">,</span> <span class="n">upper</span><span class="p">)]</span>
+
+<span class="k">def</span> <span class="nf">prime_generator</span><span class="p">(</span><span class="n">lower</span><span class="p">,</span> <span class="n">upper</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">num</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">lower</span><span class="p">,</span> <span class="n">upper</span><span class="o">+</span><span class="mi">1</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">is_prime</span><span class="p">(</span><span class="n">num</span><span class="p">):</span>
+            <span class="k">yield</span> <span class="n">num</span></code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="iterator">Iterator</h2>
+<div class="sectionbody">
+<div class="quoteblock">
+<blockquote>
+<div class="paragraph">
+<p>An iterable object is an object that implements <em>iter</em>, which is expected to return an iterator object.</p>
+</div>
+<div class="paragraph">
+<p>An iterator is an object that implements next, which is expected to return the next element of the iterable object that returned it, and raise a StopIteration exception when no more elements are available.</p>
+</div>
+</blockquote>
+<div class="attribution">
+&#8212; https://wiki.python.org/moin/Iterator
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="generator">Generator</h2>
+<div class="sectionbody">
+<div class="quoteblock">
+<blockquote>
+Generator functions allow you to declare a function that behaves like an iterator, i.e. it can be used in a for loop.
+</blockquote>
+<div class="attribution">
+&#8212; https://wiki.python.org/moin/Generators
+</div>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="/assets/generated_diagrams/diag-b3eaf32be42b4bf96ca9c9cb64e0d07b.png" alt="diag b3eaf32be42b4bf96ca9c9cb64e0d07b" width="149" height="333">
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="yield-expressions">Yield expressions</h2>
+<div class="sectionbody">
+<div class="quoteblock">
+<blockquote>
+The yield expression is used when defining a generator function or an asynchronous generator function and thus can only be used in the body of a function definition. Using a yield expression in a function’s body causes that function to be a generator, and using it in an async def function’s body causes that coroutine function to be an asynchronous generator.
+</blockquote>
+<div class="attribution">
+&#8212; https://docs.python.org/3.7/reference/expressions.html#yieldexpr
+</div>
+</div>
+<div class="paragraph">
+<p>Here it converts function <code>prime_generator</code> to a <strong>generator</strong> by <code>yield expression</code>. The difference between <strong>Generator</strong> and <strong>List</strong> and other <strong>Sequence</strong> is: elements of generator is created when accessed; but elements of List is created when defined.</p>
+</div>
+<div class="paragraph">
+<p>Take below code as an example, <code>prime_list</code> returns when found all prime numbers frim range. It found that, it firstly executed all code of <code>prime_list</code> (Check 1, Check 2, &#8230;&#8203;, Check 10), then executed <code>for x in prime_list(1, 10)</code> loop (Iterate 2, Iterate 3, &#8230;&#8203;, Iterate 7).</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="python"><span class="kn">from</span> <span class="nn">python99.arithmetic.p201</span> <span class="kn">import</span> <span class="n">is_prime</span>
+
+<span class="k">def</span> <span class="nf">prime_list</span><span class="p">(</span><span class="n">lower</span><span class="p">,</span> <span class="n">upper</span><span class="p">):</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">num</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">lower</span><span class="p">,</span> <span class="n">upper</span><span class="o">+</span><span class="mi">1</span><span class="p">):</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">"Check "</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">num</span><span class="p">))</span>
+        <span class="k">if</span> <span class="n">is_prime</span><span class="p">(</span><span class="n">num</span><span class="p">):</span>
+            <span class="k">print</span><span class="p">(</span><span class="s">"Found prime "</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">num</span><span class="p">))</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">num</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">result</span>
+
+<span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">prime_list</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">10</span><span class="p">):</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">"Iterate "</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">x</span><span class="p">))</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Console output:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>Check 2
+Found prime 2
+Check 3
+Found prime 3
+Check 4
+Check 5
+Found prime 5
+Check 6
+Check 7
+Found prime 7
+Check 8
+Check 9
+Check 10
+Iterate 2
+Iterate 3
+Iterate 5
+Iterate 7</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Now check below code, <code>prime_generator</code> return result by <code>yield</code>, it makes <code>primge_genrator</code> as a generator. It found that, <code>prime_generator</code> does not create all elements before <code>for x in prime_generator(2, 10)</code>. Instead, create element when access by outer (call <code>next()</code>). For example, when outer accesses first element, it check numbers one by one, return first found prime number.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="python"><span class="kn">from</span> <span class="nn">python99.arithmetic.p201</span> <span class="kn">import</span> <span class="n">is_prime</span>
+
+<span class="k">def</span> <span class="nf">prime_generator</span><span class="p">(</span><span class="n">lower</span><span class="p">,</span> <span class="n">upper</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">num</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">lower</span><span class="p">,</span> <span class="n">upper</span><span class="o">+</span><span class="mi">1</span><span class="p">):</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">"Check "</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">num</span><span class="p">))</span>
+        <span class="k">if</span> <span class="n">is_prime</span><span class="p">(</span><span class="n">num</span><span class="p">):</span>
+            <span class="k">print</span><span class="p">(</span><span class="s">"Found prime "</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">num</span><span class="p">))</span>
+            <span class="k">yield</span> <span class="n">num</span>
+
+<span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">prime_generator</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">10</span><span class="p">):</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">"Iterate "</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">x</span><span class="p">))</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Console output:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>Check 2
+Found prime 2
+Iterate 2
+Check 3
+Found prime 3
+Iterate 3
+Check 4
+Check 5
+Found prime 5
+Iterate 5
+Check 6
+Check 7
+Found prime 7
+Iterate 7
+Check 8
+Check 9
+Check 10</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>In case of only requesting one resolution, using generator could eliminate unnecessary effort.</p>
+</div>
+</div>
+</div>
+                    
+
+                  </div>
+                  
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4 hidden-xs">
+              <div class="sidebar ">
+  <h2>Recent Posts</h2>
+  <ul>
+    
+    <li><a href="/2019/10/Python99-P204-a-List-of-Prime-Numbers">A List of Prime Numbers</a></li>
+    
+    <li><a href="/2019/10/RESTFul">RESTFul</a></li>
+    
+    <li><a href="/2019/10/Test">Test Asciidoc Preview</a></li>
+    
+    <li><a href="/2019/08/Microservice">Microservice</a></li>
+    
+    <li><a href="/2019/08/Design-Microservice-by-DDD">Design Microservices by DDD</a></li>
+    
+  </ul>
+</div>
+
+<div class="sidebar">
+  <h2>Tags</h2>
+  <ul class="sideBarTags">
+    
+    
+    <li>
+      <a href="/tag/arithmetic" data-toggle="tooltip" data-placement="right" title="1">
+        <span>arithmetic</span></a></li>
+    
+    <li>
+      <a href="/tag/java" data-toggle="tooltip" data-placement="right" title="1">
+        <span>java</span></a></li>
+    
+    <li>
+      <a href="/tag/jpa" data-toggle="tooltip" data-placement="right" title="1">
+        <span>jpa</span></a></li>
+    
+    <li>
+      <a href="/tag/orm" data-toggle="tooltip" data-placement="right" title="1">
+        <span>orm</span></a></li>
+    
+    <li>
+      <a href="/tag/prime" data-toggle="tooltip" data-placement="right" title="1">
+        <span>prime</span></a></li>
+    
+    <li>
+      <a href="/tag/python" data-toggle="tooltip" data-placement="right" title="1">
+        <span>python</span></a></li>
+    
+    <li>
+      <a href="/tag/python99" data-toggle="tooltip" data-placement="right" title="1">
+        <span>python99</span></a></li>
+    
+  </ul>
+</div>
+
+            </div>
+          </div>
+        </div>
+        
+
+      </div>
+          <footer class="footer-distributed">
+      <div class="container">
+        <div class="footer">
+          <p>Template Powered by Pavel Makhov &copy; 2015</p>
+          <h6>Follow me</h6>
+
+<ul class="social-media">
+
+  
+    <li>
+      <a title="rscai on Github" href="https://github.com/rscai" target="_blank"><i class="fa fa-github fa-2x"></i></a>
+    </li>
+  
+
+  
+    <li>
+      <a title=" on StackOverflow" href="https://stackoverflow.com/users/" target="_blank"><i class="fa fa-stack-overflow fa-2x"></i></a>
+    </li>
+  
+
+  
+
+  
+    <li>
+      <a title=" on Instagram" href="https://instagram.com/" target="_blank"><i class="fa fa-instagram fa-2x"></i></a>
+    </li>
+  
+
+  
+    <li>
+      <a title=" on Last.fm" href="https://www.lastfm.com/user/" target="_blank"><i class="fa fa-lastfm fa-2x"></i></a>
+    </li>
+  
+
+  
+    <li>
+      <a title="feed.xml RSS" href="/feed.xml" target="_blank"><i class="fa fa-rss fa-2x"></i></a>
+    </li>
+  
+
+</ul>
+
+        </div>
+      </div>
+    </footer>
+
+    </div>
+  </body>
+</html>

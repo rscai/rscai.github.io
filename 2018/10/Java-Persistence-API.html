@@ -204,11 +204,11 @@ class ACCOUNT &lt;&lt; (T,ORCHID) &gt;&gt; {
 <span class="kd">public</span> <span class="kd">class</span> <span class="nc">Account</span> <span class="o">{</span>
     <span class="nd">@Id</span>
     <span class="nd">@Column</span><span class="o">(</span><span class="n">name</span><span class="o">=</span><span class="s">"ID"</span><span class="o">,</span> <span class="n">length</span><span class="o">=</span><span class="mi">100</span><span class="o">)</span>
-    <span class="kd">private</span> <span class="n">String</span> <span class="n">id</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="nc">String</span> <span class="n">id</span><span class="o">;</span>
     <span class="nd">@Column</span><span class="o">(</span><span class="n">name</span><span class="o">=</span><span class="s">"FIRST_NAME"</span><span class="o">,</span> <span class="n">length</span><span class="o">=</span><span class="mi">100</span><span class="o">)</span>
-    <span class="kd">private</span> <span class="n">String</span> <span class="n">firstName</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="nc">String</span> <span class="n">firstName</span><span class="o">;</span>
     <span class="nd">@Column</span><span class="o">(</span><span class="n">name</span><span class="o">=</span><span class="s">"LAST_NAME"</span><span class="o">,</span> <span class="n">length</span><span class="o">=</span><span class="mi">100</span><span class="o">)</span>
-    <span class="kd">private</span> <span class="n">String</span> <span class="n">lastNane</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="nc">String</span> <span class="n">lastNane</span><span class="o">;</span>
 <span class="o">}</span>
 </code></pre></div></div>
 
@@ -250,15 +250,15 @@ ACCOUNT "1" -- "0..1" ACCOUNT_CONTACT
 <span class="kd">public</span> <span class="kd">class</span> <span class="nc">Account</span> <span class="o">{</span>
     <span class="nd">@Id</span>
     <span class="nd">@Column</span><span class="o">(</span><span class="n">name</span><span class="o">=</span><span class="s">"ID"</span><span class="o">,</span> <span class="n">length</span><span class="o">=</span><span class="mi">100</span><span class="o">)</span>
-    <span class="kd">private</span> <span class="n">String</span> <span class="n">id</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="nc">String</span> <span class="n">id</span><span class="o">;</span>
     <span class="nd">@Column</span><span class="o">(</span><span class="n">name</span><span class="o">=</span><span class="s">"FIRST_NAME"</span><span class="o">,</span> <span class="n">length</span><span class="o">=</span><span class="mi">100</span><span class="o">)</span>
-    <span class="kd">private</span> <span class="n">String</span> <span class="n">firstName</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="nc">String</span> <span class="n">firstName</span><span class="o">;</span>
     <span class="nd">@Column</span><span class="o">(</span><span class="n">name</span><span class="o">=</span><span class="s">"LAST_NAME"</span><span class="o">,</span> <span class="n">length</span><span class="o">=</span><span class="mi">100</span><span class="o">)</span>
-    <span class="kd">private</span> <span class="n">String</span> <span class="n">lastName</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="nc">String</span> <span class="n">lastName</span><span class="o">;</span>
     <span class="nd">@Column</span><span class="o">(</span><span class="n">name</span><span class="o">=</span><span class="s">"TELPHONE"</span><span class="o">,</span> <span class="n">length</span><span class="o">=</span><span class="mi">20</span><span class="o">,</span> <span class="n">table</span><span class="o">=</span><span class="s">"ACCOUNT_CONTACT"</span><span class="o">)</span>
-    <span class="kd">private</span> <span class="n">String</span> <span class="n">telphone</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="nc">String</span> <span class="n">telphone</span><span class="o">;</span>
     <span class="nd">@Column</span><span class="o">(</span><span class="n">name</span><span class="o">=</span><span class="s">"ADDRESS"</span><span class="o">,</span> <span class="n">length</span><span class="o">=</span><span class="mi">1000</span><span class="o">,</span> <span class="n">table</span><span class="o">=</span><span class="s">"ACCOUNT_CONTACT"</span><span class="o">)</span>
-    <span class="kd">private</span> <span class="n">String</span> <span class="n">address</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="nc">String</span> <span class="n">address</span><span class="o">;</span>
 <span class="o">}</span>
 </code></pre></div></div>
 
@@ -302,11 +302,11 @@ ACCOUNT "1" -- "0..*" ACCOUNT_CONTACT
 <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@Embeddable</span>
 <span class="kd">public</span> <span class="kd">class</span> <span class="nc">Contact</span> <span class="o">{</span>
     <span class="nd">@Column</span><span class="o">(</span><span class="n">name</span><span class="o">=</span><span class="s">"LABEL"</span><span class="o">,</span><span class="n">length</span><span class="o">=</span><span class="mi">50</span><span class="o">)</span>
-    <span class="kd">private</span> <span class="n">String</span> <span class="n">label</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="nc">String</span> <span class="n">label</span><span class="o">;</span>
     <span class="nd">@Column</span><span class="o">(</span><span class="n">name</span><span class="o">=</span><span class="s">"TELPHONE"</span><span class="o">,</span><span class="n">length</span><span class="o">=</span><span class="mi">20</span><span class="o">)</span>
-    <span class="kd">private</span> <span class="n">String</span> <span class="n">telphone</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="nc">String</span> <span class="n">telphone</span><span class="o">;</span>
     <span class="nd">@Column</span><span class="o">(</span><span class="n">name</span><span class="o">=</span><span class="s">"ADDRESS"</span><span class="o">,</span><span class="n">length</span><span class="o">=</span><span class="mi">1000</span><span class="o">)</span>
-    <span class="kd">private</span> <span class="n">String</span> <span class="n">address</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="nc">String</span> <span class="n">address</span><span class="o">;</span>
 <span class="o">}</span>
 
 <span class="nd">@Entity</span>
@@ -314,17 +314,17 @@ ACCOUNT "1" -- "0..*" ACCOUNT_CONTACT
 <span class="kd">public</span> <span class="kd">class</span> <span class="nc">Account</span> <span class="o">{</span>
     <span class="nd">@Id</span>
     <span class="nd">@Column</span><span class="o">(</span><span class="n">name</span><span class="o">=</span><span class="s">"ID"</span><span class="o">,</span><span class="n">length</span><span class="o">=</span><span class="mi">100</span><span class="o">)</span>
-    <span class="kd">private</span> <span class="n">String</span> <span class="n">id</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="nc">String</span> <span class="n">id</span><span class="o">;</span>
     <span class="nd">@Column</span><span class="o">(</span><span class="n">name</span><span class="o">=</span><span class="s">"FIRST_NAME"</span><span class="o">,</span><span class="n">length</span><span class="o">=</span><span class="mi">100</span><span class="o">)</span>
-    <span class="kd">private</span> <span class="n">String</span> <span class="n">firstName</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="nc">String</span> <span class="n">firstName</span><span class="o">;</span>
     <span class="nd">@Column</span><span class="o">(</span><span class="n">name</span><span class="o">=</span><span class="s">"LAST_NAME"</span><span class="o">,</span><span class="n">length</span><span class="o">=</span><span class="mi">100</span><span class="o">)</span>
-    <span class="kd">private</span> <span class="n">String</span> <span class="n">lastName</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="nc">String</span> <span class="n">lastName</span><span class="o">;</span>
     <span class="nd">@ElementCollection</span>
     <span class="nd">@CollectionTable</span><span class="o">(</span>
         <span class="n">name</span><span class="o">=</span><span class="s">"CONTACT"</span><span class="o">,</span>
         <span class="n">joinColumns</span><span class="o">=</span><span class="nd">@JoinColumn</span><span class="o">(</span><span class="n">name</span><span class="o">=</span><span class="s">"ID"</span><span class="o">)</span>
     <span class="o">)</span>
-    <span class="kd">private</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">Contact</span><span class="o">&gt;</span> <span class="n">contacts</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="nc">List</span><span class="o">&lt;</span><span class="nc">Contact</span><span class="o">&gt;</span> <span class="n">contacts</span><span class="o">;</span>
 <span class="o">}</span>
 </code></pre></div></div>
 
@@ -367,9 +367,9 @@ CATEGORY "1" -- "0..*" PRODUCT
 <span class="kd">public</span> <span class="kd">class</span> <span class="nc">Product</span> <span class="o">{</span>
     <span class="nd">@Id</span>
     <span class="nd">@Column</span><span class="o">(</span><span class="n">name</span><span class="o">=</span><span class="s">"ID"</span><span class="o">,</span> <span class="n">length</span><span class="o">=</span><span class="mi">100</span><span class="o">)</span>
-    <span class="kd">private</span> <span class="n">String</span> <span class="n">id</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="nc">String</span> <span class="n">id</span><span class="o">;</span>
     <span class="nd">@Column</span><span class="o">(</span><span class="n">name</span><span class="o">=</span><span class="s">"SUBJECT"</span><span class="o">,</span> <span class="n">length</span><span class="o">=</span><span class="mi">200</span><span class="o">)</span>
-    <span class="kd">private</span> <span class="n">String</span> <span class="n">subject</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="nc">String</span> <span class="n">subject</span><span class="o">;</span>
 <span class="o">}</span>
 
 <span class="nd">@Entity</span>
@@ -377,15 +377,15 @@ CATEGORY "1" -- "0..*" PRODUCT
 <span class="kd">public</span> <span class="kd">class</span> <span class="nc">Category</span> <span class="o">{</span>
     <span class="nd">@Id</span>
     <span class="nd">@Column</span><span class="o">(</span><span class="n">name</span><span class="o">=</span><span class="s">"ID"</span><span class="o">,</span> <span class="n">length</span><span class="o">=</span><span class="mi">100</span><span class="o">)</span>
-    <span class="kd">private</span> <span class="n">String</span> <span class="n">id</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="nc">String</span> <span class="n">id</span><span class="o">;</span>
     <span class="nd">@Column</span><span class="o">(</span><span class="n">name</span><span class="o">=</span><span class="s">"NAME"</span><span class="o">,</span> <span class="n">length</span><span class="o">=</span><span class="mi">100</span><span class="o">)</span>
-    <span class="kd">private</span> <span class="n">String</span> <span class="n">name</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="nc">String</span> <span class="n">name</span><span class="o">;</span>
     <span class="nd">@OneToMany</span>
     <span class="nd">@JoinColumn</span><span class="o">(</span>
         <span class="n">name</span><span class="o">=</span><span class="s">"CATEGORY_ID"</span><span class="o">,</span>
         <span class="n">referencedColumnName</span><span class="o">=</span><span class="s">"ID"</span>
         <span class="o">)</span>
-    <span class="kd">private</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">Product</span><span class="o">&gt;</span> <span class="n">products</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="nc">List</span><span class="o">&lt;</span><span class="nc">Product</span><span class="o">&gt;</span> <span class="n">products</span><span class="o">;</span>
 <span class="o">}</span>
 </code></pre></div></div>
 
@@ -414,12 +414,12 @@ Category "category" -o Product
 <span class="kd">public</span> <span class="kd">class</span> <span class="nc">Product</span> <span class="o">{</span>
     <span class="nd">@Id</span>
     <span class="nd">@Column</span><span class="o">(</span><span class="n">name</span><span class="o">=</span><span class="s">"ID"</span><span class="o">,</span> <span class="n">length</span><span class="o">=</span><span class="mi">100</span><span class="o">)</span>
-    <span class="kd">private</span> <span class="n">String</span> <span class="n">id</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="nc">String</span> <span class="n">id</span><span class="o">;</span>
     <span class="nd">@Column</span><span class="o">(</span><span class="n">name</span><span class="o">=</span><span class="s">"SUBJECT"</span><span class="o">,</span> <span class="n">length</span><span class="o">=</span><span class="mi">200</span><span class="o">)</span>
-    <span class="kd">private</span> <span class="n">String</span> <span class="n">subject</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="nc">String</span> <span class="n">subject</span><span class="o">;</span>
     <span class="nd">@ManyToOne</span>
     <span class="nd">@JoinColumn</span><span class="o">(</span><span class="n">name</span><span class="o">=</span><span class="s">"CATEGORY_ID"</span><span class="o">)</span>
-    <span class="kd">private</span> <span class="n">Category</span> <span class="n">category</span>
+    <span class="kd">private</span> <span class="nc">Category</span> <span class="n">category</span>
 <span class="o">}</span>
 
 <span class="nd">@Entity</span>
@@ -427,9 +427,9 @@ Category "category" -o Product
 <span class="kd">public</span> <span class="kd">class</span> <span class="nc">Category</span> <span class="o">{</span>
     <span class="nd">@Id</span>
     <span class="nd">@Column</span><span class="o">(</span><span class="n">name</span><span class="o">=</span><span class="s">"ID"</span><span class="o">,</span> <span class="n">length</span><span class="o">=</span><span class="mi">100</span><span class="o">)</span>
-    <span class="kd">private</span> <span class="n">String</span> <span class="n">id</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="nc">String</span> <span class="n">id</span><span class="o">;</span>
     <span class="nd">@Column</span><span class="o">(</span><span class="n">name</span><span class="o">=</span><span class="s">"NAME"</span><span class="o">,</span> <span class="n">length</span><span class="o">=</span><span class="mi">100</span><span class="o">)</span>
-    <span class="kd">private</span> <span class="n">String</span> <span class="n">name</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="nc">String</span> <span class="n">name</span><span class="o">;</span>
 <span class="o">}</span>
 </code></pre></div></div>
 
@@ -455,12 +455,12 @@ Category "category" o- "products" Product
 <span class="kd">public</span> <span class="kd">class</span> <span class="nc">Product</span> <span class="o">{</span>
     <span class="nd">@Id</span>
     <span class="nd">@Column</span><span class="o">(</span><span class="n">name</span><span class="o">=</span><span class="s">"ID"</span><span class="o">,</span> <span class="n">length</span><span class="o">=</span><span class="mi">100</span><span class="o">)</span>
-    <span class="kd">private</span> <span class="n">String</span> <span class="n">id</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="nc">String</span> <span class="n">id</span><span class="o">;</span>
     <span class="nd">@Column</span><span class="o">(</span><span class="n">name</span><span class="o">=</span><span class="s">"SUBJECT"</span><span class="o">,</span> <span class="n">length</span><span class="o">=</span><span class="mi">200</span><span class="o">)</span>
-    <span class="kd">private</span> <span class="n">String</span> <span class="n">subject</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="nc">String</span> <span class="n">subject</span><span class="o">;</span>
     <span class="nd">@ManyToOne</span>
     <span class="nd">@JoinColumn</span><span class="o">(</span><span class="n">name</span><span class="o">=</span><span class="s">"CATEGORY_ID"</span><span class="o">)</span>
-    <span class="kd">private</span> <span class="n">Category</span> <span class="n">category</span>
+    <span class="kd">private</span> <span class="nc">Category</span> <span class="n">category</span>
 <span class="o">}</span>
 
 <span class="nd">@Entity</span>
@@ -468,11 +468,11 @@ Category "category" o- "products" Product
 <span class="kd">public</span> <span class="kd">class</span> <span class="nc">Category</span> <span class="o">{</span>
     <span class="nd">@Id</span>
     <span class="nd">@Column</span><span class="o">(</span><span class="n">name</span><span class="o">=</span><span class="s">"ID"</span><span class="o">,</span> <span class="n">length</span><span class="o">=</span><span class="mi">100</span><span class="o">)</span>
-    <span class="kd">private</span> <span class="n">String</span> <span class="n">id</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="nc">String</span> <span class="n">id</span><span class="o">;</span>
     <span class="nd">@Column</span><span class="o">(</span><span class="n">name</span><span class="o">=</span><span class="s">"NAME"</span><span class="o">,</span> <span class="n">length</span><span class="o">=</span><span class="mi">100</span><span class="o">)</span>
-    <span class="kd">private</span> <span class="n">String</span> <span class="n">name</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="nc">String</span> <span class="n">name</span><span class="o">;</span>
     <span class="nd">@OneToMany</span><span class="o">(</span><span class="n">mappedBy</span><span class="o">=</span><span class="s">"category"</span><span class="o">)</span>
-    <span class="kd">private</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">Product</span><span class="o">&gt;</span> <span class="n">products</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="nc">List</span><span class="o">&lt;</span><span class="nc">Product</span><span class="o">&gt;</span> <span class="n">products</span><span class="o">;</span>
 <span class="o">}</span>
 </code></pre></div></div>
 
@@ -514,25 +514,25 @@ COLLECTION_PRODUCT_REL "*" -- "1" PRODUCT
 <span class="kd">public</span> <span class="kd">class</span> <span class="nc">Product</span> <span class="o">{</span>
     <span class="nd">@Id</span>
     <span class="nd">@Column</span><span class="o">(</span><span class="n">name</span><span class="o">=</span><span class="s">"ID"</span><span class="o">,</span> <span class="n">length</span><span class="o">=</span><span class="mi">100</span><span class="o">)</span>
-    <span class="kd">private</span> <span class="n">String</span> <span class="n">id</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="nc">String</span> <span class="n">id</span><span class="o">;</span>
     <span class="nd">@Column</span><span class="o">(</span><span class="n">name</span><span class="o">=</span><span class="s">"SUBJECT"</span><span class="o">,</span> <span class="n">length</span><span class="o">=</span><span class="mi">200</span><span class="o">)</span>
-    <span class="kd">private</span> <span class="n">String</span> <span class="n">subject</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="nc">String</span> <span class="n">subject</span><span class="o">;</span>
 <span class="o">}</span>
 <span class="nd">@Entity</span>
 <span class="nd">@Table</span><span class="o">(</span><span class="n">name</span><span class="o">=</span><span class="s">"COLLECTION"</span><span class="o">)</span>
 <span class="kd">public</span> <span class="kd">class</span> <span class="nc">Collection</span> <span class="o">{</span>
     <span class="nd">@Id</span>
     <span class="nd">@Column</span><span class="o">(</span><span class="n">name</span><span class="o">=</span><span class="s">"ID"</span><span class="o">)</span>
-    <span class="kd">private</span> <span class="n">String</span> <span class="n">id</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="nc">String</span> <span class="n">id</span><span class="o">;</span>
     <span class="nd">@Column</span><span class="o">(</span><span class="n">name</span><span class="o">=</span><span class="s">"NAME"</span><span class="o">)</span>
-    <span class="kd">private</span> <span class="n">String</span> <span class="n">name</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="nc">String</span> <span class="n">name</span><span class="o">;</span>
     <span class="nd">@ManyToMany</span>
     <span class="nd">@JoinTable</span><span class="o">(</span>
         <span class="n">name</span><span class="o">=</span><span class="s">"COLLECTION_PRODUCT_REL"</span><span class="o">,</span>
         <span class="n">joinColumns</span><span class="o">=</span><span class="nd">@JoinColumn</span><span class="o">(</span><span class="n">name</span><span class="o">=</span><span class="s">"COLLECTION_ID"</span><span class="o">,</span> <span class="n">referencedColumnName</span><span class="o">=</span><span class="s">"ID"</span><span class="o">),</span>
         <span class="n">inverseJoinColumns</span><span class="o">=</span><span class="nd">@JoinColumn</span><span class="o">(</span><span class="n">name</span><span class="o">=</span><span class="s">"PRODUCT_ID"</span><span class="o">,</span> <span class="n">referencedColumnName</span><span class="o">=</span><span class="s">"ID"</span><span class="o">)</span>
     <span class="o">)</span>
-    <span class="kd">private</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">Product</span><span class="o">&gt;</span> <span class="n">products</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="nc">List</span><span class="o">&lt;</span><span class="nc">Product</span><span class="o">&gt;</span> <span class="n">products</span><span class="o">;</span>
 <span class="o">}</span>
 </code></pre></div></div>
 
@@ -615,34 +615,34 @@ DELIVERY "1" - "0..1" CONTACT
 <span class="kd">public</span> <span class="kd">abstract</span> <span class="kd">class</span> <span class="nc">Delivery</span> <span class="o">{</span>
     <span class="nd">@Id</span>
     <span class="nd">@Column</span><span class="o">(</span><span class="n">name</span><span class="o">=</span><span class="s">"ID"</span><span class="o">,</span> <span class="n">length</span><span class="o">=</span><span class="mi">100</span><span class="o">)</span>
-    <span class="kd">protected</span> <span class="n">String</span> <span class="n">id</span><span class="o">;</span>
+    <span class="kd">protected</span> <span class="nc">String</span> <span class="n">id</span><span class="o">;</span>
     <span class="nd">@Column</span><span class="o">(</span><span class="n">name</span><span class="o">=</span><span class="s">"STATUS"</span><span class="o">,</span> <span class="n">length</span><span class="o">=</span><span class="mi">50</span><span class="o">)</span>
-    <span class="kd">protected</span> <span class="n">DeliveryStatus</span> <span class="n">status</span><span class="o">;</span>
+    <span class="kd">protected</span> <span class="nc">DeliveryStatus</span> <span class="n">status</span><span class="o">;</span>
 <span class="o">}</span>
 
 <span class="nd">@Entity</span>
 <span class="nd">@DiscriminatorValue</span><span class="o">(</span><span class="s">"CUSTOM"</span><span class="o">)</span>
-<span class="kd">public</span> <span class="kd">class</span> <span class="nc">CustomDelivery</span> <span class="kd">extends</span> <span class="n">Delivery</span> <span class="o">{</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">CustomDelivery</span> <span class="kd">extends</span> <span class="nc">Delivery</span> <span class="o">{</span>
 
 <span class="o">}</span>
 
 <span class="nd">@Entity</span>
 <span class="nd">@DiscriminatorValue</span><span class="o">(</span><span class="s">"EMAIL"</span><span class="o">)</span>
-<span class="kd">public</span> <span class="kd">class</span> <span class="nc">EmailDelivery</span> <span class="kd">extends</span> <span class="n">Delivery</span> <span class="o">{</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">EmailDelivery</span> <span class="kd">extends</span> <span class="nc">Delivery</span> <span class="o">{</span>
     <span class="nd">@Column</span><span class="o">(</span><span class="n">name</span><span class="o">=</span><span class="s">"EMAIL"</span><span class="o">,</span> <span class="n">length</span><span class="o">=</span><span class="mi">100</span><span class="o">)</span>
-    <span class="kd">private</span> <span class="n">String</span> <span class="n">email</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="nc">String</span> <span class="n">email</span><span class="o">;</span>
 <span class="o">}</span>
 
 <span class="nd">@Entity</span>
 <span class="nd">@DiscriminatorValue</span><span class="o">(</span><span class="s">"EXPRESS"</span><span class="o">)</span>
-<span class="kd">public</span> <span class="kd">class</span> <span class="nc">ExpressDelivery</span> <span class="kd">extends</span> <span class="n">Delivery</span> <span class="o">{</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">ExpressDelivery</span> <span class="kd">extends</span> <span class="nc">Delivery</span> <span class="o">{</span>
     <span class="nd">@Column</span><span class="o">(</span><span class="n">name</span><span class="o">=</span><span class="s">"VENDOR"</span><span class="o">,</span> <span class="n">length</span><span class="o">=</span><span class="mi">100</span><span class="o">)</span>
-    <span class="kd">private</span> <span class="n">String</span> <span class="n">vendor</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="nc">String</span> <span class="n">vendor</span><span class="o">;</span>
     <span class="nd">@Column</span><span class="o">(</span><span class="n">name</span><span class="o">=</span><span class="s">"TRACK_ID"</span><span class="o">,</span> <span class="n">length</span><span class="o">=</span><span class="mi">50</span><span class="o">)</span>
-    <span class="kd">private</span> <span class="n">String</span> <span class="n">trackId</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="nc">String</span> <span class="n">trackId</span><span class="o">;</span>
     <span class="nd">@OneToOne</span>
     <span class="nd">@JoinColumn</span><span class="o">(</span><span class="n">name</span><span class="o">=</span><span class="s">"CONTACT_ID"</span><span class="o">)</span>
-    <span class="kd">private</span> <span class="n">Contact</span> <span class="n">contact</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="nc">Contact</span> <span class="n">contact</span><span class="o">;</span>
 <span class="o">}</span>
 </code></pre></div></div>
 
@@ -678,43 +678,43 @@ DELIVERY "1" -- "0..1" EXPRESS_DELIVERY
 </code></pre>
 
 <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@Entity</span>
-<span class="nd">@Inheritance</span><span class="o">(</span><span class="n">strategy</span><span class="o">=</span><span class="n">InheritanceType</span><span class="o">.</span><span class="na">JOINED</span><span class="o">)</span>
+<span class="nd">@Inheritance</span><span class="o">(</span><span class="n">strategy</span><span class="o">=</span><span class="nc">InheritanceType</span><span class="o">.</span><span class="na">JOINED</span><span class="o">)</span>
 <span class="nd">@DiscriminatorColumn</span><span class="o">(</span><span class="n">name</span><span class="o">=</span><span class="s">"DELIVERY_TYPE"</span><span class="o">)</span>
 <span class="nd">@Table</span><span class="o">(</span><span class="n">name</span><span class="o">=</span><span class="s">"DELIVERY"</span><span class="o">)</span>
 <span class="kd">public</span> <span class="kd">abstract</span> <span class="kd">class</span> <span class="nc">Delivery</span> <span class="o">{</span>
     <span class="nd">@Id</span>
     <span class="nd">@Column</span><span class="o">(</span><span class="n">name</span><span class="o">=</span><span class="s">"ID"</span><span class="o">,</span> <span class="n">length</span><span class="o">=</span><span class="mi">100</span><span class="o">)</span>
-    <span class="kd">protected</span> <span class="n">String</span> <span class="n">id</span><span class="o">;</span>
+    <span class="kd">protected</span> <span class="nc">String</span> <span class="n">id</span><span class="o">;</span>
     <span class="nd">@Column</span><span class="o">(</span><span class="n">name</span><span class="o">=</span><span class="s">"STATUS"</span><span class="o">,</span> <span class="n">length</span><span class="o">=</span><span class="mi">50</span><span class="o">)</span>
-    <span class="kd">protected</span> <span class="n">DeliveryStatus</span> <span class="n">status</span><span class="o">;</span>
+    <span class="kd">protected</span> <span class="nc">DeliveryStatus</span> <span class="n">status</span><span class="o">;</span>
 <span class="o">}</span>
 
 <span class="nd">@Entity</span>
 <span class="nd">@DiscriminatorValue</span><span class="o">(</span><span class="s">"CUSTOM"</span><span class="o">)</span>
 <span class="nd">@Table</span><span class="o">(</span><span class="n">name</span><span class="o">=</span><span class="s">"CUSTOM_DELIVERY"</span><span class="o">)</span>
-<span class="kd">public</span> <span class="kd">class</span> <span class="nc">CustomDelivery</span> <span class="kd">extends</span> <span class="n">Delivery</span> <span class="o">{</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">CustomDelivery</span> <span class="kd">extends</span> <span class="nc">Delivery</span> <span class="o">{</span>
 
 <span class="o">}</span>
 
 <span class="nd">@Entity</span>
 <span class="nd">@DiscriminatorValue</span><span class="o">(</span><span class="s">"EMAIL"</span><span class="o">)</span>
 <span class="nd">@Table</span><span class="o">(</span><span class="n">name</span><span class="o">=</span><span class="s">"EMAIL_DELIVERY"</span><span class="o">)</span>
-<span class="kd">public</span> <span class="kd">class</span> <span class="nc">EmailDelivery</span> <span class="kd">extends</span> <span class="n">Delivery</span> <span class="o">{</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">EmailDelivery</span> <span class="kd">extends</span> <span class="nc">Delivery</span> <span class="o">{</span>
     <span class="nd">@Column</span><span class="o">(</span><span class="n">name</span><span class="o">=</span><span class="s">"EMAIL"</span><span class="o">,</span> <span class="n">length</span><span class="o">=</span><span class="mi">100</span><span class="o">)</span>
-    <span class="kd">private</span> <span class="n">String</span> <span class="n">email</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="nc">String</span> <span class="n">email</span><span class="o">;</span>
 <span class="o">}</span>
 
 <span class="nd">@Entity</span>
 <span class="nd">@DiscriminatorValue</span><span class="o">(</span><span class="s">"EXPRESS"</span><span class="o">)</span>
 <span class="nd">@Table</span><span class="o">(</span><span class="n">name</span><span class="o">=</span><span class="s">"EXPRESS_DELIVERY"</span><span class="o">)</span>
-<span class="kd">public</span> <span class="kd">class</span> <span class="nc">ExpressDelivery</span> <span class="kd">extends</span> <span class="n">Delivery</span> <span class="o">{</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">ExpressDelivery</span> <span class="kd">extends</span> <span class="nc">Delivery</span> <span class="o">{</span>
     <span class="nd">@Column</span><span class="o">(</span><span class="n">name</span><span class="o">=</span><span class="s">"VENDOR"</span><span class="o">,</span> <span class="n">length</span><span class="o">=</span><span class="mi">100</span><span class="o">)</span>
-    <span class="kd">private</span> <span class="n">String</span> <span class="n">vendor</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="nc">String</span> <span class="n">vendor</span><span class="o">;</span>
     <span class="nd">@Column</span><span class="o">(</span><span class="n">name</span><span class="o">=</span><span class="s">"TRACK_ID"</span><span class="o">,</span> <span class="n">length</span><span class="o">=</span><span class="mi">50</span><span class="o">)</span>
-    <span class="kd">private</span> <span class="n">String</span> <span class="n">trackId</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="nc">String</span> <span class="n">trackId</span><span class="o">;</span>
     <span class="nd">@OneToOne</span>
     <span class="nd">@JoinColumn</span><span class="o">(</span><span class="n">name</span><span class="o">=</span><span class="s">"CONTACT_ID"</span><span class="o">)</span>
-    <span class="kd">private</span> <span class="n">Contact</span> <span class="n">contact</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="nc">Contact</span> <span class="n">contact</span><span class="o">;</span>
 <span class="o">}</span>
 </code></pre></div></div>
 
@@ -749,38 +749,38 @@ class EXPRESS_DELIVERY &lt;&lt; (T, chid) &gt;&gt; {
 </code></pre>
 
 <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@Entity</span>
-<span class="nd">@Inheritance</span><span class="o">(</span><span class="n">strategy</span><span class="o">=</span><span class="n">InheritanceType</span><span class="o">.</span><span class="na">TABLE_PER_CLASS</span><span class="o">)</span>
+<span class="nd">@Inheritance</span><span class="o">(</span><span class="n">strategy</span><span class="o">=</span><span class="nc">InheritanceType</span><span class="o">.</span><span class="na">TABLE_PER_CLASS</span><span class="o">)</span>
 <span class="kd">public</span> <span class="kd">abstract</span> <span class="kd">class</span> <span class="nc">Delivery</span> <span class="o">{</span>
     <span class="nd">@Id</span>
     <span class="nd">@Column</span><span class="o">(</span><span class="n">name</span><span class="o">=</span><span class="s">"ID"</span><span class="o">,</span> <span class="n">length</span><span class="o">=</span><span class="mi">100</span><span class="o">)</span>
-    <span class="kd">protected</span> <span class="n">String</span> <span class="n">id</span><span class="o">;</span>
+    <span class="kd">protected</span> <span class="nc">String</span> <span class="n">id</span><span class="o">;</span>
     <span class="nd">@Column</span><span class="o">(</span><span class="n">name</span><span class="o">=</span><span class="s">"STATUS"</span><span class="o">,</span> <span class="n">length</span><span class="o">=</span><span class="mi">50</span><span class="o">)</span>
-    <span class="kd">protected</span> <span class="n">DeliveryStatus</span> <span class="n">status</span><span class="o">;</span>
+    <span class="kd">protected</span> <span class="nc">DeliveryStatus</span> <span class="n">status</span><span class="o">;</span>
 <span class="o">}</span>
 
 <span class="nd">@Entity</span>
 <span class="nd">@Table</span><span class="o">(</span><span class="n">name</span><span class="o">=</span><span class="s">"CUSTOM_DELIVERY"</span><span class="o">)</span>
-<span class="kd">public</span> <span class="kd">class</span> <span class="nc">CustomDelivery</span> <span class="kd">extends</span> <span class="n">Delivery</span> <span class="o">{</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">CustomDelivery</span> <span class="kd">extends</span> <span class="nc">Delivery</span> <span class="o">{</span>
 
 <span class="o">}</span>
 
 <span class="nd">@Entity</span>
 <span class="nd">@Table</span><span class="o">(</span><span class="n">name</span><span class="o">=</span><span class="s">"EMAIL_DELIVERY"</span><span class="o">)</span>
-<span class="kd">public</span> <span class="kd">class</span> <span class="nc">EmailDelivery</span> <span class="kd">extends</span> <span class="n">Delivery</span> <span class="o">{</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">EmailDelivery</span> <span class="kd">extends</span> <span class="nc">Delivery</span> <span class="o">{</span>
     <span class="nd">@Column</span><span class="o">(</span><span class="n">name</span><span class="o">=</span><span class="s">"EMAIL"</span><span class="o">,</span> <span class="n">length</span><span class="o">=</span><span class="mi">100</span><span class="o">)</span>
-    <span class="kd">private</span> <span class="n">String</span> <span class="n">email</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="nc">String</span> <span class="n">email</span><span class="o">;</span>
 <span class="o">}</span>
 
 <span class="nd">@Entity</span>
 <span class="nd">@Table</span><span class="o">(</span><span class="n">name</span><span class="o">=</span><span class="s">"EXPRESS_DELIVERY"</span><span class="o">)</span>
-<span class="kd">public</span> <span class="kd">class</span> <span class="nc">ExpressDelivery</span> <span class="kd">extends</span> <span class="n">Delivery</span> <span class="o">{</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">ExpressDelivery</span> <span class="kd">extends</span> <span class="nc">Delivery</span> <span class="o">{</span>
     <span class="nd">@Column</span><span class="o">(</span><span class="n">name</span><span class="o">=</span><span class="s">"VENDOR"</span><span class="o">,</span> <span class="n">length</span><span class="o">=</span><span class="mi">100</span><span class="o">)</span>
-    <span class="kd">private</span> <span class="n">String</span> <span class="n">vendor</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="nc">String</span> <span class="n">vendor</span><span class="o">;</span>
     <span class="nd">@Column</span><span class="o">(</span><span class="n">name</span><span class="o">=</span><span class="s">"TRACK_ID"</span><span class="o">,</span> <span class="n">length</span><span class="o">=</span><span class="mi">50</span><span class="o">)</span>
-    <span class="kd">private</span> <span class="n">String</span> <span class="n">trackId</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="nc">String</span> <span class="n">trackId</span><span class="o">;</span>
     <span class="nd">@OneToOne</span>
     <span class="nd">@JoinColumn</span><span class="o">(</span><span class="n">name</span><span class="o">=</span><span class="s">"CONTACT_ID"</span><span class="o">)</span>
-    <span class="kd">private</span> <span class="n">Contact</span> <span class="n">contact</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="nc">Contact</span> <span class="n">contact</span><span class="o">;</span>
 <span class="o">}</span>
 </code></pre></div></div>
 
@@ -1040,6 +1040,8 @@ detached-&gt;[*]: remove
   <h2>Recent Posts</h2>
   <ul>
     
+    <li><a href="/2019/10/Python99-P204-a-List-of-Prime-Numbers">A List of Prime Numbers</a></li>
+    
     <li><a href="/2019/10/RESTFul">RESTFul</a></li>
     
     <li><a href="/2019/10/Test">Test Asciidoc Preview</a></li>
@@ -1048,8 +1050,6 @@ detached-&gt;[*]: remove
     
     <li><a href="/2019/08/Design-Microservice-by-DDD">Design Microservices by DDD</a></li>
     
-    <li><a href="/2019/02/Coder-Self-Cultivation">Coder Self Cultivation</a></li>
-    
   </ul>
 </div>
 
@@ -1057,6 +1057,10 @@ detached-&gt;[*]: remove
   <h2>Tags</h2>
   <ul class="sideBarTags">
     
+    
+    <li>
+      <a href="/tag/arithmetic" data-toggle="tooltip" data-placement="right" title="1">
+        <span>arithmetic</span></a></li>
     
     <li>
       <a href="/tag/java" data-toggle="tooltip" data-placement="right" title="1">
@@ -1069,6 +1073,18 @@ detached-&gt;[*]: remove
     <li>
       <a href="/tag/orm" data-toggle="tooltip" data-placement="right" title="1">
         <span>orm</span></a></li>
+    
+    <li>
+      <a href="/tag/prime" data-toggle="tooltip" data-placement="right" title="1">
+        <span>prime</span></a></li>
+    
+    <li>
+      <a href="/tag/python" data-toggle="tooltip" data-placement="right" title="1">
+        <span>python</span></a></li>
+    
+    <li>
+      <a href="/tag/python99" data-toggle="tooltip" data-placement="right" title="1">
+        <span>python99</span></a></li>
     
   </ul>
 </div>

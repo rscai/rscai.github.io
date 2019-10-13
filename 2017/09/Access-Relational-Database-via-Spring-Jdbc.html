@@ -104,11 +104,11 @@
 <p>Database related resources (Connection, Statement, ResultSet), are linking to actual resources located on database management system. For increasing resource utilization, it MUST release resource promptly.</p>
 
 <p>Java 7 has introduced the try-with-resources statement, it will automatically close resources which declared in with clause when left try block.</p>
-<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">final</span> <span class="n">String</span> <span class="n">sql</span> <span class="o">=</span> <span class="s">"SELECT * FROM DUAL WHERE ID =?"</span><span class="o">;</span>
-<span class="k">try</span><span class="o">(</span><span class="n">Connection</span> <span class="n">conn</span> <span class="o">=</span> <span class="n">dataSource</span><span class="o">.</span><span class="na">getConnection</span><span class="o">();</span>
-    <span class="n">PreparedStatement</span> <span class="n">pstmt</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="na">prepareStatement</span><span class="o">(</span><span class="n">sql</span><span class="o">)){</span>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">final</span> <span class="nc">String</span> <span class="n">sql</span> <span class="o">=</span> <span class="s">"SELECT * FROM DUAL WHERE ID =?"</span><span class="o">;</span>
+<span class="k">try</span><span class="o">(</span><span class="nc">Connection</span> <span class="n">conn</span> <span class="o">=</span> <span class="n">dataSource</span><span class="o">.</span><span class="na">getConnection</span><span class="o">();</span>
+    <span class="nc">PreparedStatement</span> <span class="n">pstmt</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="na">prepareStatement</span><span class="o">(</span><span class="n">sql</span><span class="o">)){</span>
     <span class="n">pstmt</span><span class="o">.</span><span class="na">setLong</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span><span class="n">id</span><span class="o">);</span>
-    <span class="k">try</span><span class="o">(</span><span class="n">ResultSet</span> <span class="n">resultSet</span> <span class="o">=</span> <span class="n">pstmt</span><span class="o">.</span><span class="na">executeQuery</span><span class="o">()){</span>
+    <span class="k">try</span><span class="o">(</span><span class="nc">ResultSet</span> <span class="n">resultSet</span> <span class="o">=</span> <span class="n">pstmt</span><span class="o">.</span><span class="na">executeQuery</span><span class="o">()){</span>
         <span class="k">while</span><span class="o">(</span><span class="n">resultSet</span><span class="o">.</span><span class="na">next</span><span class="o">()){</span>
             <span class="o">...</span>
         <span class="o">}</span>
@@ -125,39 +125,39 @@
 <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>org.springframework.jdbc.core.JdbcTemplate.execute(StatementCallback&lt;T&gt; action)
 </code></pre></div></div>
 <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code>	<span class="nd">@Override</span>
-	<span class="kd">public</span> <span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="n">T</span> <span class="nf">execute</span><span class="o">(</span><span class="n">StatementCallback</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="n">action</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">DataAccessException</span> <span class="o">{</span>
-		<span class="n">Assert</span><span class="o">.</span><span class="na">notNull</span><span class="o">(</span><span class="n">action</span><span class="o">,</span> <span class="s">"Callback object must not be null"</span><span class="o">);</span>
+	<span class="kd">public</span> <span class="o">&lt;</span><span class="no">T</span><span class="o">&gt;</span> <span class="no">T</span> <span class="nf">execute</span><span class="o">(</span><span class="nc">StatementCallback</span><span class="o">&lt;</span><span class="no">T</span><span class="o">&gt;</span> <span class="n">action</span><span class="o">)</span> <span class="kd">throws</span> <span class="nc">DataAccessException</span> <span class="o">{</span>
+		<span class="nc">Assert</span><span class="o">.</span><span class="na">notNull</span><span class="o">(</span><span class="n">action</span><span class="o">,</span> <span class="s">"Callback object must not be null"</span><span class="o">);</span>
 
-		<span class="n">Connection</span> <span class="n">con</span> <span class="o">=</span> <span class="n">DataSourceUtils</span><span class="o">.</span><span class="na">getConnection</span><span class="o">(</span><span class="n">getDataSource</span><span class="o">());</span>
-		<span class="n">Statement</span> <span class="n">stmt</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+		<span class="nc">Connection</span> <span class="n">con</span> <span class="o">=</span> <span class="nc">DataSourceUtils</span><span class="o">.</span><span class="na">getConnection</span><span class="o">(</span><span class="n">getDataSource</span><span class="o">());</span>
+		<span class="nc">Statement</span> <span class="n">stmt</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
 		<span class="k">try</span> <span class="o">{</span>
-			<span class="n">Connection</span> <span class="n">conToUse</span> <span class="o">=</span> <span class="n">con</span><span class="o">;</span>
+			<span class="nc">Connection</span> <span class="n">conToUse</span> <span class="o">=</span> <span class="n">con</span><span class="o">;</span>
 			<span class="k">if</span> <span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="na">nativeJdbcExtractor</span> <span class="o">!=</span> <span class="kc">null</span> <span class="o">&amp;&amp;</span>
 					<span class="k">this</span><span class="o">.</span><span class="na">nativeJdbcExtractor</span><span class="o">.</span><span class="na">isNativeConnectionNecessaryForNativeStatements</span><span class="o">())</span> <span class="o">{</span>
 				<span class="n">conToUse</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="na">nativeJdbcExtractor</span><span class="o">.</span><span class="na">getNativeConnection</span><span class="o">(</span><span class="n">con</span><span class="o">);</span>
 			<span class="o">}</span>
 			<span class="n">stmt</span> <span class="o">=</span> <span class="n">conToUse</span><span class="o">.</span><span class="na">createStatement</span><span class="o">();</span>
 			<span class="n">applyStatementSettings</span><span class="o">(</span><span class="n">stmt</span><span class="o">);</span>
-			<span class="n">Statement</span> <span class="n">stmtToUse</span> <span class="o">=</span> <span class="n">stmt</span><span class="o">;</span>
+			<span class="nc">Statement</span> <span class="n">stmtToUse</span> <span class="o">=</span> <span class="n">stmt</span><span class="o">;</span>
 			<span class="k">if</span> <span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="na">nativeJdbcExtractor</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
 				<span class="n">stmtToUse</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="na">nativeJdbcExtractor</span><span class="o">.</span><span class="na">getNativeStatement</span><span class="o">(</span><span class="n">stmt</span><span class="o">);</span>
 			<span class="o">}</span>
-			<span class="n">T</span> <span class="n">result</span> <span class="o">=</span> <span class="n">action</span><span class="o">.</span><span class="na">doInStatement</span><span class="o">(</span><span class="n">stmtToUse</span><span class="o">);</span>
+			<span class="no">T</span> <span class="n">result</span> <span class="o">=</span> <span class="n">action</span><span class="o">.</span><span class="na">doInStatement</span><span class="o">(</span><span class="n">stmtToUse</span><span class="o">);</span>
 			<span class="n">handleWarnings</span><span class="o">(</span><span class="n">stmt</span><span class="o">);</span>
 			<span class="k">return</span> <span class="n">result</span><span class="o">;</span>
 		<span class="o">}</span>
-		<span class="k">catch</span> <span class="o">(</span><span class="n">SQLException</span> <span class="n">ex</span><span class="o">)</span> <span class="o">{</span>
+		<span class="k">catch</span> <span class="o">(</span><span class="nc">SQLException</span> <span class="n">ex</span><span class="o">)</span> <span class="o">{</span>
 			<span class="c1">// Release Connection early, to avoid potential connection pool deadlock</span>
 			<span class="c1">// in the case when the exception translator hasn't been initialized yet.</span>
-			<span class="n">JdbcUtils</span><span class="o">.</span><span class="na">closeStatement</span><span class="o">(</span><span class="n">stmt</span><span class="o">);</span>
+			<span class="nc">JdbcUtils</span><span class="o">.</span><span class="na">closeStatement</span><span class="o">(</span><span class="n">stmt</span><span class="o">);</span>
 			<span class="n">stmt</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
-			<span class="n">DataSourceUtils</span><span class="o">.</span><span class="na">releaseConnection</span><span class="o">(</span><span class="n">con</span><span class="o">,</span> <span class="n">getDataSource</span><span class="o">());</span>
+			<span class="nc">DataSourceUtils</span><span class="o">.</span><span class="na">releaseConnection</span><span class="o">(</span><span class="n">con</span><span class="o">,</span> <span class="n">getDataSource</span><span class="o">());</span>
 			<span class="n">con</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
 			<span class="k">throw</span> <span class="nf">getExceptionTranslator</span><span class="o">().</span><span class="na">translate</span><span class="o">(</span><span class="s">"StatementCallback"</span><span class="o">,</span> <span class="n">getSql</span><span class="o">(</span><span class="n">action</span><span class="o">),</span> <span class="n">ex</span><span class="o">);</span>
 		<span class="o">}</span>
 		<span class="k">finally</span> <span class="o">{</span>
-			<span class="n">JdbcUtils</span><span class="o">.</span><span class="na">closeStatement</span><span class="o">(</span><span class="n">stmt</span><span class="o">);</span>
-			<span class="n">DataSourceUtils</span><span class="o">.</span><span class="na">releaseConnection</span><span class="o">(</span><span class="n">con</span><span class="o">,</span> <span class="n">getDataSource</span><span class="o">());</span>
+			<span class="nc">JdbcUtils</span><span class="o">.</span><span class="na">closeStatement</span><span class="o">(</span><span class="n">stmt</span><span class="o">);</span>
+			<span class="nc">DataSourceUtils</span><span class="o">.</span><span class="na">releaseConnection</span><span class="o">(</span><span class="n">con</span><span class="o">,</span> <span class="n">getDataSource</span><span class="o">());</span>
 		<span class="o">}</span>
 	<span class="o">}</span>
 </code></pre></div></div>
@@ -174,7 +174,7 @@
 <p><strong>Doing more than relation object mapping lead to chaos.</strong></p>
 
 <p><code class="highlighter-rouge">RowMapper</code> is designed to only map relation model to object.</p>
-<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">interface</span> <span class="nc">RowMapper</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="o">{</span>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">interface</span> <span class="nc">RowMapper</span><span class="o">&lt;</span><span class="no">T</span><span class="o">&gt;</span> <span class="o">{</span>
 
 	<span class="cm">/**
 	 * Implementations must implement this method to map each row of data
@@ -186,7 +186,7 @@
 	 * @throws SQLException if a SQLException is encountered getting
 	 * column values (that is, there's no need to catch SQLException)
 	 */</span>
-	<span class="n">T</span> <span class="nf">mapRow</span><span class="o">(</span><span class="n">ResultSet</span> <span class="n">rs</span><span class="o">,</span> <span class="kt">int</span> <span class="n">rowNum</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">SQLException</span><span class="o">;</span>
+	<span class="no">T</span> <span class="nf">mapRow</span><span class="o">(</span><span class="nc">ResultSet</span> <span class="n">rs</span><span class="o">,</span> <span class="kt">int</span> <span class="n">rowNum</span><span class="o">)</span> <span class="kd">throws</span> <span class="nc">SQLException</span><span class="o">;</span>
 
 <span class="o">}</span>
 </code></pre></div></div>
@@ -210,6 +210,8 @@
   <h2>Recent Posts</h2>
   <ul>
     
+    <li><a href="/2019/10/Python99-P204-a-List-of-Prime-Numbers">A List of Prime Numbers</a></li>
+    
     <li><a href="/2019/10/RESTFul">RESTFul</a></li>
     
     <li><a href="/2019/10/Test">Test Asciidoc Preview</a></li>
@@ -218,8 +220,6 @@
     
     <li><a href="/2019/08/Design-Microservice-by-DDD">Design Microservices by DDD</a></li>
     
-    <li><a href="/2019/02/Coder-Self-Cultivation">Coder Self Cultivation</a></li>
-    
   </ul>
 </div>
 
@@ -227,6 +227,10 @@
   <h2>Tags</h2>
   <ul class="sideBarTags">
     
+    
+    <li>
+      <a href="/tag/arithmetic" data-toggle="tooltip" data-placement="right" title="1">
+        <span>arithmetic</span></a></li>
     
     <li>
       <a href="/tag/java" data-toggle="tooltip" data-placement="right" title="1">
@@ -239,6 +243,18 @@
     <li>
       <a href="/tag/orm" data-toggle="tooltip" data-placement="right" title="1">
         <span>orm</span></a></li>
+    
+    <li>
+      <a href="/tag/prime" data-toggle="tooltip" data-placement="right" title="1">
+        <span>prime</span></a></li>
+    
+    <li>
+      <a href="/tag/python" data-toggle="tooltip" data-placement="right" title="1">
+        <span>python</span></a></li>
+    
+    <li>
+      <a href="/tag/python99" data-toggle="tooltip" data-placement="right" title="1">
+        <span>python99</span></a></li>
     
   </ul>
 </div>

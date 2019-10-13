@@ -241,7 +241,7 @@ List &lt;|-- LinkedList
 
 <p><code class="highlighter-rouge">add(E)</code> appends <code class="highlighter-rouge">E</code> to tail of list, therefore it need not shift anything. Explain algorithm of <code class="highlighter-rouge">add(E)</code> in java:</p>
 
-<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">array</span><span class="o">[</span><span class="n">size</span><span class="o">]</span> <span class="o">=</span> <span class="n">E</span><span class="o">;</span>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">array</span><span class="o">[</span><span class="n">size</span><span class="o">]</span> <span class="o">=</span> <span class="no">E</span><span class="o">;</span>
 <span class="n">size</span> <span class="o">=</span> <span class="n">size</span> <span class="o">+</span> <span class="mi">1</span><span class="o">;</span>
 </code></pre></div></div>
 
@@ -284,7 +284,7 @@ Take <code class="highlighter-rouge">add(2,E)</code> as an example, it should sh
 <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">for</span><span class="o">(</span><span class="kt">int</span> <span class="n">index</span> <span class="o">=</span><span class="n">size</span> <span class="o">-</span> <span class="mi">1</span><span class="o">;</span> <span class="n">index</span> <span class="o">&gt;=</span> <span class="n">i</span><span class="o">;</span> <span class="n">index</span><span class="o">--){</span>
     <span class="n">array</span><span class="o">[</span><span class="n">index</span><span class="o">+</span><span class="mi">1</span><span class="o">]</span> <span class="o">=</span> <span class="n">array</span><span class="o">[</span><span class="n">index</span><span class="o">];</span>
 <span class="o">}</span>
-<span class="n">array</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">=</span> <span class="n">E</span><span class="o">;</span>
+<span class="n">array</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">=</span> <span class="no">E</span><span class="o">;</span>
 </code></pre></div></div>
 
 <p>Time Complexity:</p>
@@ -380,7 +380,7 @@ Take <code class="highlighter-rouge">set(2,E)</code> as example, it just write <
 
 <p>Algorithm in Java:</p>
 
-<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">array</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">=</span> <span class="n">E</span><span class="o">;</span>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">array</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">=</span> <span class="no">E</span><span class="o">;</span>
 </code></pre></div></div>
 
 <p>Time Complexity:</p>
@@ -629,10 +629,10 @@ C_{avg} &= \frac{1}{n}\sum\limits_{i=1}^{n} i \\
         <span class="kt">int</span> <span class="n">newCapacity</span> <span class="o">=</span> <span class="n">oldCapacity</span> <span class="o">+</span> <span class="o">(</span><span class="n">oldCapacity</span> <span class="o">&gt;&gt;</span> <span class="mi">1</span><span class="o">);</span>
         <span class="k">if</span> <span class="o">(</span><span class="n">newCapacity</span> <span class="o">-</span> <span class="n">minCapacity</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="o">)</span>
             <span class="n">newCapacity</span> <span class="o">=</span> <span class="n">minCapacity</span><span class="o">;</span>
-        <span class="k">if</span> <span class="o">(</span><span class="n">newCapacity</span> <span class="o">-</span> <span class="n">MAX_ARRAY_SIZE</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="o">)</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">newCapacity</span> <span class="o">-</span> <span class="no">MAX_ARRAY_SIZE</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="o">)</span>
             <span class="n">newCapacity</span> <span class="o">=</span> <span class="n">hugeCapacity</span><span class="o">(</span><span class="n">minCapacity</span><span class="o">);</span>
         <span class="c1">// minCapacity is usually close to size, so this is a win:</span>
-        <span class="n">elementData</span> <span class="o">=</span> <span class="n">Arrays</span><span class="o">.</span><span class="na">copyOf</span><span class="o">(</span><span class="n">elementData</span><span class="o">,</span> <span class="n">newCapacity</span><span class="o">);</span>
+        <span class="n">elementData</span> <span class="o">=</span> <span class="nc">Arrays</span><span class="o">.</span><span class="na">copyOf</span><span class="o">(</span><span class="n">elementData</span><span class="o">,</span> <span class="n">newCapacity</span><span class="o">);</span>
     <span class="o">}</span>
 </code></pre></div></div>
 
@@ -752,7 +752,7 @@ C_{avg} &= \frac{1}{n}\sum\limits_{i=1}^{n} i \\
 
 <p>Algorithm in Java:</p>
 
-<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Node</span> <span class="n">e</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Node</span><span class="o">();</span>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nc">Node</span> <span class="n">e</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Node</span><span class="o">();</span>
 <span class="n">tail</span><span class="o">.</span><span class="na">next</span> <span class="o">=</span> <span class="n">e</span><span class="o">;</span>
 <span class="n">e</span><span class="o">.</span><span class="na">previous</span> <span class="o">=</span> <span class="n">tail</span><span class="o">;</span>
 <span class="n">tail</span> <span class="o">=</span> <span class="n">e</span><span class="o">;</span>
@@ -850,7 +850,7 @@ C &= 1+1+1 \\
 
 <p>Algorithm in Java:</p>
 
-<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Node</span> <span class="n">current</span> <span class="o">=</span> <span class="n">get</span><span class="o">(</span><span class="n">i</span><span class="o">);</span>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nc">Node</span> <span class="n">current</span> <span class="o">=</span> <span class="n">get</span><span class="o">(</span><span class="n">i</span><span class="o">);</span>
 <span class="n">current</span><span class="o">.</span><span class="na">previous</span><span class="o">.</span><span class="na">next</span> <span class="o">=</span> <span class="n">e</span><span class="o">;</span>
 <span class="n">e</span><span class="o">.</span><span class="na">previous</span> <span class="o">=</span> <span class="n">current</span><span class="o">.</span><span class="na">previous</span><span class="o">;</span>
 <span class="n">current</span><span class="o">.</span><span class="na">previous</span> <span class="o">=</span> <span class="n">e</span><span class="o">;</span>
@@ -913,7 +913,7 @@ C &= \mathcal{O}(n) + 1 +1 +1 \\
 
 <p>Algorithm in Java</p>
 
-<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Node</span> <span class="n">current</span> <span class="o">=</span> <span class="n">head</span><span class="o">;</span>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nc">Node</span> <span class="n">current</span> <span class="o">=</span> <span class="n">head</span><span class="o">;</span>
 <span class="k">for</span><span class="o">(</span><span class="kt">int</span> <span class="n">index</span> <span class="o">=</span><span class="mi">1</span><span class="o">;</span><span class="n">index</span> <span class="o">&lt;=</span><span class="n">i</span><span class="o">;</span><span class="n">index</span><span class="o">++){</span>
     <span class="n">current</span> <span class="o">=</span> <span class="n">current</span><span class="o">.</span><span class="na">next</span><span class="o">;</span>
 <span class="o">}</span>
@@ -977,7 +977,7 @@ C_{avg} &= \frac{1}{n}\sum\limits_{i=1}^{n}i \\
 
 <p>Algorithm in Java</p>
 
-<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Node</span> <span class="n">current</span> <span class="o">=</span> <span class="n">get</span><span class="o">(</span><span class="n">i</span><span class="o">);</span>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nc">Node</span> <span class="n">current</span> <span class="o">=</span> <span class="n">get</span><span class="o">(</span><span class="n">i</span><span class="o">);</span>
 <span class="n">current</span><span class="o">.</span><span class="na">previous</span><span class="o">.</span><span class="na">next</span> <span class="o">=</span> <span class="n">current</span><span class="o">.</span><span class="na">next</span><span class="o">;</span>
 <span class="n">current</span><span class="o">.</span><span class="na">next</span><span class="o">.</span><span class="na">previous</span> <span class="o">=</span> <span class="n">current</span><span class="o">.</span><span class="na">previous</span><span class="o">;</span>
 </code></pre></div></div>
@@ -999,8 +999,8 @@ C &= \mathcal{O}(n)+ 1 + 1 \\
 
 <p>Algorithm in Java</p>
 
-<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Node</span> <span class="n">current</span> <span class="o">=</span> <span class="n">get</span><span class="o">(</span><span class="n">i</span><span class="o">);</span>
-<span class="n">current</span><span class="o">.</span><span class="na">element</span> <span class="o">=</span> <span class="n">E</span><span class="o">;</span>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nc">Node</span> <span class="n">current</span> <span class="o">=</span> <span class="n">get</span><span class="o">(</span><span class="n">i</span><span class="o">);</span>
+<span class="n">current</span><span class="o">.</span><span class="na">element</span> <span class="o">=</span> <span class="no">E</span><span class="o">;</span>
 </code></pre></div></div>
 
 <p>Time Complexity</p>
@@ -1038,7 +1038,7 @@ C &= \mathcal{O}(n) + 1 \\
 
 <p>Algorithm in Java</p>
 
-<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Node</span> <span class="n">current</span><span class="o">=</span> <span class="n">head</span><span class="o">;</span>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nc">Node</span> <span class="n">current</span><span class="o">=</span> <span class="n">head</span><span class="o">;</span>
 <span class="k">if</span><span class="o">(</span><span class="n">current</span><span class="o">==</span><span class="kc">null</span><span class="o">){</span>
     <span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="o">;</span>
 <span class="o">}</span>
@@ -1294,6 +1294,8 @@ C_{avg} &= \frac{1}{n}\sum\limits_{i=1}^{n}(i+3) \\
   <h2>Recent Posts</h2>
   <ul>
     
+    <li><a href="/2019/10/Python99-P204-a-List-of-Prime-Numbers">A List of Prime Numbers</a></li>
+    
     <li><a href="/2019/10/RESTFul">RESTFul</a></li>
     
     <li><a href="/2019/10/Test">Test Asciidoc Preview</a></li>
@@ -1302,8 +1304,6 @@ C_{avg} &= \frac{1}{n}\sum\limits_{i=1}^{n}(i+3) \\
     
     <li><a href="/2019/08/Design-Microservice-by-DDD">Design Microservices by DDD</a></li>
     
-    <li><a href="/2019/02/Coder-Self-Cultivation">Coder Self Cultivation</a></li>
-    
   </ul>
 </div>
 
@@ -1311,6 +1311,10 @@ C_{avg} &= \frac{1}{n}\sum\limits_{i=1}^{n}(i+3) \\
   <h2>Tags</h2>
   <ul class="sideBarTags">
     
+    
+    <li>
+      <a href="/tag/arithmetic" data-toggle="tooltip" data-placement="right" title="1">
+        <span>arithmetic</span></a></li>
     
     <li>
       <a href="/tag/java" data-toggle="tooltip" data-placement="right" title="1">
@@ -1323,6 +1327,18 @@ C_{avg} &= \frac{1}{n}\sum\limits_{i=1}^{n}(i+3) \\
     <li>
       <a href="/tag/orm" data-toggle="tooltip" data-placement="right" title="1">
         <span>orm</span></a></li>
+    
+    <li>
+      <a href="/tag/prime" data-toggle="tooltip" data-placement="right" title="1">
+        <span>prime</span></a></li>
+    
+    <li>
+      <a href="/tag/python" data-toggle="tooltip" data-placement="right" title="1">
+        <span>python</span></a></li>
+    
+    <li>
+      <a href="/tag/python99" data-toggle="tooltip" data-placement="right" title="1">
+        <span>python99</span></a></li>
     
   </ul>
 </div>
