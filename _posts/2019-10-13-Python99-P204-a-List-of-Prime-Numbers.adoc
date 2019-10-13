@@ -1,0 +1,161 @@
+= A List of Prime Numbers
+:layout: post
+:page-category: python99
+:page-tags: [python, python99, arithmetic, prime]
+:icons: font
+:source-highlighter: rouge
+
+== Problem
+
+[quote]
+Given a range of integers by its lower and upper limit, construct a list of all prime numbers in that range.
+
+== Test
+
+[source, python]
+----
+from python99.arithmetic.p204 import prime
+
+def test_prime():
+    assert prime(2,7) == [2, 3, 5, 7]
+    assert prime(10, 20) == [11, 13, 17, 19]
+----
+
+== Resolution
+
+[source, python]
+----
+# A list of prime numbers
+# Given a range of integers by its lower and upper limit, construct a list of all prime numbers in that range
+from python99.arithmetic.p201 import is_prime
+
+def prime(lower, upper):
+    return [x for x in prime_generator(lower, upper)] 
+
+def prime_generator(lower, upper):
+    for num in range(lower, upper+1):
+        if is_prime(num):
+            yield num
+----
+
+== Iterator
+
+[quote, https://wiki.python.org/moin/Iterator]
+____
+An iterable object is an object that implements __iter__, which is expected to return an iterator object.
+
+An iterator is an object that implements next, which is expected to return the next element of the iterable object that returned it, and raise a StopIteration exception when no more elements are available.
+____
+
+== Generator
+
+[quote, https://wiki.python.org/moin/Generators]
+Generator functions allow you to declare a function that behaves like an iterator, i.e. it can be used in a for loop.
+
+[plantuml]
+....
+@startuml
+interface Iterable {
+    +__iter__()
+}
+interface Iterator {
+    +next()
+}
+interface Generator {
+    +__iter__()
+    +next()
+}
+Iterable <|-- Iterator
+Iterable <|-- Generator
+Iterator <|-- Generator
+@enduml
+....
+
+== Yield expressions
+
+[quote, https://docs.python.org/3.7/reference/expressions.html#yieldexpr]
+The yield expression is used when defining a generator function or an asynchronous generator function and thus can only be used in the body of a function definition. Using a yield expression in a function’s body causes that function to be a generator, and using it in an async def function’s body causes that coroutine function to be an asynchronous generator. 
+
+Here it converts function `prime_generator` to a **generator** by `yield expression`. The difference between **Generator** and **List** and other **Sequence** is: elements of generator is created when accessed; but elements of List is created when defined.
+
+Take below code as an example, `prime_list` returns when found all prime numbers frim range. It found that, it firstly executed all code of `prime_list` (Check 1, Check 2, ..., Check 10), then executed `for x in prime_list(1, 10)` loop (Iterate 2, Iterate 3, ..., Iterate 7).
+
+[source, python]
+----
+from python99.arithmetic.p201 import is_prime
+
+def prime_list(lower, upper):
+    result = []
+    for num in range(lower, upper+1):
+        print("Check "+str(num))
+        if is_prime(num):
+            print("Found prime "+str(num))
+            result.append(num)
+    return result
+
+for x in prime_list(2,10):
+    print("Iterate "+str(x))
+----
+
+Console output:
+
+----
+Check 2
+Found prime 2
+Check 3
+Found prime 3
+Check 4
+Check 5
+Found prime 5
+Check 6
+Check 7
+Found prime 7
+Check 8
+Check 9
+Check 10
+Iterate 2
+Iterate 3
+Iterate 5
+Iterate 7
+----
+
+Now check below code, `prime_generator` return result by `yield`, it makes `primge_genrator` as a generator. It found that, `prime_generator` does not create all elements before `for x in prime_generator(2, 10)`. Instead, create element when access by outer (call `next()`). For example, when outer accesses first element, it check numbers one by one, return first found prime number.
+
+[source, python]
+----
+from python99.arithmetic.p201 import is_prime
+
+def prime_generator(lower, upper):
+    for num in range(lower, upper+1):
+        print("Check "+str(num))
+        if is_prime(num):
+            print("Found prime "+str(num))
+            yield num
+
+for x in prime_generator(2,10):
+    print("Iterate "+str(x))
+----
+
+Console output:
+
+----
+Check 2
+Found prime 2
+Iterate 2
+Check 3
+Found prime 3
+Iterate 3
+Check 4
+Check 5
+Found prime 5
+Iterate 5
+Check 6
+Check 7
+Found prime 7
+Iterate 7
+Check 8
+Check 9
+Check 10
+----
+
+In case of only requesting one resolution, using generator could eliminate unnecessary effort.
