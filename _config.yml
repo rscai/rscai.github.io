@@ -1,10 +1,10 @@
 # Jekyll configuration
 
-name: Ray Cai
-description: Software Developer
+title: Ray's Blog
+description: Sr. Developer
 
 # Url is currently only used only for the RSS feed in feed.xml
-url: http://rscai.github.io
+url: https://rscai.github.io
 #url: http://localhost:4000
 
 # For a project page here should be a project name. Otherwise (for user's/organizaion's page leave it empty)
@@ -50,9 +50,12 @@ kramdown:
   input: GFM # Enable GitHub Flavored Markdown (fenced code blocks)
   hard_wrap: true
 
+assets_path: "/assets"
+
 exclude: ['README.md', 'LICENSE','vendor']
 
-theme: jekyll-theme-minimal
+#theme: jekyll-theme-leaf
+remote_theme: rscai/pRoJEct-NeGYa
 
 keep_files:
 - assets/generated_diagrams
