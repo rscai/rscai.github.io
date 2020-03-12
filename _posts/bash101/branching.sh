@@ -31,11 +31,3 @@ case $1 in
         echo "input $1 other than 10, 20 or 30"
 esac
 
-select item in "10" "20" "30" *
-do
-    if [ $1 -eq $item ]
-    then
-        echo "input $1 is $item"
-    fi
-done
-
