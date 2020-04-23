@@ -1,0 +1,217 @@
+= Apply Repository Pattern by Spring Data
+:layout: post
+:page-category: spring-boot
+:page-tags: [spring-boot, spring, spring-data, repository-pattern]
+:source-highlighter: rouge
+:icons: font
+
+[IMPORTANT]
+====
+We code for compiling.
+
+We code for running.
+
+We code for changing.
+====
+
+== Repository Pattern
+
+[quote]
+____
+Mediates between the domain and data mapping layers using a collection-like interface for accessing domain objects.
+____
+
+Domain Driven Design is domain centric, and domain data persistance (is abstracted as data mapping) is mandatory for almost application.
+
+Repository plays as an interface between client code and data mapping layers, hides complexity and isolates changes of data mapping layers from client code. 
+
+[plantuml]
+....
+@startuml
+participant client
+entity entityA
+participant repository
+participant storeService
+
+create entityA
+activate client
+client -> entityA: new
+activate entityA
+client -> repository: save(entityA)
+activate repository
+repository -> storeService: insert(entityA)
+activate storeService
+repository <-- storeService: entityA
+deactivate storeService
+client <-- repository: entityA
+deactivate repository
+client -> repository: findOne(id)
+activate repository
+repository -> storeService: selectById(id)
+activate storeService
+repository <-- storeService: entities
+deactivate storeService
+client <-- repository: entities
+deactivate repository
+@enduml
+....
+
+Through repository, client code could access and persisten entity instances by collection-like and domain-centric interface. Because repository isolates changes of data mapping layers from client code, therefore it is easy to change data mapping layers implemenation. For example, it defines a repository interface and two implementations:
+[plantuml]
+....
+@startuml
+interface Repository<T, ID> {
+    +save(entity: T): T
+    +findOne(id: ID): T
+}
+class JpaRepository
+class MongoDBRepository
+
+Repository <|-- JpaRepository
+Repository <|-- MongoDBRepository
+@enduml
+....
+
+When we changed the data mapping layer from JPA to MongoDB, it need not change any client code. Because client code depends on repository interface.
+
+.JPA data mapping layer
+[plantuml]
+....
+@startuml
+participant client
+entity entityA
+participant "repository:JpaRepository" as repository
+database RDMS as storeService
+
+create entityA
+activate client
+client -> entityA: new
+activate entityA
+client -> repository: save(entityA)
+activate repository
+repository -> storeService: INSERT INTO ...
+activate storeService
+repository <-- storeService: entityA
+deactivate storeService
+client <-- repository: entityA
+deactivate repository
+client -> repository: findOne(id)
+activate repository
+repository -> storeService: SELECT * FROM ...
+activate storeService
+repository <-- storeService: entities
+deactivate storeService
+client <-- repository: entities
+deactivate repository
+@enduml
+....
+
+.MongoDB data mapping layer
+[plantuml]
+....
+@startuml
+participant client
+entity entityA
+participant "repository:MongoDBRepository" as repository
+database MongoDB as storeService
+
+create entityA
+activate client
+client -> entityA: new
+activate entityA
+client -> repository: save(entityA)
+activate repository
+repository -> storeService: db.collection.insertOne(entityA)
+activate storeService
+repository <-- storeService: entityA
+deactivate storeService
+client <-- repository: entityA
+deactivate repository
+client -> repository: findOne(id)
+activate repository
+repository -> storeService: db.collection.find(...)
+activate storeService
+repository <-- storeService: entities
+deactivate storeService
+client <-- repository: entities
+deactivate repository
+@enduml
+....
+
+== Data Mapper Pattern
+
+[quote, Data mapper pattern, https://en.wikipedia.org/wiki/Data_mapper_pattern]
+____
+In software engineering, the data mapper pattern is an architectural pattern. It was named by Martin Fowler in this 2003 book Patterns of Enterprise Application Architecture. The interface of an object conforming to this pattern would include functions such as Create, Read, Update, and Delete, that operate on objects that represent domain entity types in a data store.
+
+A Data Mapper is a Data Access Layer that performs bidirectional transfer of data between a persistent data store (often a relational database) and an in-memory data representation (the domain layer). The goal of the pattern is to keep the in-memory representation and the persistent data store independent of each other and the data mapper itself. The layer is composed of one or more mappers (or Data Access Objects), performing the data transfer. Mapper implementations vary in scope. Generic mappers will handle many different domain entity types, dedicated mappers will handle one or a few.
+____
+
+The pattern descibes data access by descriptive approach. It defines elements of in-memory data representation and data store, and maps them. Take Object/Relation Mapping as an example, it defines elements of object represnetation:
+
+* class
+* object
+* field
+
+and defines elements of Relational database:
+
+* table
+* record
+* column
+
+and then maps them:
+
+* class maps to table
+* object maps to record
+* field maps to column
+
+With data mapper pattern, application developer need not consider data access case by case, but describe the mapping of elements of in-memory and data store representations.
+
+== One Repository per Entity
+
+Per **Single-responsibility principle**, one repository should only handle one entity.
+
+[quote, Single-responsibility principle, https://en.wikipedia.org/wiki/Single-responsibility_principle]
+____
+The single-responsibility principle (SRP) is a computer-programming principle that states that every module or class should have responsiblity over a single part of the functionality provided by the software, and that responsibility should be entirely encapsulated by the class, module or function. All its services should be narrowly aligned with that responsiblity. Robert C. Martin expresses the principle as "A class should have only one reason to change." although, because of confusion around the word "reason" he more recently stated "This principle is about people."
+____
+
+Keeping one repository per entity could benefit developer:
+
+* make repository small and clean
+* changing data store solution per entity independently
+
+== Spring Data
+
+[quote, Spring Data, https://spring.io/projects/spring-data]
+____
+Spring Data's mission is to provide a familiar and consistent, Spring-based programming model for data access while still retaining the special traits of the underlying data store.
+
+It makes it easy to use data access technologies, relational and non-relational databases, map-reduce frameworks, and cloud-based data services. This is an umbrella project which contains many subprojects that are specifiv to a given database. The projects are developed by working together with many of the companies and developers that are behind these exciting technologies.
+____
+
+The core of Spring Data is Repository. Repositories of Spring data are organized in interface/abstract class/implementation class pattern. Take `InventoryItemRepository` as an example, it adopts RDMS as the data store of `InventoryItem`. Spring Data offers base interface `JpaRepository` and abstract class `SimpleJpaRepository` (`SimpleJpaRepository` is not implemented as an abstract class, but is designed as a base class for JPA repository implememntation class). Application developer defines entity-specific repository interface `InventoryItemRepository` which extends from interface `JpaRepository`. Spring Data will generate repository implementation `InventoryItemRepositoryImpl`.
+
+.Spring Data Repository
+[plantuml]
+....
+@startuml
+interface JpaRepository<T, ID>
+interface JpaRepositoryImplementation<T, ID>
+interface InventoryItemRepository
+class SimpleJpaRepository<T, ID>
+class InventoryItemRepositoryImpl <<implementation>>
+
+JpaRepository <|- JpaRepositoryImplementation
+JpaRepository <|-- InventoryItemRepository
+JpaRepositoryImplementation <|-- SimpleJpaRepository
+InventoryItemRepository <|-- InventoryItemRepositoryImpl
+SimpleJpaRepository <|-- InventoryItemRepositoryImpl
+@enduml
+....
+
+== Reference
+
+* https://en.wikipedia.org/wiki/Data_mapper_pattern[Data mapper pattern]
+* https://en.wikipedia.org/wiki/Single-responsibility_principle[Single-responsibility principle]
+
