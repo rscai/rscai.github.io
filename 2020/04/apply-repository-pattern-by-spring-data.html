@@ -6,13 +6,13 @@
   <meta content="width=device-width, initial-scale=1" name="viewport" />
   <!-- site description -->
   
-  <meta content="Mock Oracle Database by Docker" name="description" />
+  <meta content="We code for compiling." name="description" />
   <!-- referer for 3rd-part images-->
   <meta content="no-referrer" name="referrer" />
   <!-- title -->
   <title>
     
-    Mock Oracle Database by Docker
+    Apply Repository Pattern by Spring Data
     
   </title>
   <!-- icon -->
@@ -6451,22 +6451,11 @@
     
     <!-- generate toc -->
     <ul id="ul_toc" class="ul_toc">
-  <li><a href="#mock-oracle-database-by-docker">Mock Oracle Database by Docker</a>
-    <ul>
-      <li><a href="#overview">Overview</a></li>
-      <li><a href="#use-case">Use Case</a></li>
-      <li><a href="#solution">Solution</a>
-        <ul>
-          <li><a href="#system-and-software-information">System and Software Information</a></li>
-          <li><a href="#docker">Docker</a></li>
-          <li><a href="#dockerizing-oracle-database">Dockerizing Oracle Database</a></li>
-          <li><a href="#test-case">Test Case</a></li>
-          <li><a href="#continuous-integration">Continuous Integration</a></li>
-        </ul>
-      </li>
-      <li><a href="#reference">Reference</a></li>
-    </ul>
-  </li>
+  <li><a href="#repository-pattern">Repository Pattern</a></li>
+  <li><a href="#data-mapper-pattern">Data Mapper Pattern</a></li>
+  <li><a href="#one-repository-per-entity">One Repository per Entity</a></li>
+  <li><a href="#spring-data">Spring Data</a></li>
+  <li><a href="#reference">Reference</a></li>
 </ul>
     </div>
     <!-- toggle toc -->
@@ -6519,24 +6508,24 @@
       <div class="div_article" id="div_atcl">       
         <article id="main_atcl" itemscope itemtype="http://schema.org/BlogPosting">
           <h1>
-  Mock Oracle Database by Docker
+  Apply Repository Pattern by Spring Data
 </h1>
 <div class="post_info">
   <!-- author -->
-  
-  <span>
-    <i class="fa fa-user-secret"></i>
-    Ray Cai
-  </span>
   
   <!-- date -->
   
   <span>
     <i class="fa fa-calendar"></i>
-    Mar 14, 2018
+    Apr 16, 2020
   </span>
   
   <!-- category -->
+  
+  <span>
+    <i class="fa fa-archive"></i>
+    spring-boot
+  </span>
   
 </div>
 <!-- abstract -->
@@ -6544,456 +6533,221 @@
   
 </div>
 
-<h1 id="mock-oracle-database-by-docker">Mock Oracle Database by Docker</h1>
-
-<blockquote>
-  <p>for testing</p>
-</blockquote>
-
-<ul id="markdown-toc">
-  <li><a href="#mock-oracle-database-by-docker" id="markdown-toc-mock-oracle-database-by-docker">Mock Oracle Database by Docker</a>    <ul>
-      <li><a href="#overview" id="markdown-toc-overview">Overview</a></li>
-      <li><a href="#use-case" id="markdown-toc-use-case">Use Case</a></li>
-      <li><a href="#solution" id="markdown-toc-solution">Solution</a>        <ul>
-          <li><a href="#system-and-software-information" id="markdown-toc-system-and-software-information">System and Software Information</a></li>
-          <li><a href="#docker" id="markdown-toc-docker">Docker</a>            <ul>
-              <li><a href="#install-docker" id="markdown-toc-install-docker">Install Docker</a></li>
-              <li><a href="#enable-remote-api" id="markdown-toc-enable-remote-api">Enable Remote API</a></li>
-              <li><a href="#verify-docker-remote-api" id="markdown-toc-verify-docker-remote-api">Verify Docker Remote API</a></li>
-            </ul>
-          </li>
-          <li><a href="#dockerizing-oracle-database" id="markdown-toc-dockerizing-oracle-database">Dockerizing Oracle Database</a></li>
-          <li><a href="#test-case" id="markdown-toc-test-case">Test Case</a>            <ul>
-              <li><a href="#create-oracle-database-instance-when-beforeclass" id="markdown-toc-create-oracle-database-instance-when-beforeclass">Create Oracle Database Instance when BeforeClass</a></li>
-              <li><a href="#destory-oracle-database-instance-when-afterclass" id="markdown-toc-destory-oracle-database-instance-when-afterclass">Destory Oracle Database Instance when AfterClass</a></li>
-            </ul>
-          </li>
-          <li><a href="#continuous-integration" id="markdown-toc-continuous-integration">Continuous Integration</a>            <ul>
-              <li><a href="#travis-ci" id="markdown-toc-travis-ci">Travis CI</a></li>
-              <li><a href="#code-example" id="markdown-toc-code-example">Code Example</a></li>
-            </ul>
-          </li>
-        </ul>
-      </li>
-      <li><a href="#reference" id="markdown-toc-reference">Reference</a></li>
-    </ul>
-  </li>
-</ul>
-
-<h2 id="overview">Overview</h2>
-
-<p>Many application is accessing database through handwrite SQL, even SQL dialect. For testing these code, it has to mock a real compatible database instance. Here I describe a soluition of mocking Oracle database by Docker.</p>
-
-<h2 id="use-case">Use Case</h2>
-
-<p>Method <code class="language-plaintext highlighter-rouge">findById</code> of data access object <code class="language-plaintext highlighter-rouge">CategoryDao</code> query database by <a href="https://docs.oracle.com/cd/B19306_01/server.102/b14200/queries003.htm">Hierarchical Queries</a>. It need a unit test case to cover the implementation of <code class="language-plaintext highlighter-rouge">CategoryDao.findById</code>.</p>
-
-<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">DEV</span><span class="p">.</span><span class="n">CATEGORY</span> <span class="k">START</span> <span class="k">WITH</span> <span class="n">ID</span> <span class="o">=</span> <span class="p">:</span><span class="n">id</span> <span class="k">CONNECT</span> <span class="k">BY</span> <span class="k">PRIOR</span> <span class="n">ID</span><span class="o">=</span><span class="n">PARENT_ID</span>
-</code></pre></div></div>
-
-<p>Because the Hierarchical Queries is not supported by in-memory databases (includes HSQLDB, H2). Therefore it has to mock database by real Oracle database instance. And for a well-designed unit test case, it should:</p>
-
-<ul>
-  <li>Repeatable, it is able to be executed on any environment and any time.</li>
-  <li>Do not depend on external resource, it should embbed all necessary resources.</li>
-</ul>
-
-<h2 id="solution">Solution</h2>
-
-<p>Take JUnit as test framework, create and destroy Oracle database instance on phases <code class="language-plaintext highlighter-rouge">BeforeClass</code> and <code class="language-plaintext highlighter-rouge">AfterClass</code> respectively. Here take advantage of Docker, to create and destory Oracle database instance fastly.<br />
-On phase <code class="language-plaintext highlighter-rouge">BeforeClass</code>, it call Docker engine through Remote API, to create Oracle database instance. On phase <code class="language-plaintext highlighter-rouge">AfterClass</code>, it call Docker engine, to destroy the Oracle database instance.</p>
-
-<h3 id="system-and-software-information">System and Software Information</h3>
-
+<div id="preamble">
+<div class="sectionbody">
+<div class="admonitionblock important">
 <table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Version</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>OS</td>
-      <td>Ubuntu 16.04.4 LTS (GNU/Linux 4.4.0-116-generic x86_64)</td>
-    </tr>
-    <tr>
-      <td>Docker</td>
-      <td>17.12.1-ce, build 7390fc6</td>
-    </tr>
-  </tbody>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>We code for compiling.</p>
+</div>
+<div class="paragraph">
+<p>We code for running.</p>
+</div>
+<div class="paragraph">
+<p>We code for changing.</p>
+</div>
+</td>
+</tr>
 </table>
-
-<h3 id="docker">Docker</h3>
-
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="repository-pattern">Repository Pattern</h2>
+<div class="sectionbody">
+<div class="quoteblock">
 <blockquote>
-  <p>Docker provides a way to run applications securely isolated in a container, packaged with all its dependencies and libraries.</p>
+<div class="paragraph">
+<p>Mediates between the domain and data mapping layers using a collection-like interface for accessing domain objects.</p>
+</div>
 </blockquote>
-
-<h4 id="install-docker">Install Docker</h4>
-
-<p>See offical document <a href="https://docs.docker.com/install/linux/docker-ce/ubuntu/#install-docker-ce-1">Install Docker</a>.</p>
-
-<h4 id="enable-remote-api">Enable Remote API</h4>
-
-<p>Set the hosts array in the <code class="language-plaintext highlighter-rouge">/etc/docker/daemon.json</code> to connect to the UNIX socket and an IP address, as follows:</p>
-
-<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
-  </span><span class="nl">"hosts"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"fd://"</span><span class="p">,</span><span class="w"> </span><span class="s2">"tcp://0.0.0.0:4243"</span><span class="p">]</span><span class="w">
-</span><span class="p">}</span><span class="w">
-</span></code></pre></div></div>
-
-<p>Restart docker daemon</p>
-
-<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>service docker restart
-</code></pre></div></div>
-
-<p>It may get error:</p>
-
-<pre><code class="language-txt">unable to configure the Docker daemon with file /etc/docker/daemon.json: the following directives are specified both as a flag and in the configuration file: hosts: (from flag: [fd://], from file: [tcp://0.0.0.0:4243])
-</code></pre>
-
-<p>It because <code class="language-plaintext highlighter-rouge">docker.service</code> hard code argument <code class="language-plaintext highlighter-rouge">-H fd://</code> for <code class="language-plaintext highlighter-rouge">/usr/bin/dockerd</code>. Edit <code class="language-plaintext highlighter-rouge">/lib/systemd/system/docker.service</code>, change <code class="language-plaintext highlighter-rouge">ExecStart=/usr/bin/dockerd -H fd://</code> to <code class="language-plaintext highlighter-rouge">ExecStart=/usr/bin/dockerd</code>.</p>
-
-<pre><code class="language-txt">[Service]
-Type=notify
-# the default is not to use systemd for cgroups because the delegate issues still
-# exists and systemd currently does not support the cgroup feature set required
-# for containers run by docker
-ExecStart=/usr/bin/dockerd
-ExecReload=/bin/kill -s HUP $MAINPID
-LimitNOFILE=1048576
-</code></pre>
-
-<p>Reload <code class="language-plaintext highlighter-rouge">docker.service</code></p>
-
-<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>systemctl daemon-reload
-</code></pre></div></div>
-
-<p>Then restart docker daemon</p>
-
-<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>service docker restart
-</code></pre></div></div>
-
-<h4 id="verify-docker-remote-api">Verify Docker Remote API</h4>
-
-<p>List installed images by commandline client <code class="language-plaintext highlighter-rouge">docker</code>, it commuicates with docker daemon via sock <code class="language-plaintext highlighter-rouge">unix:///var/run/docker.sock</code></p>
-
-<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>dev@ubuntu-vb:~<span class="nv">$ </span>docker image <span class="nb">ls
-</span>REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
-sath89/oracle-12c   latest              17cd1ab9d9a7        3 months ago        5.7GB
-hello-world         latest              f2a91732366c        3 months ago        1.85kB
-</code></pre></div></div>
-
-<p>Send <code class="language-plaintext highlighter-rouge">GET</code> HTTP request to <code class="language-plaintext highlighter-rouge">http://ubuntu-vb:4243/images/json</code>, it should get same image list as via commandline client <code class="language-plaintext highlighter-rouge">docker</code>.</p>
-
-<div class="language-http highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">GET</span> <span class="nn">/images/json</span> <span class="k">HTTP</span><span class="o">/</span><span class="m">1.1</span>
-<span class="na">Host</span><span class="p">:</span> <span class="s">ubuntu-vb:4243</span>
-<span class="na">Connection</span><span class="p">:</span> <span class="s">keep-alive</span>
-<span class="na">Cache-Control</span><span class="p">:</span> <span class="s">max-age=0</span>
-<span class="na">Upgrade-Insecure-Requests</span><span class="p">:</span> <span class="s">1</span>
-<span class="na">User-Agent</span><span class="p">:</span> <span class="s">Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3202.94 Safari/537.36</span>
-<span class="na">Accept</span><span class="p">:</span> <span class="s">text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8</span>
-<span class="na">Accept-Encoding</span><span class="p">:</span> <span class="s">gzip, deflate</span>
-<span class="na">Accept-Language</span><span class="p">:</span> <span class="s">zh-CN,zh;q=0.9,en;q=0.8</span>
-</code></pre></div></div>
-
-<div class="language-http highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">HTTP</span><span class="o">/</span><span class="m">1.1</span> <span class="m">200</span> <span class="ne">OK</span>
-<span class="na">Api-Version</span><span class="p">:</span> <span class="s">1.35</span>
-<span class="na">Content-Type</span><span class="p">:</span> <span class="s">application/json</span>
-<span class="na">Docker-Experimental</span><span class="p">:</span> <span class="s">false</span>
-<span class="na">Ostype</span><span class="p">:</span> <span class="s">linux</span>
-<span class="na">Server</span><span class="p">:</span> <span class="s">Docker/17.12.1-ce (linux)</span>
-<span class="na">Date</span><span class="p">:</span> <span class="s">Sat, 17 Mar 2018 13:34:59 GMT</span>
-<span class="na">Content-Length</span><span class="p">:</span> <span class="s">682</span>
-
-<span class="p">[{</span><span class="w">
-    </span><span class="nl">"Containers"</span><span class="p">:</span><span class="w"> </span><span class="mi">-1</span><span class="p">,</span><span class="w">
-    </span><span class="nl">"Created"</span><span class="p">:</span><span class="w"> </span><span class="mi">1512650278</span><span class="p">,</span><span class="w">
-    </span><span class="nl">"Id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"sha256:17cd1ab9d9a7faf883ec2a0b3be19c221fe38212961c925f289e88823ed24a9c"</span><span class="p">,</span><span class="w">
-    </span><span class="nl">"Labels"</span><span class="p">:</span><span class="w"> </span><span class="p">{},</span><span class="w">
-    </span><span class="nl">"ParentId"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
-    </span><span class="nl">"RepoDigests"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"sath89/oracle-12c@sha256:a0f6f1cfd3738b0c00f4025a656335b53c205b3bfc0722908ee7b1469111665b"</span><span class="p">],</span><span class="w">
-    </span><span class="nl">"RepoTags"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"sath89/oracle-12c:latest"</span><span class="p">],</span><span class="w">
-    </span><span class="nl">"SharedSize"</span><span class="p">:</span><span class="w"> </span><span class="mi">-1</span><span class="p">,</span><span class="w">
-    </span><span class="nl">"Size"</span><span class="p">:</span><span class="w"> </span><span class="mi">5703441170</span><span class="p">,</span><span class="w">
-    </span><span class="nl">"VirtualSize"</span><span class="p">:</span><span class="w"> </span><span class="mi">5703441170</span><span class="w">
-</span><span class="p">},</span><span class="w"> </span><span class="p">{</span><span class="w">
-    </span><span class="nl">"Containers"</span><span class="p">:</span><span class="w"> </span><span class="mi">-1</span><span class="p">,</span><span class="w">
-    </span><span class="nl">"Created"</span><span class="p">:</span><span class="w"> </span><span class="mi">1511223798</span><span class="p">,</span><span class="w">
-    </span><span class="nl">"Id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"sha256:f2a91732366c0332ccd7afd2a5c4ff2b9af81f549370f7a19acd460f87686bc7"</span><span class="p">,</span><span class="w">
-    </span><span class="nl">"Labels"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
-    </span><span class="nl">"ParentId"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
-    </span><span class="nl">"RepoDigests"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"hello-world@sha256:97ce6fa4b6cdc0790cda65fe7290b74cfebd9fa0c9b8c38e979330d547d22ce1"</span><span class="p">],</span><span class="w">
-    </span><span class="nl">"RepoTags"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"hello-world:latest"</span><span class="p">],</span><span class="w">
-    </span><span class="nl">"SharedSize"</span><span class="p">:</span><span class="w"> </span><span class="mi">-1</span><span class="p">,</span><span class="w">
-    </span><span class="nl">"Size"</span><span class="p">:</span><span class="w"> </span><span class="mi">1848</span><span class="p">,</span><span class="w">
-    </span><span class="nl">"VirtualSize"</span><span class="p">:</span><span class="w"> </span><span class="mi">1848</span><span class="w">
-</span><span class="p">}]</span><span class="w">
-</span></code></pre></div></div>
-
-<h3 id="dockerizing-oracle-database">Dockerizing Oracle Database</h3>
-
-<p>Oracle does not offer offical docker image of Oracle Database, but provide <a href="https://github.com/oracle/docker-images/tree/master/OracleDatabase/SingleInstance">docker file</a>, allow users to build image by themselves. Besides, there are a lot of thrid party Oracle Database docker images. Here I use third party Oracle Database docker images <a href="https://hub.docker.com/r/sath89/oracle-xe-11g/">sath89/oracle-xe-11g</a> for convience.</p>
-
-<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker pull sath89/oracle-xe-11g
-</code></pre></div></div>
-
-<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker run <span class="nt">-d</span> <span class="nt">-e</span> <span class="nv">WEB_CONSOLE</span><span class="o">=</span><span class="nb">false</span> <span class="nt">-p</span> 1521:1521 sath89/oracle-xe-11g
-</code></pre></div></div>
-
-<pre><code class="language-txt">port: 1521
-sid: xe
-service name: xe
-username: system
-password: oracle
-</code></pre>
-
-<div class="language-http highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">POST</span> <span class="nn">/containers/create</span> <span class="k">HTTP</span><span class="o">/</span><span class="m">1.1</span>
-<span class="na">content-type</span><span class="p">:</span> <span class="s">application/json</span>
-
-<span class="p">{</span><span class="w">
-    </span><span class="nl">"Env"</span><span class="p">:[</span><span class="w">
-        </span><span class="s2">"WEB_CONSOLE=false"</span><span class="w">    </span><span class="p">],</span><span class="w">
-    </span><span class="nl">"Image"</span><span class="p">:</span><span class="s2">"sath89/oracle-xe-11g"</span><span class="p">,</span><span class="w">
-    </span><span class="nl">"HostConfig"</span><span class="p">:{</span><span class="w">
-        </span><span class="nl">"PortBindings"</span><span class="p">:{</span><span class="w">
-            </span><span class="nl">"1521/tcp"</span><span class="p">:[</span><span class="w">
-                </span><span class="p">{</span><span class="w">
-                    </span><span class="nl">"HostPort"</span><span class="p">:</span><span class="s2">"1521"</span><span class="w">
-                </span><span class="p">}</span><span class="w">
-            </span><span class="p">]</span><span class="w">
-        </span><span class="p">}</span><span class="w">
-    </span><span class="p">}</span><span class="w">
-</span><span class="p">}</span><span class="w">
-</span></code></pre></div></div>
-
-<div class="language-http highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">HTTP</span><span class="o">/</span><span class="m">1.1</span> <span class="m">201</span> <span class="ne">Created</span>
-<span class="na">api-version</span><span class="p">:</span> <span class="s">1.35</span>
-<span class="na">content-type</span><span class="p">:</span> <span class="s">application/json</span>
-<span class="na">docker-experimental</span><span class="p">:</span> <span class="s">false</span>
-<span class="na">ostype</span><span class="p">:</span> <span class="s">linux</span>
-<span class="na">server</span><span class="p">:</span> <span class="s">Docker/17.12.1-ce (linux)</span>
-<span class="na">date</span><span class="p">:</span> <span class="s">Mon, 19 Mar 2018 13:57:28 GMT</span>
-<span class="na">content-length</span><span class="p">:</span> <span class="s">90</span>
-
-<span class="p">{</span><span class="w">
-</span><span class="nl">"Id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0eb6f3bfcdeba9fd604bae3f684d077a59b8a5c8daad0fa947977a284e80ac93"</span><span class="p">,</span><span class="w">
-</span><span class="nl">"Warnings"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
-</span><span class="p">}</span><span class="w">
-</span></code></pre></div></div>
-
-<div class="language-http highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">POST</span> <span class="nn">/containers/{containerId}/start</span> <span class="k">HTTP</span><span class="o">/</span><span class="m">1.1</span>
-</code></pre></div></div>
-
-<div class="language-http highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">HTTP</span><span class="o">/</span><span class="m">1.1</span> <span class="m">204</span> <span class="ne">No Content</span>
-<span class="na">api-version</span><span class="p">:</span> <span class="s">1.35</span>
-<span class="na">docker-experimental</span><span class="p">:</span> <span class="s">false</span>
-<span class="na">ostype</span><span class="p">:</span> <span class="s">linux</span>
-<span class="na">server</span><span class="p">:</span> <span class="s">Docker/17.12.1-ce (linux)</span>
-<span class="na">date</span><span class="p">:</span> <span class="s">Mon, 19 Mar 2018 14:04:59 GMT</span>
-
-</code></pre></div></div>
-
-<div class="language-http highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">POST</span> <span class="nn">/containers/{containerId}/stop</span> <span class="k">HTTP</span><span class="o">/</span><span class="m">1.1</span>
-</code></pre></div></div>
-
-<div class="language-http highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">HTTP</span><span class="o">/</span><span class="m">1.1</span> <span class="m">204</span> <span class="ne">No Content</span>
-<span class="na">api-version</span><span class="p">:</span> <span class="s">1.35</span>
-<span class="na">docker-experimental</span><span class="p">:</span> <span class="s">false</span>
-<span class="na">ostype</span><span class="p">:</span> <span class="s">linux</span>
-<span class="na">server</span><span class="p">:</span> <span class="s">Docker/17.12.1-ce (linux)</span>
-<span class="na">date</span><span class="p">:</span> <span class="s">Mon, 19 Mar 2018 14:02:34 GMT</span>
-
-</code></pre></div></div>
-
-<div class="language-http highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">DELETE</span> <span class="nn">/containers/{containerId}</span> <span class="k">HTTP</span><span class="o">/</span><span class="m">1.1</span>
-</code></pre></div></div>
-
-<div class="language-http highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">HTTP</span><span class="o">/</span><span class="m">1.1</span> <span class="m">204</span> <span class="ne">No Content</span>
-<span class="na">api-version</span><span class="p">:</span> <span class="s">1.35</span>
-<span class="na">docker-experimental</span><span class="p">:</span> <span class="s">false</span>
-<span class="na">ostype</span><span class="p">:</span> <span class="s">linux</span>
-<span class="na">server</span><span class="p">:</span> <span class="s">Docker/17.12.1-ce (linux)</span>
-<span class="na">date</span><span class="p">:</span> <span class="s">Mon, 19 Mar 2018 14:07:41 GMT</span>
-
-</code></pre></div></div>
-
-<p>Force delete container</p>
-
-<div class="language-http highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">DELETE</span> <span class="nn">/containers/{containerId}?force=true</span> <span class="k">HTTP</span><span class="o">/</span><span class="m">1.1</span>
-</code></pre></div></div>
-
-<div class="language-http highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">HTTP</span><span class="o">/</span><span class="m">1.1</span> <span class="m">204</span> <span class="ne">No Content</span>
-<span class="na">api-version</span><span class="p">:</span> <span class="s">1.35</span>
-<span class="na">docker-experimental</span><span class="p">:</span> <span class="s">false</span>
-<span class="na">ostype</span><span class="p">:</span> <span class="s">linux</span>
-<span class="na">server</span><span class="p">:</span> <span class="s">Docker/17.12.1-ce (linux)</span>
-<span class="na">date</span><span class="p">:</span> <span class="s">Mon, 19 Mar 2018 14:09:53 GMT</span>
-</code></pre></div></div>
-
-<h3 id="test-case">Test Case</h3>
-
-<p>JUnit defines below five phases for test case:</p>
-
+</div>
+<div class="paragraph">
+<p>Domain Driven Design is domain centric, and domain data persistance (is abstracted as data mapping) is mandatory for almost application.</p>
+</div>
+<div class="paragraph">
+<p>Repository plays as an interface between client code and data mapping layers, hides complexity and isolates changes of data mapping layers from client code.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="/assets/generated_diagrams/diag-5bb8a0f9b2aa50ba684bb435bf6a0962.png" alt="diag 5bb8a0f9b2aa50ba684bb435bf6a0962" width="374" height="418">
+</div>
+</div>
+<div class="paragraph">
+<p>Through repository, client code could access and persisten entity instances by collection-like and domain-centric interface. Because repository isolates changes of data mapping layers from client code, therefore it is easy to change data mapping layers implemenation. For example, it defines a repository interface and two implementations:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="/assets/generated_diagrams/diag-dbd212b9a8b6ed4b0ed14d98493030ee.png" alt="diag dbd212b9a8b6ed4b0ed14d98493030ee" width="325" height="200">
+</div>
+</div>
+<div class="paragraph">
+<p>When we changed the data mapping layer from JPA to MongoDB, it need not change any client code. Because client code depends on repository interface.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="/assets/generated_diagrams/diag-5e1c65a27b3dcfd6d9d67d0830d5c455.png" alt="diag 5e1c65a27b3dcfd6d9d67d0830d5c455" width="418" height="448">
+</div>
+<div class="title">Figure 1. JPA data mapping layer</div>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="/assets/generated_diagrams/diag-164625319346b449b4558c532db883eb.png" alt="diag 164625319346b449b4558c532db883eb" width="542" height="448">
+</div>
+<div class="title">Figure 2. MongoDB data mapping layer</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="data-mapper-pattern">Data Mapper Pattern</h2>
+<div class="sectionbody">
+<div class="quoteblock">
+<blockquote>
+<div class="paragraph">
+<p>In software engineering, the data mapper pattern is an architectural pattern. It was named by Martin Fowler in this 2003 book Patterns of Enterprise Application Architecture. The interface of an object conforming to this pattern would include functions such as Create, Read, Update, and Delete, that operate on objects that represent domain entity types in a data store.</p>
+</div>
+<div class="paragraph">
+<p>A Data Mapper is a Data Access Layer that performs bidirectional transfer of data between a persistent data store (often a relational database) and an in-memory data representation (the domain layer). The goal of the pattern is to keep the in-memory representation and the persistent data store independent of each other and the data mapper itself. The layer is composed of one or more mappers (or Data Access Objects), performing the data transfer. Mapper implementations vary in scope. Generic mappers will handle many different domain entity types, dedicated mappers will handle one or a few.</p>
+</div>
+</blockquote>
+<div class="attribution">
+&#8212; Data mapper pattern<br>
+<cite>https://en.wikipedia.org/wiki/Data_mapper_pattern</cite>
+</div>
+</div>
+<div class="paragraph">
+<p>The pattern descibes data access by descriptive approach. It defines elements of in-memory data representation and data store, and maps them. Take Object/Relation Mapping as an example, it defines elements of object represnetation:</p>
+</div>
+<div class="ulist">
 <ul>
-  <li>BeforeClass</li>
-  <li>SetUp</li>
-  <li>Test</li>
-  <li>TearDown</li>
-  <li>AfterClass</li>
+<li>
+<p>class</p>
+</li>
+<li>
+<p>object</p>
+</li>
+<li>
+<p>field</p>
+</li>
 </ul>
-
-<p>Each <strong>test case</strong> is able to contain one or more <strong>test</strong>. It firstly executes <strong>BeforeClass</strong>, then executes <strong>test</strong> one by one, finally executes <strong>AfterClass</strong>. For each <strong>test</strong>, it executes <strong>SetUp</strong> and <strong>TearDown</strong> before and after.</p>
-
-<pre><code class="language-puml">@startuml
-start
-:BeforeClass;
-repeat
-    :SetUp;
-    :Test;
-    :TearDown;
-repeat while (more test?)
-:AfterClass;
-end
-@enduml
-</code></pre>
-
-<p>For keeping <strong>test case</strong> independent and reducing unneccessary overhead, it should create separate Oracle database instance for each <strong>test case</strong>, and all <strong>test</strong> share one instance. Thus it create Oracle database instance on phase <strong>BeforeClass</strong> and destroy it on phase <strong>AfterClass</strong>.<br />
-<a href="https://github.com/spotify/docker-client">docker-client</a> is</p>
-
+</div>
+<div class="paragraph">
+<p>and defines elements of Relational database:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>table</p>
+</li>
+<li>
+<p>record</p>
+</li>
+<li>
+<p>column</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>and then maps them:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>class maps to table</p>
+</li>
+<li>
+<p>object maps to record</p>
+</li>
+<li>
+<p>field maps to column</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>With data mapper pattern, application developer need not consider data access case by case, but describe the mapping of elements of in-memory and data store representations.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="one-repository-per-entity">One Repository per Entity</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Per <strong>Single-responsibility principle</strong>, one repository should only handle one entity.</p>
+</div>
+<div class="quoteblock">
 <blockquote>
-  <p>a simple docker client for JVM</p>
+<div class="paragraph">
+<p>The single-responsibility principle (SRP) is a computer-programming principle that states that every module or class should have responsiblity over a single part of the functionality provided by the software, and that responsibility should be entirely encapsulated by the class, module or function. All its services should be narrowly aligned with that responsiblity. Robert C. Martin expresses the principle as "A class should have only one reason to change." although, because of confusion around the word "reason" he more recently stated "This principle is about people."</p>
+</div>
 </blockquote>
-
-<p>which contributed by <a href="https://spotify.github.io/">Spotify</a>. With <a href="https://github.com/spotify/docker-client">docker-client</a>, it is easy to access Docker API.</p>
-
-<h4 id="create-oracle-database-instance-when-beforeclass">Create Oracle Database Instance when BeforeClass</h4>
-
-<p>Steps to create an Oracle database instance in Docker:</p>
-
-<ol>
-  <li>create container, specify <strong>image</strong>, <strong>port binding</strong> and <strong>evironment valirables</strong></li>
-  <li>start container</li>
-  <li>waiting for database up, Oracle database instance is not ready even <strong>start container</strong> request completed. Therefore it need to wait until Oracle database instance is really up</li>
-  <li>pass database instance connection information, includes JDBC URL, username, password and driver class</li>
-</ol>
-
-<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="nd">@BeforeClass</span>
-  <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">beforeClass</span><span class="o">()</span> <span class="kd">throws</span> <span class="nc">Exception</span> <span class="o">{</span>
-    <span class="nc">String</span> <span class="n">dockerHost</span> <span class="o">=</span> <span class="nc">System</span><span class="o">.</span><span class="na">getProperty</span><span class="o">(</span><span class="no">DOCKER_HOST</span><span class="o">,</span> <span class="s">"unix:///var/run/docker.sock"</span><span class="o">);</span>
-    <span class="nc">String</span> <span class="n">databaseHost</span> <span class="o">=</span> <span class="nc">System</span><span class="o">.</span><span class="na">getProperty</span><span class="o">(</span><span class="no">DOCKER_DATABASE_HOST</span><span class="o">,</span> <span class="s">"127.0.0.1"</span><span class="o">);</span>
-    <span class="nc">String</span> <span class="n">image</span> <span class="o">=</span> <span class="nc">System</span><span class="o">.</span><span class="na">getProperty</span><span class="o">(</span><span class="no">DOCKER_IMAGE_ORACLE</span><span class="o">,</span> <span class="s">"sath89/oracle-xe-11g"</span><span class="o">);</span>
-    <span class="nc">String</span> <span class="n">urlTemplate</span> <span class="o">=</span> <span class="nc">System</span>
-        <span class="o">.</span><span class="na">getProperty</span><span class="o">(</span><span class="no">DOCKER_DATABASE_URL_TEMPLATE</span><span class="o">,</span> <span class="s">"jdbc:oracle:thin:@%s:%d:xe"</span><span class="o">);</span>
-    <span class="nc">String</span> <span class="n">databaseUsername</span> <span class="o">=</span> <span class="nc">System</span><span class="o">.</span><span class="na">getProperty</span><span class="o">(</span><span class="no">DOCKER_DATABASE_USERNAME</span><span class="o">,</span> <span class="s">"system"</span><span class="o">);</span>
-    <span class="nc">String</span> <span class="n">databasePassword</span> <span class="o">=</span> <span class="nc">System</span><span class="o">.</span><span class="na">getProperty</span><span class="o">(</span><span class="no">DOCKER_DATABASE_PASSWORD</span><span class="o">,</span> <span class="s">"oracle"</span><span class="o">);</span>
-    <span class="nc">String</span> <span class="n">driverClass</span> <span class="o">=</span> <span class="nc">System</span>
-        <span class="o">.</span><span class="na">getProperty</span><span class="o">(</span><span class="no">DOCKER_DATABASE_DRIVER_CLASS</span><span class="o">,</span> <span class="s">"oracle.jdbc.driver.OracleDriver"</span><span class="o">);</span>
-
-    <span class="nc">DefaultDockerClient</span> <span class="n">docker</span> <span class="o">=</span> <span class="nc">DefaultDockerClient</span><span class="o">.</span><span class="na">builder</span><span class="o">().</span><span class="na">uri</span><span class="o">(</span><span class="k">new</span> <span class="no">URI</span><span class="o">(</span><span class="n">dockerHost</span><span class="o">)).</span><span class="na">build</span><span class="o">();</span>
-    <span class="nc">Map</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">,</span> <span class="nc">List</span><span class="o">&lt;</span><span class="nc">PortBinding</span><span class="o">&gt;&gt;</span> <span class="n">portBindings</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">TreeMap</span><span class="o">&lt;&gt;();</span>
-    <span class="n">portBindings</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">"1521/tcp"</span><span class="o">,</span> <span class="nc">Arrays</span><span class="o">.</span><span class="na">asList</span><span class="o">(</span><span class="nc">PortBinding</span><span class="o">.</span><span class="na">randomPort</span><span class="o">(</span><span class="s">"0.0.0.0"</span><span class="o">)));</span>
-    <span class="nc">ContainerConfig</span> <span class="n">config</span> <span class="o">=</span> <span class="nc">ContainerConfig</span><span class="o">.</span><span class="na">builder</span><span class="o">().</span><span class="na">image</span><span class="o">(</span><span class="n">image</span><span class="o">)</span>
-        <span class="o">.</span><span class="na">hostConfig</span><span class="o">(</span><span class="nc">HostConfig</span><span class="o">.</span><span class="na">builder</span><span class="o">().</span><span class="na">portBindings</span><span class="o">(</span><span class="n">portBindings</span><span class="o">).</span><span class="na">build</span><span class="o">())</span>
-        <span class="o">.</span><span class="na">env</span><span class="o">(</span><span class="s">"WEB_CONSOLE=false"</span><span class="o">)</span>
-        <span class="o">.</span><span class="na">build</span><span class="o">();</span>
-    <span class="nc">ContainerCreation</span> <span class="n">creation</span> <span class="o">=</span> <span class="n">docker</span><span class="o">.</span><span class="na">createContainer</span><span class="o">(</span><span class="n">config</span><span class="o">);</span>
-    <span class="n">docker</span><span class="o">.</span><span class="na">startContainer</span><span class="o">(</span><span class="n">creation</span><span class="o">.</span><span class="na">id</span><span class="o">());</span>
-    <span class="nc">ContainerInfo</span> <span class="n">info</span> <span class="o">=</span> <span class="n">docker</span><span class="o">.</span><span class="na">inspectContainer</span><span class="o">(</span><span class="n">creation</span><span class="o">.</span><span class="na">id</span><span class="o">());</span>
-    <span class="kd">final</span> <span class="kt">int</span> <span class="n">port</span> <span class="o">=</span> <span class="nc">Integer</span>
-        <span class="o">.</span><span class="na">valueOf</span><span class="o">(</span><span class="n">info</span><span class="o">.</span><span class="na">networkSettings</span><span class="o">().</span><span class="na">ports</span><span class="o">().</span><span class="na">get</span><span class="o">(</span><span class="s">"1521/tcp"</span><span class="o">).</span><span class="na">get</span><span class="o">(</span><span class="mi">0</span><span class="o">).</span><span class="na">hostPort</span><span class="o">());</span>
-
-    <span class="nc">System</span><span class="o">.</span><span class="na">setProperty</span><span class="o">(</span><span class="no">DOCKER_DATABASE_CONTAINER_ID</span><span class="o">,</span> <span class="n">creation</span><span class="o">.</span><span class="na">id</span><span class="o">());</span>
-
-    <span class="c1">//Thread.sleep(60000);</span>
-    <span class="kd">final</span> <span class="kt">long</span> <span class="no">MAX_WAIT_SECOND</span> <span class="o">=</span> <span class="mi">90</span><span class="o">;</span>
-    <span class="kt">long</span> <span class="n">startCheckAt</span> <span class="o">=</span> <span class="nc">System</span><span class="o">.</span><span class="na">currentTimeMillis</span><span class="o">()</span> <span class="o">/</span> <span class="mi">1000</span><span class="o">;</span>
-    <span class="k">while</span> <span class="o">(!</span><span class="n">checkIfUp</span><span class="o">(</span><span class="n">driverClass</span><span class="o">,</span> <span class="nc">String</span><span class="o">.</span><span class="na">format</span><span class="o">(</span><span class="n">urlTemplate</span><span class="o">,</span> <span class="n">databaseHost</span><span class="o">,</span> <span class="n">port</span><span class="o">),</span> <span class="n">databaseUsername</span><span class="o">,</span>
-        <span class="n">databasePassword</span><span class="o">))</span> <span class="o">{</span>
-      <span class="kt">long</span> <span class="n">now</span> <span class="o">=</span> <span class="nc">System</span><span class="o">.</span><span class="na">currentTimeMillis</span><span class="o">()</span> <span class="o">/</span> <span class="mi">1000</span><span class="o">;</span>
-      <span class="no">LOGGER</span><span class="o">.</span><span class="na">info</span><span class="o">(</span>
-          <span class="nc">String</span><span class="o">.</span><span class="na">format</span><span class="o">(</span><span class="s">"Checking if database is up for %d second"</span><span class="o">,</span> <span class="n">now</span> <span class="o">-</span> <span class="n">startCheckAt</span><span class="o">));</span>
-      <span class="k">if</span> <span class="o">(</span><span class="n">now</span> <span class="o">-</span> <span class="n">startCheckAt</span> <span class="o">&gt;</span> <span class="no">MAX_WAIT_SECOND</span><span class="o">)</span> <span class="o">{</span>
-        <span class="k">throw</span> <span class="k">new</span> <span class="nf">Exception</span><span class="o">(</span><span class="nc">String</span>
-            <span class="o">.</span><span class="na">format</span><span class="o">(</span><span class="s">"Start database fail, not ready after %d seconds"</span><span class="o">,</span> <span class="n">now</span> <span class="o">-</span> <span class="n">startCheckAt</span><span class="o">));</span>
-      <span class="o">}</span>
-      <span class="nc">Thread</span><span class="o">.</span><span class="na">sleep</span><span class="o">(</span><span class="mi">5000</span><span class="o">);</span>
-    <span class="o">}</span>
-
-    <span class="nc">System</span><span class="o">.</span><span class="na">setProperty</span><span class="o">(</span><span class="nc">PropertiesBasedJdbcDatabaseTester</span><span class="o">.</span><span class="na">DBUNIT_CONNECTION_URL</span><span class="o">,</span>
-        <span class="nc">String</span><span class="o">.</span><span class="na">format</span><span class="o">(</span><span class="n">urlTemplate</span><span class="o">,</span> <span class="n">databaseHost</span><span class="o">,</span> <span class="n">port</span><span class="o">));</span>
-    <span class="nc">System</span><span class="o">.</span><span class="na">setProperty</span><span class="o">(</span><span class="nc">PropertiesBasedJdbcDatabaseTester</span><span class="o">.</span><span class="na">DBUNIT_USERNAME</span><span class="o">,</span> <span class="n">databaseUsername</span><span class="o">);</span>
-    <span class="nc">System</span><span class="o">.</span><span class="na">setProperty</span><span class="o">(</span><span class="nc">PropertiesBasedJdbcDatabaseTester</span><span class="o">.</span><span class="na">DBUNIT_PASSWORD</span><span class="o">,</span> <span class="n">databasePassword</span><span class="o">);</span>
-    <span class="nc">System</span><span class="o">.</span><span class="na">setProperty</span><span class="o">(</span><span class="nc">PropertiesBasedJdbcDatabaseTester</span><span class="o">.</span><span class="na">DBUNIT_DRIVER_CLASS</span><span class="o">,</span> <span class="n">driverClass</span><span class="o">);</span>
-  <span class="o">}</span>
-</code></pre></div></div>
-
-<h4 id="destory-oracle-database-instance-when-afterclass">Destory Oracle Database Instance when AfterClass</h4>
-
-<p>An elegent way to destroy a container is that stop container firstly then remove it. But stopping a Oracle database instance is a time-consuming operation. Therefore I take a rude but efficient way, kill then remove.</p>
-
-<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="nd">@AfterClass</span>
-  <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">afterClass</span><span class="o">()</span> <span class="kd">throws</span> <span class="nc">Exception</span> <span class="o">{</span>
-    <span class="nc">String</span> <span class="n">dockerHost</span> <span class="o">=</span> <span class="nc">System</span><span class="o">.</span><span class="na">getProperty</span><span class="o">(</span><span class="s">"docker.host"</span><span class="o">,</span> <span class="s">"unix:///var/run/docker.sock"</span><span class="o">);</span>
-    <span class="nc">String</span> <span class="n">containerId</span> <span class="o">=</span> <span class="nc">System</span><span class="o">.</span><span class="na">getProperty</span><span class="o">(</span><span class="s">"docker.database.containerId"</span><span class="o">);</span>
-
-    <span class="nc">DefaultDockerClient</span> <span class="n">docker</span> <span class="o">=</span> <span class="nc">DefaultDockerClient</span><span class="o">.</span><span class="na">builder</span><span class="o">().</span><span class="na">uri</span><span class="o">(</span><span class="k">new</span> <span class="no">URI</span><span class="o">(</span><span class="n">dockerHost</span><span class="o">)).</span><span class="na">build</span><span class="o">();</span>
-    <span class="n">docker</span><span class="o">.</span><span class="na">killContainer</span><span class="o">(</span><span class="n">containerId</span><span class="o">);</span>
-    <span class="n">docker</span><span class="o">.</span><span class="na">removeContainer</span><span class="o">(</span><span class="n">containerId</span><span class="o">);</span>
-  <span class="o">}</span>
-</code></pre></div></div>
-
-<h3 id="continuous-integration">Continuous Integration</h3>
-
-<h4 id="travis-ci">Travis CI</h4>
-
-<p><code class="language-plaintext highlighter-rouge">.travis.yml</code></p>
-
-<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">language</span><span class="pi">:</span> <span class="s">java</span>
-<span class="na">sudo</span><span class="pi">:</span> <span class="s">required</span>
-<span class="na">services</span><span class="pi">:</span>
-  <span class="pi">-</span> <span class="s">docker</span>
-<span class="na">install</span><span class="pi">:</span> <span class="no">true</span>
-<span class="na">addons</span><span class="pi">:</span>
-  <span class="na">sonarcloud</span><span class="pi">:</span>
-    <span class="na">organization</span><span class="pi">:</span> <span class="s">$SONAR_CLOUD_ORGANIZATION</span>
-    <span class="na">token</span><span class="pi">:</span> <span class="s">$SONAR_CLOUD_TOKEN</span>
-<span class="na">jdk</span><span class="pi">:</span>
-  <span class="pi">-</span> <span class="s">oraclejdk8</span>
-<span class="na">before_install</span><span class="pi">:</span>
-  <span class="pi">-</span> <span class="s">docker pull sath89/oracle-xe-11g</span>
-<span class="na">cache</span><span class="pi">:</span>
-  <span class="na">directories</span><span class="pi">:</span>
-    <span class="pi">-</span> <span class="s1">'</span><span class="s">$HOME/.m2/repository'</span>
-    <span class="pi">-</span> <span class="s1">'</span><span class="s">$HOME/.sonar/cache'</span>
-<span class="na">jobs</span><span class="pi">:</span>
-  <span class="na">include</span><span class="pi">:</span>
-    <span class="pi">-</span> <span class="na">stage</span><span class="pi">:</span> <span class="s">compile</span>
-      <span class="na">script</span><span class="pi">:</span> <span class="s">mvn clean compile</span>
-    <span class="pi">-</span> <span class="na">stage</span><span class="pi">:</span> <span class="s">verify</span>
-      <span class="na">script</span><span class="pi">:</span> <span class="s">mvn org.jacoco:jacoco-maven-plugin:prepare-agent test sonar:sonar</span>
-<span class="na">stages</span><span class="pi">:</span>
-  <span class="pi">-</span> <span class="s">compile</span>
-  <span class="pi">-</span> <span class="s">verify</span>
-</code></pre></div></div>
-
-<p>Build log:<br />
-<a href="https://travis-ci.org/rscai/docker-mock-db/builds/359397887">https://travis-ci.org/rscai/docker-mock-db/builds/359397887</a></p>
-
-<h4 id="code-example">Code Example</h4>
-
-<p><a href="https://github.com/rscai/docker-mock-db">https://github.com/rscai/docker-mock-db</a></p>
-
+<div class="attribution">
+&#8212; Single-responsibility principle<br>
+<cite>https://en.wikipedia.org/wiki/Single-responsibility_principle</cite>
+</div>
+</div>
+<div class="paragraph">
+<p>Keeping one repository per entity could benefit developer:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>make repository small and clean</p>
+</li>
+<li>
+<p>changing data store solution per entity independently</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="spring-data">Spring Data</h2>
+<div class="sectionbody">
+<div class="quoteblock">
+<blockquote>
+<div class="paragraph">
+<p>Spring Data&#8217;s mission is to provide a familiar and consistent, Spring-based programming model for data access while still retaining the special traits of the underlying data store.</p>
+</div>
+<div class="paragraph">
+<p>It makes it easy to use data access technologies, relational and non-relational databases, map-reduce frameworks, and cloud-based data services. This is an umbrella project which contains many subprojects that are specifiv to a given database. The projects are developed by working together with many of the companies and developers that are behind these exciting technologies.</p>
+</div>
+</blockquote>
+<div class="attribution">
+&#8212; Spring Data<br>
+<cite>https://spring.io/projects/spring-data</cite>
+</div>
+</div>
+<div class="paragraph">
+<p>The core of Spring Data is Repository. Repositories of Spring data are organized in interface/abstract class/implementation class pattern. Take <code>InventoryItemRepository</code> as an example, it adopts RDMS as the data store of <code>InventoryItem</code>. Spring Data offers base interface <code>JpaRepository</code> and abstract class <code>SimpleJpaRepository</code> (<code>SimpleJpaRepository</code> is not implemented as an abstract class, but is designed as a base class for JPA repository implememntation class). Application developer defines entity-specific repository interface <code>InventoryItemRepository</code> which extends from interface <code>JpaRepository</code>. Spring Data will generate repository implementation <code>InventoryItemRepositoryImpl</code>.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="/assets/generated_diagrams/diag-f0d6ed742ecde72d78e1ab149132ff17.png" alt="diag f0d6ed742ecde72d78e1ab149132ff17" width="461" height="287">
+</div>
+<div class="title">Figure 3. Spring Data Repository</div>
+</div>
+</div>
+</div>
+<div class="sect1">
 <h2 id="reference">Reference</h2>
-
+<div class="sectionbody">
+<div class="ulist">
 <ul>
-  <li><a href="https://docs.docker.com/install/linux/docker-ce/ubuntu/#install-docker-ce-1">Install Docker</a></li>
-  <li><a href="https://docs.docker.com/engine/api/latest/">Docker Engine API</a></li>
-  <li>[Examples using the Docker Engine SDKs and Docker API](</li>
-  <li><a href="https://www.virtuallyghetto.com/2014/07/quick-tip-how-to-enable-docker-remote-api.html">Quick Tip – How to enable Docker Remote API?</a></li>
+<li>
+<p><a href="https://en.wikipedia.org/wiki/Data_mapper_pattern">Data mapper pattern</a></p>
+</li>
+<li>
+<p><a href="https://en.wikipedia.org/wiki/Single-responsibility_principle">Single-responsibility principle</a></p>
+</li>
 </ul>
-
+</div>
+</div>
+</div>
 
           
 

@@ -62,7 +62,7 @@
   "api_url": "https://api.github.com",
   "archived": false,
   "baseurl": "/pages/rscai/rscai.github.io",
-  "build_revision": "313d8b58503a7d5bd115e98310ac1020a5ee6a40",
+  "build_revision": "6738b16c22800a12e5bc2bb7d0bfee483932faaf",
   "clone_url": "https://github.com/rscai/rscai.github.io.git",
   "contributors": [
     {
@@ -105,7 +105,7 @@
       "received_events_url": "https://api.github.com/users/traviscibot/received_events",
       "type": "User",
       "site_admin": false,
-      "contributions": 6
+      "contributions": 7
     }
   ],
   "disabled": false,
@@ -4817,14 +4817,14 @@
       "releases_url": "https://api.github.com/repos/rscai/rscai.github.io/releases{/id}",
       "deployments_url": "https://api.github.com/repos/rscai/rscai.github.io/deployments",
       "created_at": "2017-09-05 13:12:01 UTC",
-      "updated_at": "2020-03-15 07:56:51 UTC",
-      "pushed_at": "2020-03-22 06:55:01 UTC",
+      "updated_at": "2020-03-22 06:57:45 UTC",
+      "pushed_at": "2020-05-03 06:46:30 UTC",
       "git_url": "git://github.com/rscai/rscai.github.io.git",
       "ssh_url": "git@github.com:rscai/rscai.github.io.git",
       "clone_url": "https://github.com/rscai/rscai.github.io.git",
       "svn_url": "https://github.com/rscai/rscai.github.io",
       "homepage": null,
-      "size": 4314,
+      "size": 4471,
       "stargazers_count": 0,
       "watchers_count": 0,
       "language": "HTML",
@@ -5594,13 +5594,13 @@
       "deployments_url": "https://api.github.com/repos/rscai/storify-admin-ui/deployments",
       "created_at": "2017-05-28 04:37:02 UTC",
       "updated_at": "2019-11-10 08:44:26 UTC",
-      "pushed_at": "2019-11-10 08:44:24 UTC",
+      "pushed_at": "2020-04-30 12:37:34 UTC",
       "git_url": "git://github.com/rscai/storify-admin-ui.git",
       "ssh_url": "git@github.com:rscai/storify-admin-ui.git",
       "clone_url": "https://github.com/rscai/storify-admin-ui.git",
       "svn_url": "https://github.com/rscai/storify-admin-ui",
       "homepage": null,
-      "size": 172,
+      "size": 571,
       "stargazers_count": 0,
       "watchers_count": 0,
       "language": "TypeScript",
@@ -5613,13 +5613,13 @@
       "mirror_url": null,
       "archived": false,
       "disabled": false,
-      "open_issues_count": 2,
+      "open_issues_count": 5,
       "license": null,
       "topics": [
 
       ],
       "forks": 0,
-      "open_issues": 2,
+      "open_issues": 5,
       "watchers": 0,
       "default_branch": "master"
     },
@@ -6452,6 +6452,8 @@
     <!-- generate toc -->
     <ul id="ul_toc" class="ul_toc">
   <li><a href="#what-is-api-testing">What is API Testing</a></li>
+  <li><a href="#what-is-restful">What is RESTful</a></li>
+  <li><a href="#spring-mvc-application">Spring MVC Application</a></li>
   <li><a href="#spring-mvc-test-framework">Spring MVC Test Framework</a></li>
   <li><a href="#configure-spring-mvc-test">Configure Spring MVC Test</a></li>
   <li><a href="#performing-requests">Performing Requests</a></li>
@@ -6537,27 +6539,58 @@
 <div class="sect1">
 <h2 id="what-is-api-testing">What is API Testing</h2>
 <div class="sectionbody">
+<div class="quoteblock">
+<blockquote>
 <div class="paragraph">
-<p>API is the interface between <strong>service</strong> and <strong>consumer</strong>. <strong>Consumer</strong> depends on <strong>API</strong> than <strong>service</strong>, it care behaviors of API more than service&#8217;s. Consumer could work well if behaviors of API satisfy.</p>
+<p>API testing is a type of software testing that invovles testing application programming interfaces (APIs) directly and as part of integration testing to determine if they meet expectations for functionality, reliability, performance, and security. Since APIs lack a GUI, API testing is performed at the message layer. API testing is now considered ciritcal for autmating testing because APIs now serve as the primary interface to application logic and because GUI tests are difficult to maintain with the short release cycles and frequent changes commonly used with Agile software development and DevOps.</p>
 </div>
-<div class="imageblock">
-<div class="content">
-<img src="/assets/generated_diagrams/diag-74c40c7d3f7171b0f309943c6fbf6b92.png" alt="diag 74c40c7d3f7171b0f309943c6fbf6b92" width="344" height="127">
-</div>
-</div>
-<div class="paragraph">
-<p>As pricinple of verifying what it depends on, it is sense to verify API&#8217;s behaviours than service&#8217;s implementation.</p>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="/assets/generated_diagrams/diag-6f74dabf32731fa6bc7ddff56ff0f7fb.png" alt="diag 6f74dabf32731fa6bc7ddff56ff0f7fb" width="403" height="127">
+</blockquote>
+<div class="attribution">
+&#8212; API testing<br>
+<cite>https://en.wikipedia.org/wiki/API_testing</cite>
 </div>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="spring-mvc-test-framework">Spring MVC Test Framework</h2>
+<h2 id="what-is-restful">What is RESTful</h2>
 <div class="sectionbody">
+<div class="quoteblock">
+<blockquote>
+<div class="paragraph">
+<p>Representational state transfer (REST) is a software architectural style that defines a set of constraints to be used for creating Web Services. Web services that conform to the REST architectural style, called RESTful Web services allow the requesting systems to access and manipulate textual representations of Web resources by using a uniform and predefined set of stateless oerations. Other kinds of Web services, such as SOAP Web services, expose their own arbitrary sets of operations.</p>
+</div>
+<div class="paragraph">
+<p>"Web resources" were first defined on the World Wid Web as documents or files identified by their URLs. However, today they have a much more generic and abstract definition that encompasses every thing, entity, or action that can be identified, named, addressed, handled, or performed, in any way whatsoever, on the Web. In a RESTful Web service, requests made to a resource&#8217;s URI will elicit a response with a payload formatted in HTML, XML, JSON, or some other format. The response can confirm that some alteration has been made to the resource state, and the response can provide hypertext links to other related resources. When HTTP is used, as is most common, the operations (HTTP methods) available are GET, HEAD, POST, PUT, PATCH, DELETE, CONNECT, OPTIONS and TRACE.</p>
+</div>
+<div class="paragraph">
+<p>By using a stateless protocol and standard operations, RESTful systems aim for fast performance, reliability, and the ability to grow by reusing components that can be managed and updated without affecting the system as a whole, even while it is running.</p>
+</div>
+</blockquote>
+<div class="attribution">
+&#8212; Representational state transfer<br>
+<cite>https://en.wikipedia.org/wiki/Representational_state_transfer</cite>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="spring-mvc-application">Spring MVC Application</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Spring MVC is the most popular framework to build RESTful Web services in Java world, at least till now.</p>
+</div>
+<div class="quoteblock">
+<blockquote>
+<div class="paragraph">
+<p>Spring Web MVC is the original web framework built on the Servlet API and has been included in the Spring Framework from the very beginning. The formal name, "Spring Web MVC", comes from the name of its source module (<code>spring-webmvc</code>), but it is more commonly known as "Spring MVC".</p>
+</div>
+</blockquote>
+<div class="attribution">
+&#8212; Spring Web MVC<br>
+<cite>https://docs.spring.io/spring/docs/current/spring-framework-reference/web.html#spring-web</cite>
+</div>
+</div>
 <div class="paragraph">
 <p>The core of Spring MVC is <code>DispatcherServlet</code>. <code>DispatcherServlet</code> is an implementation of <code>HttpServlet</code>, which intercept all incoming request and dispatch to <strong>controller</strong>. As it is a <strong>Servlet</strong>, <code>DispatcherServlet</code> is running inside a <strong>Servlet Container</strong>. Servlet container handles HTTP communication, listen on port, receive request package and convert to <code>HttpServletRequest</code> object, convert <code>HttpServletResponse</code> object which return by controller (actually it is rendered by <strong>View</strong>) and send to client application.</p>
 </div>
@@ -6566,6 +6599,81 @@
 <img src="/assets/generated_diagrams/diag-a048a79e429fc15425ced351eeaf1464.png" alt="diag a048a79e429fc15425ced351eeaf1464" width="535" height="309">
 </div>
 </div>
+<div class="paragraph">
+<p>The URI to controller method mappings are declared by annotations. For example,</p>
+</div>
+<div class="listingblock">
+<div class="title">ProductController.java</div>
+<div class="content">
+<pre class="rouge highlight"><code data-lang="java"><span class="nd">@RestController</span>
+<span class="nd">@RequestMapping</span><span class="o">(</span><span class="s">"products"</span><span class="o">)</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">ProductController</span> <span class="o">{</span>
+    <span class="o">...</span>
+    <span class="nd">@PostMapping</span>
+    <span class="kd">public</span> <span class="nc">Product</span> <span class="nf">create</span><span class="o">(</span><span class="nd">@RequestBody</span> <span class="nc">Product</span> <span class="n">entity</span><span class="o">)</span> <span class="o">{</span>
+        <span class="o">...</span>
+    <span class="o">}</span>
+    <span class="nd">@PutMapping</span><span class="o">(</span><span class="s">"{id}"</span><span class="o">)</span>
+    <span class="kd">public</span> <span class="nc">Product</span> <span class="nf">update</span><span class="o">(</span><span class="nd">@PathVariable</span><span class="o">(</span><span class="s">"id"</span><span class="o">)</span> <span class="nc">String</span> <span class="n">id</span><span class="o">,</span> <span class="nd">@RequestBody</span> <span class="nc">Product</span> <span class="n">entity</span><span class="o">)</span> <span class="o">{</span>
+        <span class="o">...</span>
+    <span class="o">}</span>
+    <span class="nd">@DeleteMapping</span><span class="o">(</span><span class="s">"{id}"</span><span class="o">)</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">delete</span><span class="o">(</span><span class="nd">@PathVariable</span><span class="o">(</span><span class="s">"id"</span><span class="o">)</span> <span class="nc">String</span> <span class="n">id</span><span class="o">)</span> <span class="o">{</span>
+        <span class="o">...</span>
+    <span class="o">}</span>
+    <span class="nd">@GetMapping</span><span class="o">(</span><span class="s">"{id}"</span><span class="o">)</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">getOne</span><span class="o">(</span><span class="nd">@PathVariable</span><span class="o">(</span><span class="s">"id"</span><span class="o">)</span> <span class="nc">String</span> <span class="n">id</span><span class="o">)</span> <span class="o">{</span>
+        <span class="o">...</span>
+    <span class="o">}</span>
+    <span class="o">...</span>
+<span class="o">}</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>It declares CRUD RESTful API against resource <code>Product</code>:</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 1. CRUD RESTful API</caption>
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">URI Pattern</th>
+<th class="tableblock halign-left valign-top">HTTP Method</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">/products</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">POST</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">create new product entity</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">/products/{id}</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">PUT</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">update the existed product which with id <code>id</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">/products/{id}</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">DELETE</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">delete the existed product which with id <code>id</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">/products/{id}</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">GET</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">get the existed product which with id <code>id</code></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="sect1">
+<h2 id="spring-mvc-test-framework">Spring MVC Test Framework</h2>
+<div class="sectionbody">
 <div class="quoteblock">
 <blockquote>
 <div class="paragraph">
@@ -6573,13 +6681,13 @@
 </div>
 </blockquote>
 </div>
-<div class="imageblock">
-<div class="content">
-<img src="/assets/generated_diagrams/diag-889087f19a8e1c9d2a9cfbb60f86ccf7.png" alt="diag 889087f19a8e1c9d2a9cfbb60f86ccf7" width="814" height="353">
-</div>
-</div>
 <div class="paragraph">
 <p>Spring Boot scan and assemble MockMvc, controllers, DispatcherServlet and other beans. MockMvc is invoking <code>doService</code> of DispatcherServlet for mocking HTTP request processing directly. Test case is able to perform request on DispatcherServelt through MockMvc.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="/assets/generated_diagrams/diag-26bafe30fbf52bfd6eabd9f9b6f077e4.png" alt="diag 26bafe30fbf52bfd6eabd9f9b6f077e4" width="535" height="561">
+</div>
 </div>
 </div>
 </div>
@@ -6590,21 +6698,19 @@
 <p>Auto-Configuration is the remakrable feature offered by Spring Boot. Unexpectedly, Spring MVC Test framework offers auto-configuration of MockMvc. Annotation <code>@AutoConfigureMockMvc</code> enable MockMvc auto configuration.</p>
 </div>
 <div class="listingblock">
-<div class="title">ProductImageTest.java</div>
+<div class="title">ProductTest.java</div>
 <div class="content">
 <pre class="rouge highlight"><code data-lang="java"><span class="nd">@ActiveProfiles</span><span class="o">({</span><span class="s">"test"</span><span class="o">})</span>
 <span class="nd">@RunWith</span><span class="o">(</span><span class="nc">SpringRunner</span><span class="o">.</span><span class="na">class</span><span class="o">)</span> <i class="conum" data-value="1"></i><b>(1)</b>
 <span class="nd">@SpringBootTest</span><span class="o">(</span><span class="n">classes</span> <span class="o">=</span> <span class="nc">CatalogApplication</span><span class="o">.</span><span class="na">class</span><span class="o">)</span> <i class="conum" data-value="2"></i><b>(2)</b>
 <span class="nd">@AutoConfigureMockMvc</span> <i class="conum" data-value="3"></i><b>(3)</b>
-<span class="kd">public</span> <span class="kd">class</span> <span class="nc">ProductImageTest</span> <span class="o">{</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">ProductTest</span> <span class="o">{</span>
 
-  <span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="nc">String</span> <span class="no">ENDPOINT</span> <span class="o">=</span> <span class="s">"/productImages"</span><span class="o">;</span>
+  <span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="nc">String</span> <span class="no">ENDPOINT</span> <span class="o">=</span> <span class="s">"/products"</span><span class="o">;</span>
   <span class="nd">@Autowired</span>
   <span class="kd">private</span> <span class="nc">MockMvc</span> <span class="n">mvc</span><span class="o">;</span> <i class="conum" data-value="4"></i><b>(4)</b>
   <span class="nd">@Autowired</span>
   <span class="kd">private</span> <span class="nc">ObjectMapper</span> <span class="n">objectMapper</span><span class="o">;</span>
-  <span class="nd">@Autowired</span>
-  <span class="kd">private</span> <span class="nc">ProductImageRepository</span> <span class="n">imageRepository</span><span class="o">;</span>
   <span class="o">...</span></code></pre>
 </div>
 </div>
@@ -6634,11 +6740,11 @@
 <h2 id="performing-requests">Performing Requests</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>It can perofrma requests that use any HTTP method through MockMvc. For example:</p>
+<p>It can perform requests that use any HTTP method through MockMvc. For example:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="java"><span class="n">mockMvc</span><span class="o">.</span><span class="na">perform</span><span class="o">(</span><span class="n">post</span><span class="o">(</span><span class="s">"/productImages"</span><span class="o">)</span>
+<pre class="rouge highlight"><code data-lang="java"><span class="n">mockMvc</span><span class="o">.</span><span class="na">perform</span><span class="o">(</span><span class="n">post</span><span class="o">(</span><span class="s">"/products"</span><span class="o">)</span>
                   <span class="o">.</span><span class="na">contentType</span><span class="o">(</span><span class="nc">MediaType</span><span class="o">.</span><span class="na">APPLICATION_JSON</span><span class="o">)</span>
                   <span class="o">.</span><span class="na">content</span><span class="o">(</span><span class="n">jsonContent</span><span class="o">));</span></code></pre>
 </div>
@@ -6697,7 +6803,7 @@ request-line   = method SP request-target SP HTTP-version CRLF</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="java"><span class="n">mockMvc</span><span class="o">.</span><span class="na">perform</span><span class="o">(</span><span class="n">post</span><span class="o">(</span><span class="s">"/productImages"</span><span class="o">)</span>
+<pre class="rouge highlight"><code data-lang="java"><span class="n">mockMvc</span><span class="o">.</span><span class="na">perform</span><span class="o">(</span><span class="n">post</span><span class="o">(</span><span class="s">"/products"</span><span class="o">)</span>
                                   <span class="o">.</span><span class="na">accept</span><span class="o">(</span><span class="nc">MediaType</span><span class="o">.</span><span class="na">APPLICATION_JSON</span><span class="o">)</span>
                                   <span class="o">.</span><span class="na">contentType</span><span class="o">(</span><span class="nc">MediaType</span><span class="o">.</span><span class="na">APPLICATION_JSON</span><span class="o">)</span>
                                   <span class="o">.</span><span class="na">header</span><span class="o">(</span><span class="s">"Custom-Header"</span><span class="o">,</span> <span class="s">"some value"</span><span class="o">));</span></code></pre>
@@ -6708,7 +6814,7 @@ request-line   = method SP request-target SP HTTP-version CRLF</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="java"><span class="n">mockMvc</span><span class="o">.</span><span class="na">perform</span><span class="o">(</span><span class="n">post</span><span class="o">(</span><span class="s">"/productImages"</span><span class="o">)</span>
+<pre class="rouge highlight"><code data-lang="java"><span class="n">mockMvc</span><span class="o">.</span><span class="na">perform</span><span class="o">(</span><span class="n">post</span><span class="o">(</span><span class="s">"/products"</span><span class="o">)</span>
                                   <span class="o">.</span><span class="na">content</span><span class="o">(</span><span class="n">jsonContent</span><span class="o">));</span></code></pre>
 </div>
 </div>
@@ -6743,7 +6849,7 @@ status-line = HTTP-version SP status-code SP reason-phrase CRLF</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="java"><span class="n">mockMvc</span><span class="o">.</span><span class="na">perform</span><span class="o">(</span><span class="n">post</span><span class="o">(</span><span class="s">"/productImages"</span><span class="o">)</span>
+<pre class="rouge highlight"><code data-lang="java"><span class="n">mockMvc</span><span class="o">.</span><span class="na">perform</span><span class="o">(</span><span class="n">post</span><span class="o">(</span><span class="s">"/products"</span><span class="o">)</span>
                                   <span class="o">.</span><span class="na">content</span><span class="o">(</span><span class="n">jsonContent</span><span class="o">))</span>
                               <span class="o">.</span><span class="na">andExpect</span><span class="o">(</span><span class="n">status</span><span class="o">().</span><span class="na">isCreated</span><span class="o">());</span></code></pre>
 </div>
@@ -6753,7 +6859,7 @@ status-line = HTTP-version SP status-code SP reason-phrase CRLF</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="java"><span class="n">mockMvc</span><span class="o">.</span><span class="na">perform</span><span class="o">(</span><span class="n">post</span><span class="o">(</span><span class="s">"/productImages"</span><span class="o">)</span>
+<pre class="rouge highlight"><code data-lang="java"><span class="n">mockMvc</span><span class="o">.</span><span class="na">perform</span><span class="o">(</span><span class="n">post</span><span class="o">(</span><span class="s">"/products"</span><span class="o">)</span>
                                   <span class="o">.</span><span class="na">content</span><span class="o">(</span><span class="n">jsonContent</span><span class="o">))</span>
                               <span class="o">.</span><span class="na">andExpect</span><span class="o">(</span><span class="n">jsonPath</span><span class="o">(</span><span class="s">"$.title"</span><span class="o">,</span> <span class="n">is</span><span class="o">(</span><span class="n">title</span><span class="o">));</span></code></pre>
 </div>
@@ -6765,6 +6871,12 @@ status-line = HTTP-version SP status-code SP reason-phrase CRLF</code></pre>
 <div class="sectionbody">
 <div class="ulist">
 <ul>
+<li>
+<p><a href="https://en.wikipedia.org/wiki/Representational_state_transfer">Representational state transfer</a></p>
+</li>
+<li>
+<p><a href="https://en.wikipedia.org/wiki/API_testing">API testing</a></p>
+</li>
 <li>
 <p><a href="https://docs.spring.io/spring/docs/current/spring-framework-reference/testing.html#spring-mvc-test-framework">Spring MVC Test Framework</a></p>
 </li>
