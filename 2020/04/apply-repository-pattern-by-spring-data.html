@@ -1,205 +1,51 @@
 <!DOCTYPE html>
-<html>
+<html lang="en-US">
   <head>
-  <meta charset="utf-8" />
-  <!-- multi-device width -->
-  <meta content="width=device-width, initial-scale=1" name="viewport" />
-  <!-- site description -->
-  
-  <meta content="We code for compiling." name="description" />
-  <!-- referer for 3rd-part images-->
-  <meta content="no-referrer" name="referrer" />
-  <!-- title -->
-  <title>
-    
-    Apply Repository Pattern by Spring Data
-    
-  </title>
-  <!-- icon -->
-  <link href="https://rscai.github.io/assets/img/favicon.ico?" rel="shortcut icon bookmark" type="image/x-icon" />
-  <!-- main stylesheet -->
-  <link rel="stylesheet" href="https://rscai.github.io/assets/css/main.css" type="text/css" />
-  <!-- fa 5.9.0 -->
-  <link rel="stylesheet" href="https://rscai.github.io/assets/css/fa.min.css" type="text/css" />
-  <!-- rouge theme-->
-  <link rel="stylesheet" href="https://rscai.github.io/assets/css/rouge-bg.css" />
-  <!-- mathjax 2.7.5 -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML" async></script>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/assets/css/style.css?v=">
+
+<!-- Begin Jekyll SEO tag v2.7.1 -->
+<title>Apply Repository Pattern by Spring Data | Ray’s Blog</title>
+<meta name="generator" content="Jekyll v4.2.0" />
+<meta property="og:title" content="Apply Repository Pattern by Spring Data" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="We code for compiling." />
+<meta property="og:description" content="We code for compiling." />
+<meta property="og:site_name" content="Ray’s Blog" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2020-04-16T00:00:00+00:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Apply Repository Pattern by Spring Data" />
+<script type="application/ld+json">
+{"description":"We code for compiling.","@type":"BlogPosting","headline":"Apply Repository Pattern by Spring Data","dateModified":"2020-04-16T00:00:00+00:00","datePublished":"2020-04-16T00:00:00+00:00","url":"/2020/04/apply-repository-pattern-by-spring-data","mainEntityOfPage":{"@type":"WebPage","@id":"/2020/04/apply-repository-pattern-by-spring-data"},"@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
   </head>
-  <body class="page">
-    <!-- disable background animations -->
 
-    <div class="container" id="ctner">
-      <div class="header">
-    <nav class="nav_bar">
-        <ul>
-            <!-- left header -->
-            <li
-                class="li_left">
-                <!-- home -->
-                
-                    <a class="header_btn" href="https://rscai.github.io">
-                        <i class="fa fa-home">
-                            
-                                <p class="btn_text">Home</p>
-                            
-                        </i>
-                    </a>
-                
-                <!-- email -->
-                
-                    <a class="header_btn" href="mailto://">
-                        <i class="fa fa-envelope-square">
-                            
-                                <p class="btn_text">Email</p>
-                            
-                        </i>
-                    </a>
-                
-                <!-- github -->
-                
-                    <a class="header_btn" href="https://github.com/">
-                        <i class="fa fa-github">
-                            
-                                <p class="btn_text">Github</p>
-                            
-                        </i>
-                    </a>
-                
-                <!-- maximize -->
-                
-                    <a class="header_btn" id="mxmz_btn" onclick="toggle_maximize()">
-                        <i class="fa fa-window-maximize">
-                            
-                                <p class="btn_text" id="mxmz_text">Maximize</p>
-                            
-                        </i>
-                    </a>
-                
-                <!-- access token -->
-                
-            </li>
-            <!-- right header -->
-            <span
-                class="span_right">
-                <!-- popup table of content -->
-                
-                    <a class="header_btn" onclick="scroll_percentage(-0.88)">
-                        <i class="fa fa-backward">
-                            
-                                <p class="btn_text">Prev</p>
-                            
-                        </i>
-                    </a>
-                    <!-- scroll down -->
-                    <a class="header_btn" onclick="scroll_percentage(0.88)">
-                        <i class="fa fa-forward">
-                            
-                                <p class="btn_text">Next</p>
-                            
-                        </i>
-                    </a>
-                    <!-- popup table of content -->
-                    <a class="header_btn popup_btn" onclick="toggle_toc()">
-                        <i class="fa fa-bars">
-                            
-                                <p class="btn_text">Content</p>
-                            
-                        </i>
-                    </a>
-                
-            </span>
-        </ul>
-    </nav>
-    <hr/>
-</div>
-<!-- table of content -->
+  <body>
 
-    <div class="div_toc toc" id="popup_toc">
-    
-    <!-- generate toc -->
-    <ul id="ul_toc" class="ul_toc">
-  <li><a href="#repository-pattern">Repository Pattern</a></li>
-  <li><a href="#data-mapper-pattern">Data Mapper Pattern</a></li>
-  <li><a href="#one-repository-per-entity">One Repository per Entity</a></li>
-  <li><a href="#spring-data">Spring Data</a></li>
-  <li><a href="#reference">Reference</a></li>
-</ul>
-    </div>
-    <!-- toggle toc -->
-    <script>
-    function toggle_toc() {
-        var popup = document.getElementById("popup_toc");
-        popup.classList.toggle("show");
-    }
-    </script>
-    <!-- scroll page -->
-        <script>
-    function scroll_percentage(mtpler) {
-        document
-        .getElementById("div_atcl")
-        .scrollBy(0, window.innerHeight * mtpler);
-    }
-    </script>
+    <header>
+      <div class="container">
+        <a id="a-title" href="/">
+          <h1>Ray's Blog</h1>
+        </a>
+        <h2>Sr. Developer</h2>
 
-<!-- toggle maximize -->
+        <section id="downloads">
+          
+          <a href="" class="btn btn-github"><span class="icon"></span>View on GitHub</a>
+        </section>
+      </div>
+    </header>
 
-<script>
-  var ctner_state = 0;
-  var ctner = document.getElementById("ctner");
-  function toggle_maximize() {
-    if (ctner_state == 0) {
-      ctner.style.width = "100%";
-      ctner.style.height = "100%";
-      ctner.style.top = "0";
-      ctner.style.maxWidth = "100%";
-      if (document.getElementById("mxmz_text")) {
-        document.getElementById("mxmz_text").innerHTML = "Restore";
-      }
-      ctner_state = 1;
-    } else if (ctner_state == 1) {
-      ctner.style.width = "84%";
-      ctner.style.height = "97%";
-      ctner.style.top = "2%";
-      ctner.style.maxWidth = "1240px";
-      if (document.getElementById("mxmz_text")) {
-        document.getElementById("mxmz_text").innerHTML = "Maximize";
-      }
-      ctner_state = 0;
-    }
-  }
-</script>
+    <div class="container">
+      <section id="main_content">
+        <small>16 April 2020</small>
+<h1>Apply Repository Pattern by Spring Data</h1>
 
-<!-- encrypt and decrypt -->
-
-
-      <div class="div_article" id="div_atcl">       
-        <article id="main_atcl" itemscope itemtype="http://schema.org/BlogPosting">
-          <h1>
-  Apply Repository Pattern by Spring Data
-</h1>
-<div class="post_info">
-  <!-- author -->
-  
-  <!-- date -->
-  
-  <span>
-    <i class="fa fa-calendar"></i>
-    Apr 16, 2020
-  </span>
-  
-  <!-- category -->
-  
-  <span>
-    <i class="fa fa-archive"></i>
-    spring-boot
-  </span>
-  
-</div>
-<!-- abstract -->
-<div class="abstract">
-  
-</div>
+<p class="view">by </p>
 
 <div id="preamble">
 <div class="sectionbody">
@@ -243,7 +89,7 @@
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="/assets/generated_diagrams/diag-5bb8a0f9b2aa50ba684bb435bf6a0962.png" alt="Diagram" width="374" height="418">
+<img src="/assets/generated_diagrams/diag-3e3cd96a57e5ad61522b0f7dac7d093f.png" alt="Diagram" width="374" height="420">
 </div>
 </div>
 <div class="paragraph">
@@ -251,7 +97,7 @@
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="/assets/generated_diagrams/diag-dbd212b9a8b6ed4b0ed14d98493030ee.png" alt="Diagram" width="325" height="200">
+<img src="/assets/generated_diagrams/diag-8759650d078b2465d0e11ea0ecd1fd0a.png" alt="Diagram" width="329" height="205">
 </div>
 </div>
 <div class="paragraph">
@@ -259,13 +105,13 @@
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="/assets/generated_diagrams/diag-5e1c65a27b3dcfd6d9d67d0830d5c455.png" alt="Diagram" width="418" height="448">
+<img src="/assets/generated_diagrams/diag-5e1c65a27b3dcfd6d9d67d0830d5c455.png" alt="Diagram" width="410" height="445">
 </div>
 <div class="title">Figure 1. JPA data mapping layer</div>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="/assets/generated_diagrams/diag-164625319346b449b4558c532db883eb.png" alt="Diagram" width="542" height="448">
+<img src="/assets/generated_diagrams/diag-164625319346b449b4558c532db883eb.png" alt="Diagram" width="534" height="445">
 </div>
 <div class="title">Figure 2. MongoDB data mapping layer</div>
 </div>
@@ -391,13 +237,86 @@
 </div>
 </div>
 <div class="paragraph">
-<p>The core of Spring Data is Repository. Repositories of Spring data are organized in interface/abstract class/implementation class pattern. Take <code>InventoryItemRepository</code> as an example, it adopts RDMS as the data store of <code>InventoryItem</code>. Spring Data offers base interface <code>JpaRepository</code> and abstract class <code>SimpleJpaRepository</code> (<code>SimpleJpaRepository</code> is not implemented as an abstract class, but is designed as a base class for JPA repository implememntation class). Application developer defines entity-specific repository interface <code>InventoryItemRepository</code> which extends from interface <code>JpaRepository</code>. Spring Data will generate repository implementation <code>InventoryItemRepositoryImpl</code>.</p>
+<p>The core of Spring Data is Repository. Repositories of Spring data are organized in interface/abstract class/implementation class pattern. Take Spring Data JPA as an example, it offers base interface <code>JpaRepository</code> and abstract class <code>SimpleJpaRepository</code> (<code>SimpleJpaRepository</code> technically is not declared as <code>abstract</code>, but it logically is used as abstract class). Application developer only needs to declare entity-specific repository interface, Spring Data will generate implementation class.</p>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="/assets/generated_diagrams/diag-f0d6ed742ecde72d78e1ab149132ff17.png" alt="Diagram" width="461" height="287">
+<img src="/assets/generated_diagrams/diag-556d5c5ad346c2fea70001cc20f79636.png" alt="Diagram" width="453" height="306">
 </div>
 <div class="title">Figure 3. Spring Data Repository</div>
+</div>
+<div class="sect2">
+<h3 id="predefined-repository-interface">Predefined Repository Interface</h3>
+<div class="paragraph">
+<p>Spring Data consists of core module <strong>Spring Data Commons</strong> and other data store specific modules. Spring Data is repository-centric. Spring Data Commons module defines a few common repository interfaces, other modules define more data store specific repository interfaces.</p>
+</div>
+<div class="paragraph">
+<p>Spring Data Commons defines repository interfaces:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>Repository</code>, is a base and empty repository, does not declare any methods.</p>
+<div class="imageblock">
+<div class="content">
+<img src="/assets/generated_diagrams/diag-6579e94f4b8011380ea1e54a90443f4e.png" alt="Diagram" width="150" height="68">
+</div>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><code>CrudReposority</code>, declares simple Create/Read/Update/Delete methods.</p>
+<div class="imageblock">
+<div class="content">
+<img src="/assets/generated_diagrams/diag-0e062e9ee3e91d66bc58ec6bd26d7288.png" alt="Diagram" width="311" height="319">
+</div>
+</div>
+</li>
+<li>
+<p><code>PagingAndSortingRepository</code>, inherit simple Create/Read/Update/Delete methods and plus pagination and sorting support.</p>
+<div class="imageblock">
+<div class="content">
+<img src="/assets/generated_diagrams/diag-e4613e0f134439dfb49a0440c772c06a.png" alt="Diagram" width="261" height="204">
+</div>
+</div>
+</li>
+<li>
+<p><code>ReactiveCrudRepository</code>, TBD</p>
+</li>
+<li>
+<p><code>ReactiveSortingRepository</code>, TBD</p>
+</li>
+<li>
+<p><code>RevisionRepository</code>, TBD</p>
+<div class="imageblock">
+<div class="content">
+<img src="/assets/generated_diagrams/diag-ee9b471b48aad52f5b1bff900a09cb89.png" alt="Diagram" width="400" height="230">
+</div>
+</div>
+</li>
+<li>
+<p><code>RxJava2CrudRepository</code>, TBD</p>
+</li>
+<li>
+<p><code>RxJava2SortingRepository</code>, TBD</p>
+</li>
+</ol>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="deriving-the-query-from-the-method-name">Deriving the Query from the Method Name</h3>
+<div class="paragraph">
+<p>TBD</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="using-a-manually-defined-query">Using a Manually Defined Query</h3>
+<div class="paragraph">
+<p>TBD</p>
+</div>
 </div>
 </div>
 </div>
@@ -417,11 +336,13 @@
 </div>
 </div>
 
-          
 
-        </article>
-          
-      </div>
+  <small>tags: <em>spring-boot</em> - <em>spring</em> - <em>spring-data</em> - <em>repository-pattern</em></small>
+
+
+      </section>
     </div>
+
+    
   </body>
 </html>

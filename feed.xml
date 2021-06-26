@@ -3,8 +3,8 @@
 	<channel>
 		<title></title>
 		<description>Sr. Developer</description>
-		<link>https://rscai.github.io</link>
-		<atom:link href="https://rscai.github.io/feed.xml" rel="self" type="application/rss+xml" />
+		<link></link>
+		<atom:link href="/feed.xml" rel="self" type="application/rss+xml" />
 		
 			<item>
 				<title>Apply Repository Pattern by Spring Data</title>
@@ -50,7 +50,7 @@
 &lt;/div&gt;
 &lt;div class=&quot;imageblock&quot;&gt;
 &lt;div class=&quot;content&quot;&gt;
-&lt;img src=&quot;/assets/generated_diagrams/diag-5bb8a0f9b2aa50ba684bb435bf6a0962.png&quot; alt=&quot;Diagram&quot; width=&quot;374&quot; height=&quot;418&quot;&gt;
+&lt;img src=&quot;/assets/generated_diagrams/diag-3e3cd96a57e5ad61522b0f7dac7d093f.png&quot; alt=&quot;Diagram&quot; width=&quot;374&quot; height=&quot;420&quot;&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;div class=&quot;paragraph&quot;&gt;
@@ -58,7 +58,7 @@
 &lt;/div&gt;
 &lt;div class=&quot;imageblock&quot;&gt;
 &lt;div class=&quot;content&quot;&gt;
-&lt;img src=&quot;/assets/generated_diagrams/diag-dbd212b9a8b6ed4b0ed14d98493030ee.png&quot; alt=&quot;Diagram&quot; width=&quot;325&quot; height=&quot;200&quot;&gt;
+&lt;img src=&quot;/assets/generated_diagrams/diag-8759650d078b2465d0e11ea0ecd1fd0a.png&quot; alt=&quot;Diagram&quot; width=&quot;329&quot; height=&quot;205&quot;&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;div class=&quot;paragraph&quot;&gt;
@@ -66,13 +66,13 @@
 &lt;/div&gt;
 &lt;div class=&quot;imageblock&quot;&gt;
 &lt;div class=&quot;content&quot;&gt;
-&lt;img src=&quot;/assets/generated_diagrams/diag-5e1c65a27b3dcfd6d9d67d0830d5c455.png&quot; alt=&quot;Diagram&quot; width=&quot;418&quot; height=&quot;448&quot;&gt;
+&lt;img src=&quot;/assets/generated_diagrams/diag-5e1c65a27b3dcfd6d9d67d0830d5c455.png&quot; alt=&quot;Diagram&quot; width=&quot;410&quot; height=&quot;445&quot;&gt;
 &lt;/div&gt;
 &lt;div class=&quot;title&quot;&gt;Figure 1. JPA data mapping layer&lt;/div&gt;
 &lt;/div&gt;
 &lt;div class=&quot;imageblock&quot;&gt;
 &lt;div class=&quot;content&quot;&gt;
-&lt;img src=&quot;/assets/generated_diagrams/diag-164625319346b449b4558c532db883eb.png&quot; alt=&quot;Diagram&quot; width=&quot;542&quot; height=&quot;448&quot;&gt;
+&lt;img src=&quot;/assets/generated_diagrams/diag-164625319346b449b4558c532db883eb.png&quot; alt=&quot;Diagram&quot; width=&quot;534&quot; height=&quot;445&quot;&gt;
 &lt;/div&gt;
 &lt;div class=&quot;title&quot;&gt;Figure 2. MongoDB data mapping layer&lt;/div&gt;
 &lt;/div&gt;
@@ -198,13 +198,86 @@
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;div class=&quot;paragraph&quot;&gt;
-&lt;p&gt;The core of Spring Data is Repository. Repositories of Spring data are organized in interface/abstract class/implementation class pattern. Take &lt;code&gt;InventoryItemRepository&lt;/code&gt; as an example, it adopts RDMS as the data store of &lt;code&gt;InventoryItem&lt;/code&gt;. Spring Data offers base interface &lt;code&gt;JpaRepository&lt;/code&gt; and abstract class &lt;code&gt;SimpleJpaRepository&lt;/code&gt; (&lt;code&gt;SimpleJpaRepository&lt;/code&gt; is not implemented as an abstract class, but is designed as a base class for JPA repository implememntation class). Application developer defines entity-specific repository interface &lt;code&gt;InventoryItemRepository&lt;/code&gt; which extends from interface &lt;code&gt;JpaRepository&lt;/code&gt;. Spring Data will generate repository implementation &lt;code&gt;InventoryItemRepositoryImpl&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;The core of Spring Data is Repository. Repositories of Spring data are organized in interface/abstract class/implementation class pattern. Take Spring Data JPA as an example, it offers base interface &lt;code&gt;JpaRepository&lt;/code&gt; and abstract class &lt;code&gt;SimpleJpaRepository&lt;/code&gt; (&lt;code&gt;SimpleJpaRepository&lt;/code&gt; technically is not declared as &lt;code&gt;abstract&lt;/code&gt;, but it logically is used as abstract class). Application developer only needs to declare entity-specific repository interface, Spring Data will generate implementation class.&lt;/p&gt;
 &lt;/div&gt;
 &lt;div class=&quot;imageblock&quot;&gt;
 &lt;div class=&quot;content&quot;&gt;
-&lt;img src=&quot;/assets/generated_diagrams/diag-f0d6ed742ecde72d78e1ab149132ff17.png&quot; alt=&quot;Diagram&quot; width=&quot;461&quot; height=&quot;287&quot;&gt;
+&lt;img src=&quot;/assets/generated_diagrams/diag-556d5c5ad346c2fea70001cc20f79636.png&quot; alt=&quot;Diagram&quot; width=&quot;453&quot; height=&quot;306&quot;&gt;
 &lt;/div&gt;
 &lt;div class=&quot;title&quot;&gt;Figure 3. Spring Data Repository&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class=&quot;sect2&quot;&gt;
+&lt;h3 id=&quot;predefined-repository-interface&quot;&gt;Predefined Repository Interface&lt;/h3&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;Spring Data consists of core module &lt;strong&gt;Spring Data Commons&lt;/strong&gt; and other data store specific modules. Spring Data is repository-centric. Spring Data Commons module defines a few common repository interfaces, other modules define more data store specific repository interfaces.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;Spring Data Commons defines repository interfaces:&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;ulist&quot;&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;Repository&lt;/code&gt;, is a base and empty repository, does not declare any methods.&lt;/p&gt;
+&lt;div class=&quot;imageblock&quot;&gt;
+&lt;div class=&quot;content&quot;&gt;
+&lt;img src=&quot;/assets/generated_diagrams/diag-6579e94f4b8011380ea1e54a90443f4e.png&quot; alt=&quot;Diagram&quot; width=&quot;150&quot; height=&quot;68&quot;&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class=&quot;olist arabic&quot;&gt;
+&lt;ol class=&quot;arabic&quot;&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;CrudReposority&lt;/code&gt;, declares simple Create/Read/Update/Delete methods.&lt;/p&gt;
+&lt;div class=&quot;imageblock&quot;&gt;
+&lt;div class=&quot;content&quot;&gt;
+&lt;img src=&quot;/assets/generated_diagrams/diag-0e062e9ee3e91d66bc58ec6bd26d7288.png&quot; alt=&quot;Diagram&quot; width=&quot;311&quot; height=&quot;319&quot;&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;PagingAndSortingRepository&lt;/code&gt;, inherit simple Create/Read/Update/Delete methods and plus pagination and sorting support.&lt;/p&gt;
+&lt;div class=&quot;imageblock&quot;&gt;
+&lt;div class=&quot;content&quot;&gt;
+&lt;img src=&quot;/assets/generated_diagrams/diag-e4613e0f134439dfb49a0440c772c06a.png&quot; alt=&quot;Diagram&quot; width=&quot;261&quot; height=&quot;204&quot;&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;ReactiveCrudRepository&lt;/code&gt;, TBD&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;ReactiveSortingRepository&lt;/code&gt;, TBD&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;RevisionRepository&lt;/code&gt;, TBD&lt;/p&gt;
+&lt;div class=&quot;imageblock&quot;&gt;
+&lt;div class=&quot;content&quot;&gt;
+&lt;img src=&quot;/assets/generated_diagrams/diag-ee9b471b48aad52f5b1bff900a09cb89.png&quot; alt=&quot;Diagram&quot; width=&quot;400&quot; height=&quot;230&quot;&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;RxJava2CrudRepository&lt;/code&gt;, TBD&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;RxJava2SortingRepository&lt;/code&gt;, TBD&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/div&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class=&quot;sect2&quot;&gt;
+&lt;h3 id=&quot;deriving-the-query-from-the-method-name&quot;&gt;Deriving the Query from the Method Name&lt;/h3&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;TBD&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class=&quot;sect2&quot;&gt;
+&lt;h3 id=&quot;using-a-manually-defined-query&quot;&gt;Using a Manually Defined Query&lt;/h3&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;TBD&lt;/p&gt;
+&lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
@@ -224,8 +297,8 @@
 &lt;/div&gt;
 &lt;/div&gt;</description>
 				<pubDate>Thu, 16 Apr 2020 00:00:00 +0000</pubDate>
-				<link>https://rscai.github.io/2020/04/apply-repository-pattern-by-spring-data</link>
-				<guid isPermaLink="true">https://rscai.github.io/2020/04/apply-repository-pattern-by-spring-data</guid>
+				<link>/2020/04/apply-repository-pattern-by-spring-data</link>
+				<guid isPermaLink="true">/2020/04/apply-repository-pattern-by-spring-data</guid>
 			</item>
 		
 			<item>
@@ -290,7 +363,7 @@
 &lt;/div&gt;
 &lt;div class=&quot;imageblock&quot;&gt;
 &lt;div class=&quot;content&quot;&gt;
-&lt;img src=&quot;/assets/generated_diagrams/diag-a048a79e429fc15425ced351eeaf1464.png&quot; alt=&quot;Diagram&quot; width=&quot;535&quot; height=&quot;309&quot;&gt;
+&lt;img src=&quot;/assets/generated_diagrams/diag-a048a79e429fc15425ced351eeaf1464.png&quot; alt=&quot;Diagram&quot; width=&quot;564&quot; height=&quot;306&quot;&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;div class=&quot;paragraph&quot;&gt;
@@ -380,7 +453,7 @@
 &lt;/div&gt;
 &lt;div class=&quot;imageblock&quot;&gt;
 &lt;div class=&quot;content&quot;&gt;
-&lt;img src=&quot;/assets/generated_diagrams/diag-26bafe30fbf52bfd6eabd9f9b6f077e4.png&quot; alt=&quot;Diagram&quot; width=&quot;535&quot; height=&quot;561&quot;&gt;
+&lt;img src=&quot;/assets/generated_diagrams/diag-26bafe30fbf52bfd6eabd9f9b6f077e4.png&quot; alt=&quot;Diagram&quot; width=&quot;564&quot; height=&quot;578&quot;&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
@@ -579,8 +652,8 @@ status-line = HTTP-version SP status-code SP reason-phrase CRLF&lt;/code&gt;&lt;
 &lt;/div&gt;
 &lt;/div&gt;</description>
 				<pubDate>Wed, 18 Mar 2020 00:00:00 +0000</pubDate>
-				<link>https://rscai.github.io/2020/03/API-Testing-by-Spring-MVC-Test-Framework</link>
-				<guid isPermaLink="true">https://rscai.github.io/2020/03/API-Testing-by-Spring-MVC-Test-Framework</guid>
+				<link>/2020/03/API-Testing-by-Spring-MVC-Test-Framework</link>
+				<guid isPermaLink="true">/2020/03/API-Testing-by-Spring-MVC-Test-Framework</guid>
 			</item>
 		
 			<item>
@@ -1121,8 +1194,8 @@ It losts 750 in Q4, totally 5,000 in this year.&lt;/pre&gt;
 &lt;/div&gt;
 &lt;/div&gt;</description>
 				<pubDate>Sun, 08 Mar 2020 00:00:00 +0000</pubDate>
-				<link>https://rscai.github.io/2020/03/Bash101</link>
-				<guid isPermaLink="true">https://rscai.github.io/2020/03/Bash101</guid>
+				<link>/2020/03/Bash101</link>
+				<guid isPermaLink="true">/2020/03/Bash101</guid>
 			</item>
 		
 			<item>
@@ -1202,7 +1275,7 @@ Generator functions allow you to declare a function that behaves like an iterato
 &lt;/div&gt;
 &lt;div class=&quot;imageblock&quot;&gt;
 &lt;div class=&quot;content&quot;&gt;
-&lt;img src=&quot;/assets/generated_diagrams/diag-b3eaf32be42b4bf96ca9c9cb64e0d07b.png&quot; alt=&quot;Diagram&quot; width=&quot;149&quot; height=&quot;333&quot;&gt;
+&lt;img src=&quot;/assets/generated_diagrams/diag-b3eaf32be42b4bf96ca9c9cb64e0d07b.png&quot; alt=&quot;Diagram&quot; width=&quot;154&quot; height=&quot;335&quot;&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
@@ -1313,8 +1386,8 @@ Check 10&lt;/pre&gt;
 &lt;/div&gt;
 &lt;/div&gt;</description>
 				<pubDate>Sun, 13 Oct 2019 00:00:00 +0000</pubDate>
-				<link>https://rscai.github.io/2019/10/Python99-P204-a-List-of-Prime-Numbers</link>
-				<guid isPermaLink="true">https://rscai.github.io/2019/10/Python99-P204-a-List-of-Prime-Numbers</guid>
+				<link>/2019/10/Python99-P204-a-List-of-Prime-Numbers</link>
+				<guid isPermaLink="true">/2019/10/Python99-P204-a-List-of-Prime-Numbers</guid>
 			</item>
 		
 			<item>
@@ -2382,8 +2455,8 @@ Reveal.addEventListener('resize', function () {
 hljs.initHighlightingOnLoad();
 &lt;/script&gt;&lt;/body&gt;&lt;/html&gt;</description>
 				<pubDate>Thu, 03 Oct 2019 00:00:00 +0000</pubDate>
-				<link>https://rscai.github.io/2019/10/RESTFul</link>
-				<guid isPermaLink="true">https://rscai.github.io/2019/10/RESTFul</guid>
+				<link>/2019/10/RESTFul</link>
+				<guid isPermaLink="true">/2019/10/RESTFul</guid>
 			</item>
 		
 			<item>
@@ -3449,8 +3522,8 @@ Reveal.addEventListener('resize', function () {
 hljs.initHighlightingOnLoad();
 &lt;/script&gt;&lt;/body&gt;&lt;/html&gt;</description>
 				<pubDate>Sun, 25 Aug 2019 00:00:00 +0000</pubDate>
-				<link>https://rscai.github.io/2019/08/Design-Microservice-by-DDD</link>
-				<guid isPermaLink="true">https://rscai.github.io/2019/08/Design-Microservice-by-DDD</guid>
+				<link>/2019/08/Design-Microservice-by-DDD</link>
+				<guid isPermaLink="true">/2019/08/Design-Microservice-by-DDD</guid>
 			</item>
 		
 			<item>
@@ -3842,8 +3915,8 @@ Override&lt;/p&gt;
 
 </description>
 				<pubDate>Sun, 18 Aug 2019 00:00:00 +0000</pubDate>
-				<link>https://rscai.github.io/2019/08/Learn-Python-in-One-Hour</link>
-				<guid isPermaLink="true">https://rscai.github.io/2019/08/Learn-Python-in-One-Hour</guid>
+				<link>/2019/08/Learn-Python-in-One-Hour</link>
+				<guid isPermaLink="true">/2019/08/Learn-Python-in-One-Hour</guid>
 			</item>
 		
 			<item>
@@ -3929,8 +4002,8 @@ frame Hardware {
 
 </description>
 				<pubDate>Sun, 03 Mar 2019 00:00:00 +0000</pubDate>
-				<link>https://rscai.github.io/2019/03/Introduction-to-Docker</link>
-				<guid isPermaLink="true">https://rscai.github.io/2019/03/Introduction-to-Docker</guid>
+				<link>/2019/03/Introduction-to-Docker</link>
+				<guid isPermaLink="true">/2019/03/Introduction-to-Docker</guid>
 			</item>
 		
 			<item>
@@ -3997,8 +4070,8 @@ frame Hardware {
 &lt;/ul&gt;
 </description>
 				<pubDate>Sat, 23 Feb 2019 00:00:00 +0000</pubDate>
-				<link>https://rscai.github.io/2019/02/Coder-Self-Cultivation</link>
-				<guid isPermaLink="true">https://rscai.github.io/2019/02/Coder-Self-Cultivation</guid>
+				<link>/2019/02/Coder-Self-Cultivation</link>
+				<guid isPermaLink="true">/2019/02/Coder-Self-Cultivation</guid>
 			</item>
 		
 			<item>
@@ -4350,8 +4423,8 @@ codeRelease is 1.3
 &lt;p&gt;app&lt;/p&gt;
 </description>
 				<pubDate>Sun, 11 Nov 2018 00:00:00 +0000</pubDate>
-				<link>https://rscai.github.io/2018/11/After-Reading-Migrating-to-Microservices-Databases</link>
-				<guid isPermaLink="true">https://rscai.github.io/2018/11/After-Reading-Migrating-to-Microservices-Databases</guid>
+				<link>/2018/11/After-Reading-Migrating-to-Microservices-Databases</link>
+				<guid isPermaLink="true">/2018/11/After-Reading-Migrating-to-Microservices-Databases</guid>
 			</item>
 		
 	</channel>

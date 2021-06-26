@@ -1,183 +1,48 @@
 <!DOCTYPE html>
-<html>
+<html lang="en-US">
   <head>
-  <meta charset="utf-8" />
-  <!-- multi-device width -->
-  <meta content="width=device-width, initial-scale=1" name="viewport" />
-  <!-- site description -->
-  
-  <meta content="Sr. Developer" name="description" />
-  <!-- referer for 3rd-part images-->
-  <meta content="no-referrer" name="referrer" />
-  <!-- title -->
-  <title>
-    
-    Ray&#39;s Blog
-    
-  </title>
-  <!-- icon -->
-  <link href="https://rscai.github.io/assets/img/favicon.ico?" rel="shortcut icon bookmark" type="image/x-icon" />
-  <!-- main stylesheet -->
-  <link rel="stylesheet" href="https://rscai.github.io/assets/css/main.css" type="text/css" />
-  <!-- fa 5.9.0 -->
-  <link rel="stylesheet" href="https://rscai.github.io/assets/css/fa.min.css" type="text/css" />
-  <!-- rouge theme-->
-  <link rel="stylesheet" href="https://rscai.github.io/assets/css/rouge-bg.css" />
-  <!-- mathjax 2.7.5 -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML" async></script>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/assets/css/style.css?v=">
+
+<!-- Begin Jekyll SEO tag v2.7.1 -->
+<title>Ray’s Blog | Sr. Developer</title>
+<meta name="generator" content="Jekyll v4.2.0" />
+<meta property="og:title" content="Ray’s Blog" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Sr. Developer" />
+<meta property="og:description" content="Sr. Developer" />
+<meta property="og:site_name" content="Ray’s Blog" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Ray’s Blog" />
+<script type="application/ld+json">
+{"description":"Sr. Developer","@type":"WebSite","headline":"Ray’s Blog","url":"/","name":"Ray’s Blog","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
   </head>
-  <body class="page">
-    <!-- disable background animations -->
 
-    <div class="container" id="ctner">
-      <div class="header">
-    <nav class="nav_bar">
-        <ul>
-            <!-- left header -->
-            <li
-                class="li_left">
-                <!-- home -->
-                
-                    <a class="header_btn" href="https://rscai.github.io">
-                        <i class="fa fa-home">
-                            
-                                <p class="btn_text">Home</p>
-                            
-                        </i>
-                    </a>
-                
-                <!-- email -->
-                
-                    <a class="header_btn" href="mailto://">
-                        <i class="fa fa-envelope-square">
-                            
-                                <p class="btn_text">Email</p>
-                            
-                        </i>
-                    </a>
-                
-                <!-- github -->
-                
-                    <a class="header_btn" href="https://github.com/">
-                        <i class="fa fa-github">
-                            
-                                <p class="btn_text">Github</p>
-                            
-                        </i>
-                    </a>
-                
-                <!-- maximize -->
-                
-                    <a class="header_btn" id="mxmz_btn" onclick="toggle_maximize()">
-                        <i class="fa fa-window-maximize">
-                            
-                                <p class="btn_text" id="mxmz_text">Maximize</p>
-                            
-                        </i>
-                    </a>
-                
-                <!-- access token -->
-                
-            </li>
-            <!-- right header -->
-            <span
-                class="span_right">
-                <!-- popup table of content -->
-                
-                    <a class="header_btn" onclick="scroll_percentage(-0.88)">
-                        <i class="fa fa-backward">
-                            
-                                <p class="btn_text">Prev</p>
-                            
-                        </i>
-                    </a>
-                    <!-- scroll down -->
-                    <a class="header_btn" onclick="scroll_percentage(0.88)">
-                        <i class="fa fa-forward">
-                            
-                                <p class="btn_text">Next</p>
-                            
-                        </i>
-                    </a>
-                    <!-- popup table of content -->
-                    <a class="header_btn popup_btn" onclick="toggle_toc()">
-                        <i class="fa fa-bars">
-                            
-                                <p class="btn_text">Content</p>
-                            
-                        </i>
-                    </a>
-                
-            </span>
-        </ul>
-    </nav>
-    <hr/>
-</div>
-<!-- table of content -->
+  <body>
 
-    <div class="div_toc toc" id="popup_toc">
-    
-    <!-- generate toc -->
-    <ul id="ul_toc" class="ul_toc">
-  <li><a href="#">\n    \n      {{ post.title }}\n    \n  </a>
-    <ul>
-      <li><a href="#">Blog archive</a></li>
-    </ul>
-  </li>
-</ul>
-    </div>
-    <!-- toggle toc -->
-    <script>
-    function toggle_toc() {
-        var popup = document.getElementById("popup_toc");
-        popup.classList.toggle("show");
-    }
-    </script>
-    <!-- scroll page -->
-        <script>
-    function scroll_percentage(mtpler) {
-        document
-        .getElementById("div_atcl")
-        .scrollBy(0, window.innerHeight * mtpler);
-    }
-    </script>
+    <header>
+      <div class="container">
+        <a id="a-title" href="/">
+          <h1>Ray's Blog</h1>
+        </a>
+        <h2>Sr. Developer</h2>
 
-<!-- toggle maximize -->
-
-<script>
-  var ctner_state = 0;
-  var ctner = document.getElementById("ctner");
-  function toggle_maximize() {
-    if (ctner_state == 0) {
-      ctner.style.width = "100%";
-      ctner.style.height = "100%";
-      ctner.style.top = "0";
-      ctner.style.maxWidth = "100%";
-      if (document.getElementById("mxmz_text")) {
-        document.getElementById("mxmz_text").innerHTML = "Restore";
-      }
-      ctner_state = 1;
-    } else if (ctner_state == 1) {
-      ctner.style.width = "84%";
-      ctner.style.height = "97%";
-      ctner.style.top = "2%";
-      ctner.style.maxWidth = "1240px";
-      if (document.getElementById("mxmz_text")) {
-        document.getElementById("mxmz_text").innerHTML = "Maximize";
-      }
-      ctner_state = 0;
-    }
-  }
-</script>
-
-<!-- encrypt and decrypt -->
-
-
-      <div class="div_article" id="div_atcl">       
-        <article id="main_atcl" itemscope itemtype="http://schema.org/BlogPosting">
+        <section id="downloads">
           
+          <a href="" class="btn btn-github"><span class="icon"></span>View on GitHub</a>
+        </section>
+      </div>
+    </header>
+
+    <div class="container">
+      <section id="main_content">
+        
   <h2 class="post-title">
-    <a href="https://rscai.github.io/2020/04/apply-repository-pattern-by-spring-data">
+    <a href="/2020/04/apply-repository-pattern-by-spring-data">
       Apply Repository Pattern by Spring Data
     </a>
   </h2>
@@ -189,13 +54,13 @@
   </div>
   <ul>
     
-    <li><a href="https://rscai.github.io/tag/spring-boot">spring-boot</a></li>
+    <li><a href="/tag/spring-boot">spring-boot</a></li>
     
-    <li><a href="https://rscai.github.io/tag/spring">spring</a></li>
+    <li><a href="/tag/spring">spring</a></li>
     
-    <li><a href="https://rscai.github.io/tag/spring-data">spring-data</a></li>
+    <li><a href="/tag/spring-data">spring-data</a></li>
     
-    <li><a href="https://rscai.github.io/tag/repository-pattern">repository-pattern</a></li>
+    <li><a href="/tag/repository-pattern">repository-pattern</a></li>
     
   </ul>
 </div>
@@ -207,7 +72,7 @@
   </div>
   
   <h2 class="post-title">
-    <a href="https://rscai.github.io/2020/03/API-Testing-by-Spring-MVC-Test-Framework">
+    <a href="/2020/03/API-Testing-by-Spring-MVC-Test-Framework">
       API Testing by Spring MVC Test Framework
     </a>
   </h2>
@@ -219,15 +84,15 @@
   </div>
   <ul>
     
-    <li><a href="https://rscai.github.io/tag/spring-boot">spring-boot</a></li>
+    <li><a href="/tag/spring-boot">spring-boot</a></li>
     
-    <li><a href="https://rscai.github.io/tag/spring">spring</a></li>
+    <li><a href="/tag/spring">spring</a></li>
     
-    <li><a href="https://rscai.github.io/tag/spring-mvc">spring-mvc</a></li>
+    <li><a href="/tag/spring-mvc">spring-mvc</a></li>
     
-    <li><a href="https://rscai.github.io/tag/test">test</a></li>
+    <li><a href="/tag/test">test</a></li>
     
-    <li><a href="https://rscai.github.io/tag/api">api</a></li>
+    <li><a href="/tag/api">api</a></li>
     
   </ul>
 </div>
@@ -239,7 +104,7 @@
   </div>
   
   <h2 class="post-title">
-    <a href="https://rscai.github.io/2020/03/Bash101">
+    <a href="/2020/03/Bash101">
       Bash 101
     </a>
   </h2>
@@ -251,11 +116,11 @@
   </div>
   <ul>
     
-    <li><a href="https://rscai.github.io/tag/bash">bash</a></li>
+    <li><a href="/tag/bash">bash</a></li>
     
-    <li><a href="https://rscai.github.io/tag/linux">linux</a></li>
+    <li><a href="/tag/linux">linux</a></li>
     
-    <li><a href="https://rscai.github.io/tag/script">script</a></li>
+    <li><a href="/tag/script">script</a></li>
     
   </ul>
 </div>
@@ -267,7 +132,7 @@
   </div>
   
   <h2 class="post-title">
-    <a href="https://rscai.github.io/2019/10/Python99-P204-a-List-of-Prime-Numbers">
+    <a href="/2019/10/Python99-P204-a-List-of-Prime-Numbers">
       A List of Prime Numbers
     </a>
   </h2>
@@ -279,13 +144,13 @@
   </div>
   <ul>
     
-    <li><a href="https://rscai.github.io/tag/python">python</a></li>
+    <li><a href="/tag/python">python</a></li>
     
-    <li><a href="https://rscai.github.io/tag/python99">python99</a></li>
+    <li><a href="/tag/python99">python99</a></li>
     
-    <li><a href="https://rscai.github.io/tag/arithmetic">arithmetic</a></li>
+    <li><a href="/tag/arithmetic">arithmetic</a></li>
     
-    <li><a href="https://rscai.github.io/tag/prime">prime</a></li>
+    <li><a href="/tag/prime">prime</a></li>
     
   </ul>
 </div>
@@ -297,7 +162,7 @@
   </div>
   
   <h2 class="post-title">
-    <a href="https://rscai.github.io/2019/10/RESTFul">
+    <a href="/2019/10/RESTFul">
       RESTFul
     </a>
   </h2>
@@ -319,7 +184,7 @@
   </div>
   
   <h2 class="post-title">
-    <a href="https://rscai.github.io/2019/08/Design-Microservice-by-DDD">
+    <a href="/2019/08/Design-Microservice-by-DDD">
       Design Microservices by DDD
     </a>
   </h2>
@@ -341,7 +206,7 @@
   </div>
   
   <h2 class="post-title">
-    <a href="https://rscai.github.io/2019/08/Learn-Python-in-One-Hour">
+    <a href="/2019/08/Learn-Python-in-One-Hour">
       Learn Python In One Hour
     </a>
   </h2>
@@ -363,7 +228,7 @@
   </div>
   
   <h2 class="post-title">
-    <a href="https://rscai.github.io/2019/03/Introduction-to-Docker">
+    <a href="/2019/03/Introduction-to-Docker">
       Introduction To Docker
     </a>
   </h2>
@@ -385,7 +250,7 @@
   </div>
   
   <h2 class="post-title">
-    <a href="https://rscai.github.io/2019/02/Coder-Self-Cultivation">
+    <a href="/2019/02/Coder-Self-Cultivation">
       Coder Self Cultivation
     </a>
   </h2>
@@ -407,7 +272,7 @@
   </div>
   
   <h2 class="post-title">
-    <a href="https://rscai.github.io/2018/11/After-Reading-Migrating-to-Microservices-Databases">
+    <a href="/2018/11/After-Reading-Migrating-to-Microservices-Databases">
       After Reading Migrating To Microservices Databases
     </a>
   </h2>
@@ -432,15 +297,13 @@
 
 <div class="post-footer">
   <div class="column-full">
-    <h3><a href="https://rscai.github.io/archive.html">Blog archive</a></h3>
+    <h3><a href="/archive.html">Blog archive</a></h3>
   </div>
 </div>
 
-          
-
-        </article>
-          
-      </div>
+      </section>
     </div>
+
+    
   </body>
 </html>
