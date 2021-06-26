@@ -4,6 +4,8 @@
 :page-tags: [spring-boot, spring, spring-data, repository-pattern]
 :source-highlighter: rouge
 :icons: font
+:kroki-fetch-diagram:
+:imagesdir: .asciidoctor/diagram
 
 [IMPORTANT]
 ====
@@ -28,6 +30,8 @@ Repository plays as an interface between client code and data mapping layers, hi
 [plantuml]
 ....
 @startuml
+skinparam monochrome reverse
+
 participant client
 entity entityA
 participant repository
@@ -60,6 +64,7 @@ Through repository, client code could access and persisten entity instances by c
 [plantuml]
 ....
 @startuml
+skinparam monochrome reverse
 interface Repository<T, ID> {
     +save(entity: T): T
     +findOne(id: ID): T
@@ -190,7 +195,7 @@ Spring Data's mission is to provide a familiar and consistent, Spring-based prog
 It makes it easy to use data access technologies, relational and non-relational databases, map-reduce frameworks, and cloud-based data services. This is an umbrella project which contains many subprojects that are specifiv to a given database. The projects are developed by working together with many of the companies and developers that are behind these exciting technologies.
 ____
 
-The core of Spring Data is Repository. Repositories of Spring data are organized in interface/abstract class/implementation class pattern. Take `InventoryItemRepository` as an example, it adopts RDMS as the data store of `InventoryItem`. Spring Data offers base interface `JpaRepository` and abstract class `SimpleJpaRepository` (`SimpleJpaRepository` is not implemented as an abstract class, but is designed as a base class for JPA repository implememntation class). Application developer defines entity-specific repository interface `InventoryItemRepository` which extends from interface `JpaRepository`. Spring Data will generate repository implementation `InventoryItemRepositoryImpl`.
+The core of Spring Data is Repository. Repositories of Spring data are organized in interface/abstract class/implementation class pattern. Take Spring Data JPA as an example, it offers base interface `JpaRepository` and abstract class `SimpleJpaRepository` (`SimpleJpaRepository` technically is not declared as `abstract`, but it logically is used as abstract class). Application developer only needs to declare entity-specific repository interface, Spring Data will generate implementation class.
 
 .Spring Data Repository
 [plantuml]
@@ -198,17 +203,97 @@ The core of Spring Data is Repository. Repositories of Spring data are organized
 @startuml
 interface JpaRepository<T, ID>
 interface JpaRepositoryImplementation<T, ID>
-interface InventoryItemRepository
+interface EntityRepository
 class SimpleJpaRepository<T, ID>
-class InventoryItemRepositoryImpl <<implementation>>
+class EntityRepositoryImpl <<implementation>> <<generated>>
 
 JpaRepository <|- JpaRepositoryImplementation
-JpaRepository <|-- InventoryItemRepository
+JpaRepository <|-- EntityRepository
 JpaRepositoryImplementation <|-- SimpleJpaRepository
-InventoryItemRepository <|-- InventoryItemRepositoryImpl
-SimpleJpaRepository <|-- InventoryItemRepositoryImpl
+EntityRepository <|-- EntityRepositoryImpl
+SimpleJpaRepository <|-- EntityRepositoryImpl
 @enduml
 ....
+
+=== Predefined Repository Interface
+
+Spring Data consists of core module **Spring Data Commons** and other data store specific modules. Spring Data is repository-centric. Spring Data Commons module defines a few common repository interfaces, other modules define more data store specific repository interfaces.
+
+Spring Data Commons defines repository interfaces:
+
+* `Repository`, is a base and empty repository, does not declare any methods.
++
+[plantuml,]
+....
+@startuml
+interface Repository<T, ID>
+@enduml
+....
+. `CrudReposority`, declares simple Create/Read/Update/Delete methods.
++
+[plantuml]
+....
+@startuml
+interface Repository<T, ID>
+interface CrudRepository<T, ID> {
+    <S extends T> S save(S entity)
+    <S extends T> Iterable<S> saveAll(Iterable<s> entities>
+    Optional<T> findById(ID id)
+    boolean existsById(ID id)
+    Iterable<T> findAll()
+    Iterable<T> findAllById(Iterable<ID> ids)
+    long count()
+    void deleteById(ID id)
+    void delete(T entity)
+    void deleteAll(Iterable<? extends T> entities)
+    void deleteAll()
+}
+
+Repository <|-- CrudRepository
+@enduml
+....
+. `PagingAndSortingRepository`, inherit simple Create/Read/Update/Delete methods and plus pagination and sorting support.
++
+[plantuml]
+....
+@startuml
+interface CrudRepository<T, ID>
+interface PagingAndSortingRepository<T, ID> {
+    Iterable<T> findAll(Sort sort)
+    Page<T> findAll(Pageable pageable)
+}
+
+CrudRepository <|-- PagingAndSortingRepository
+@enduml
+....
+. `ReactiveCrudRepository`, TBD
+. `ReactiveSortingRepository`, TBD
+. `RevisionRepository`, TBD
++
+[plantuml]
+....
+@startuml
+interface Repository<T, ID>
+interface RevisionRepository<T, ID> {
+    Optional<Revision<N, T>> findLastChangeRevision(ID id)
+    Revision<N, T> findRevisions(ID id)
+    Page<Revision<N, T>> findRevisions(ID id, Pageable pageable)
+    Optional<Revision<N, T>> findRevision(ID id, N revisionNumber)
+}
+
+Repository <|-- RevisionRepository
+@enduml
+....
+. `RxJava2CrudRepository`, TBD
+. `RxJava2SortingRepository`, TBD
+
+=== Deriving the Query from the Method Name
+
+TBD
+
+=== Using a Manually Defined Query
+
+TBD
 
 == Reference
 
