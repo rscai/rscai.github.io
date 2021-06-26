@@ -4,7 +4,7 @@ title: Ray's Blog
 description: Sr. Developer
 
 # Url is currently only used only for the RSS feed in feed.xml
-url: https://rscai.github.io
+#url: https://rscai.github.io
 #url: http://localhost:4000
 
 # For a project page here should be a project name. Otherwise (for user's/organizaion's page leave it empty)
@@ -54,8 +54,7 @@ assets_path: "/assets"
 
 exclude: ['README.md', 'LICENSE','vendor']
 
-#theme: jekyll-theme-leaf
-remote_theme: rscai/pRoJEct-NeGYa
+theme: jekyll-theme-hacker
 
 keep_files:
 - assets/generated_diagrams
