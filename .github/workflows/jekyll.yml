@@ -10,6 +10,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
+      - name: Install packages
+        run: sudo apt-get install libcurl4-openssl-dev graphviz
+      - name: Install Gem Dependency
+        run: bundle
       - name: Build & Deploy to GitHub Pages
         env: 
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
