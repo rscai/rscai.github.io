@@ -1,0 +1,555 @@
+= Java Developer Interview
+:layout: post
+:page-category: development
+:page-tags: [java, programming language, development, multithreading, interview]
+:source-highlighter: highlightjs
+:icons: font
+:kroki-fetch-diagram:
+:imagesdir: .asciidoctor/diagram
+
+== Interview Questions and Answers
+
+Q: What are the main features of OOPs?
+A: Four main features of OOPs are Inheritance, Encapsulation, Abstraction and Polymorphism. Inheritance is one such concept where the properties of one class can be inherited by other, It helps to reuse the code. Encapsulation is a mechanism where you bind your data and code together as a single unit. It also means to hide your data in order to make it safe from any modification. Abstraction basically deals with hiding the details and showing the essential things to the user. It makes user only depends on what really required, reduces the impact of service code changes on user code. Polymorphism is the ability of a variable, function or object to take on multiple forms. It allows developer define one interface or method and have multiple implementation. And it allows user code trigger different behaviors by sending same message to different objects.
+
+Q: What are method overloading and method overriding?
+A: Method overloading is a feature which makes it possible to define more than one methods with same name but different arguments. Method overriding is a feature of OOPs by which the child class can redefine methods present in the parent class. Shortly, method overloading overloads methods of one class, method overridinng overrides methods of parent class.
+
+Q: What is the difference between ArrayList and LinkedList?
+A: Both ArrayList and LinkedList implement interface List, but they store elements in different data strcuture. ArrayList stores elements in native array which use continous memory. LinkedList stores elements in double link. Because storing elements in continuous memory, so ArrayList takes big O 1 time to perform get by index, takes linear big O n time to perform remove. LinkedList takes big O n time to perform get by index, takes big O 1 time to perform remove.
+
+Q: How to use collection objects thread-safely?
+A: Java collections framework offers two options for using collection objects in multi-threading scenarios, synchronization wrappers and multi-threading optimized collection implementations. Synchronization wrappers add sycnhronization statement around public methods of general prupose collection implementation. The developer can create synchronization wrappers by factory methods from class Collections, likes synchronizedList, synchronizedSet, synchronizedMap, and so on. Besides, collection framework offers multi-threading optimized collection implementations, likes CopyOnWriteArrayList, CopyOnWriteArraySet, ConcurrentSkipListSet, ArrayBlockingQueue, and so on. All of them are thread-safely.
+
+Q: What is the difference between Thread and Process?
+A:
+
+Q: When to use Runnable vs Thread vs Callable?
+A:
+
+Q: What is Java Memory Model?
+A:
+
+Q: What are wait, notify and notifyAll, and why they are defined on Object than Thread?
+A: 
+
+Q: What is the difference between the interrupted() and isInterrupted() method in Java?
+A: 
+
+
+Q: How to synchronize threads?
+A: 
+
+
+== Programming Paradigms
+
+Java is a **General Purpose** **Object-Oriiented** **Statically Typing** **Compiled** **Interpreted** programming languange. It supports object-oriented and functional (introduced since 1.8) programming paradigms.
+
+=== Object Oriented Programming
+
+Object-oriented programming (OOP) is a programming paradigm based on the concept of objects, which can contain state and behavior.
+
+A class is a blueprint or prototype from which objects are created.
+
+Four major features of OOP are:
+
+* Encapsulation
+* Inheritance
+* Abstraction
+* Polymorphism
+
+Encapsulation is a concept that binds together the data and functions that manipulate the data, to protect data from outside interference and misuse.
+
+Inheritance is an approach to reuse code. With inheritance, reduces duplicate code and simplifies code maintenance.
+
+Abstraction is a fundamental concept in computer science and software development. The process of abstraction is that only focuses on a part of the target at one time. In object-oriiented programming, the process of abstraction is that only focus a part of object at one time. Java offers Interface, super Class and method overload to support abstraction.
+
+Polymorphism is the provision of a single interface to entities of different types or the use of a single symbol to represnet multiple different types.
+
+.OOP Concepts and Java Features mapping
+|===
+|OOP Concept|Java Feature
+
+|Object
+|Object
+
+|Class
+|Class
+
+|State
+|Field
+
+|Behavior
+|Method
+
+|Encapsulation
+|Access Modifier, Setter/Getter
+
+|Inheritence
+|Extend
+
+|Abstraction
+|Interface, Implement, Abstract Class
+
+|Polymorphsim
+|Interface, Abstract Class, Implement, Extend, Method Overload, Method Overwrite
+|===
+
+=== Functional Programming
+
+Functional programming is a programming paradigm where programs are constructed by applying and composing functions. It is a declarative programming paradigm in which function definitions are trees of expressions that map values to other values, rather than a sequence of imperative statements which update the running state of the program.
+
+Since Java 8, it introduces function interface which only declare one method, and Stream API in which developer is able to compose functions (objects which implements function interface) and apply on collections.
+
+== Collections Framework
+
+[quote, Collection Framework Overview, https://docs.oracle.com/javase/8/docs/technotes/guides/collections/overview.html]
+____
+The java platform includes a _collection framework_. A _collection_ is an object that represnets a group of objects (such as the classic Vector class). A collections framework is a unified architecture for represneting and maipulating collections, enabling collections to be manipulated independently of implementation details.
+
+The primary advantages of a collections framework are that it:
+
+* **Reduces programming effort** by providing data structures and algorithms so you don't have to write them yourself.
+* **Increases performance** by providing high-performance implementations of data structures and algorithms. Becuase the various implementations of each interface are interchangeable, programs can be tuned by switching implementations.
+* **Provides interoperability between unrelated APIs** by establishing a common language to pass collections back and forth.
+* **Reduces the effort required to learn APIs** by requiring you to learn multiple ad hoc collection APIs.
+* **Reduces the effort required to design and implement APIs** by not requiring you to produce ad hoc collections APIs.
+* **Fosters software reuse** by providing a standard interface for collections and and algorithms with which to manipulate them.
+
+The collections framework consists of:
+
+* **Collection interface**. Represent different types of collections, such as sets, lists and maps. These interfaces form the basis of the framework.
+* **Generate-purpose implementations**. Primary implementations of the collection interfaces.
+* **Legacy implementations**. The collection classes from earlier releases, `Vector` and `Hashtable`, were retrofltted to impelement the collection interfaces.
+* **Special-purpose implementations**. Implementations designed for use in special situations. These implementations display nonstandard performance characteristics, usage restrictions, or behavior.
+* **Concurrent implementations**. Implementations designed for highly concurrent use.
+* **Wrapper implementations**. Add functionality, such as synchronization, to other implementations.
+* **Convenience implementations**. High-perforamcne "mini-implementations" of the collection interfaces.
+* **Abstract implementations**. Partial implementations of the collection interfaces to facilitate custom implementations.
+* **Algorithms**. Static methods that perform useful functions on collections, such as sorting a list.
+* **Infrastructure**. Interfaces that provide essential support for the collection interfaces.
+* **Array Utilities**. Utility functions for arrays of primitive types and reference objects. Not, strictly speaking, a part of the collections framework, this feature was added to the Java platform at the same time as the collections framework and relies on some of the same infrastructure.
+____
+
+=== Collection Interfaces
+
+.Collection interfaces
+[plantuml, collection-interfaces]
+....
+@startuml
+skinparam backgroundColor #EEEBDC
+package java.util {
+    interface Collection<E>
+    interface Set<E>
+    interface List<E>
+    interface Queue<E>
+
+
+    Collection <|-- List: extends
+    Collection <|-- Set: extends
+    Collection <|-- Queue: extends
+
+    interface SortedSet<E>
+    interface NavigableSet<E>
+
+    Set <|-- SortedSet: extends
+    SortedSet <|-- NavigableSet: extends
+
+    interface Deque<E>
+    interface BlockingQueue<E>
+    interface TransferQueue<E>
+    interface BlockingDeque<E>
+
+    Queue <|-- Deque: extends
+    Queue <|-- BlockingQueue: extends
+    BlockingQueue <|-- TransferQueue: extends
+    Deque <|-- BlockingDeque: extends
+    BlockingQueue <|-- BlockingDeque: extends
+
+    interface Map<K, V>
+    interface SortedMap<K, V>
+    interface NavigableMap<K, V>
+    interface ConcurrentMap<K, V>
+    interface ConcurrentNavigableMap<K, V>
+
+    Map <|-- SortedMap: extends
+    SortedMap <|-- NavigableMap: extends
+    Map <|-- ConcurrentMap: extends
+    ConcurrentMap <|-- ConcurrentNavigableMap: extends
+    NavigableMap <|-- ConcurrentNavigableMap: extends
+
+}
+@enduml
+....
+
+* **Collection** represents a group of objects known as its elements.
+* **Set** is a collection that cannot contain duplicate elements. This interface models the mathematical set abstraction and is used to represnet sets.
+* **List** is an ordered collection. Lists can contain duplicate elements. Elements of List can be accessed by the position.
+* **Queue** is a collection used to hold multiple elements prior to processing. Only head and tail elements are accessable.
+* **Deque** is a collection ysed to hold multiple elements prior to processing. As same as Queue, only head and tail elements are accessable.
+* **Map** is an object that maps keys to values.
+
+=== General Purpose Implementations
+
+.General-purpose implementations
+|===
+|Interface|Hash Table|Resiable Array|Balanced Tree|Linked List|Hash Table + Linked List
+
+|Set
+|HashSet
+|
+|TreeSet
+|
+|LinkedHashSet
+
+|List
+|
+|ArrayList
+|
+|LinkedList
+|
+
+|Deque
+|
+|ArrayDeque
+|
+|LinkedList
+|
+
+|Map
+|HashMap
+|
+|TreeMap
+|
+|LinkedHashMap
+|===
+
+=== Concurrent Implemetations
+
+|===
+|Interface|Array|Linked List|Tree|Hash Table
+
+|Set
+|CopyOnWriteArraySet
+|ConcurrentSkipListSet
+|
+|
+
+|List
+|CopyOnWriteArrayList
+|
+|
+|
+
+|Queue
+|ArrayBlockingQueue
+|LinkedBlockingQueue
+|
+|
+
+|Map
+|
+|ConcurrentSkipListMap
+|
+|ConcurrentHashMap
+|===
+
+=== Wrapper Implementations
+
+Wrapper implementations delegate all their real work to a specified collection but add extra functionality on top of what this collection offers. For design pattern fans, this is an example of the decorator pattern.
+
+`Collections` provides static factory methods to create wrapper implementations:
+
+* Synchronization wrappers, add automatic synchronization to a arbitrary collection.
+** `public static <T> Collection<T> synchronizedCollection(Collection<'T> c);`
+** `public static <T> Set<T> synchronizedSet<Set<T> s);`
+** `public static <T> List<T> synchronizedList(List<T> list);`
+** `public static <K,V> Map<K,V> synchronizedMap(Map<K,V> m);`
+** `public static <T> SortedSet<T> synchronizedSortedSet(SortedSet<T> s);`
+** `public static <K,V> SortedMap<K,V> synchronizedSortedMap(SortedMap<K,V> m);`
+* Unmodifiable wrappers, take away the ability to modify the collection by intercepting all the operations that would modify the collection and throwing an `UnsupportedOperationException`.
+** `public static <T> Collection<T> unmodifiableCollection(Collection<? extends T> c);`
+** `public static <T> Set<T> unmodifiableSet(Set<? extends T> s);`
+** `public static <T> List<T> unmodifiableList(List<? extends T> list);`
+** `public static <K,V> Map<K,V> unmodifiableMap(Map<? extends K, ? extends V> m);`
+** `public static <T> SortedSet<T> unmodifiableSortedSet(SortedSet<? extends T> s);`
+** `public static <K,V> SortedMap<K,V> unmodifiableSortedMap(SortedMap<K, ? extends V> m);`
+* Checked interface wrappers, are provided for use with generic collections. These implementations return a dynamically type-safe view of the specified collection, which throws a `ClassCastException` if a client attempts to add an element of the wrong type.
+
+=== Convenience Implementations
+
+Convenience implementations are more convenient and more efficient than general-purpose implementations when you don't need their full power.
+
+* List view of an Array `Arrays.asList`
+* Immutable multiple-copy list `Collections.nCopies`
+* Immutable singleton set `Collections.singleton`
+* Empty set, list and map constants `Collections.emptySet`, `Collections.emptyList` and `Collections.emptyMap`
+
+=== Algorithms
+
+Most of algorithms come from the `Collections` class, and all take the form of static methods whose first argument is the collection on which the operation is to be performed.
+
+* The **Sorting** algorithm reorders a List so that its elements are in ascending order according to an ordering relationship. Tow forms of the operation are provided:
+** `public static <T extends Comparable<? super T>> void sort(List<T> list)`
+** `public static <T> void sort(List<T> list, Comparable<? super T> c)`
+* The **Shuffling** algorithm does the opposite of what sort does, destroying any trace of order that may have been present in a List. That is, this algorithm reorders the List based on input form a source of randomness such that all possible permutations occur with equal likelihood, assuming a fair source of randomness.
+* The `Collections` class provides five algorithms for doing **routine data manipulation** on List objects, all of which are pretty straightforward:
+** _reverse_ reverses the order of the elements in a List.
+** _fil_ overwrites every element in a list with the specified value. This operation is useful for reinitializing a List.
+** _copy_ takes two arguments, a destination List and a source List, and copies the elements of the source into the destination, overwriting its contents. The destination List must be at least as long as the source. If it is longer, the remaining elements in the destination List are unaffected.
+** _swap_ swaps the elements at the specified positions in a List
+** _addAll_ adds all the specified elements to a `Collection`. The elements to be added may be specified individually or as an array.
+* The **binarySearch** algorithms search for a specified element in a sorted list. This algorithm has two forms:
+** `public static <T> int binarySearch(List<? extends Comparable<? super T>> list, T key)`
+** `public static <T> int binarySearch(List<? extends T> list, T key, Comparator<? super T> c)``
+* The **frequency** and **disjoint** algorithms test some aspect of the composition of one or more `Collections`:
+** **frequency** counts the number of times the specified element occurs in the specified collection
+** **disjoint** determines whether two `Collections` are disjoint; that is, whether they contain no elements in common
+* The `min` and the `max` algorithms return, respectively, the minimum and maximum element contained in a specified `Collection`.
+
+== Design Pattern
+
+* Creational Design Patterns
+** Factory Method
+** Abstract Factory
+** Builder
+** Prototype
+** Singleton
+* Structural Design Patterns
+** Adapter
+** Bridge
+** Composite
+** Decorator
+** Facade
+** Flyweight
+** Proxy
+* Behavioral Design Patterns
+** Chain of Responsibility
+** Command
+** Iterator
+** Mediator
+** Memento
+** Observer
+** State
+** Strategy
+** Template Method
+** Vistor
+
+=== Factory Method
+
+**Factory Method** provides an interface for creating objects in a superclass, but allows subclasses to alter the type of objects that will be created
+
+=== Abstract Factory
+
+TBD
+
+=== Builder
+
+TBD
+
+== Multithreading
+
+=== Process vs. Thread
+
+[quote, Process (computing), https://en.wikipedia.org/wiki/Process_(computing)]
+____
+In computing, a process is the instance of a computer program that is being executed by one or many threads. It contains the program code and its activity. Depending on the operating system (OS), a process may be made up of multiple threads of execution that execute instructions concurrently.
+
+In general, a computer system process consists of (or is said to own) the following resources:
+
+* An __image__ of the executable machine code associated with a program.
+* Memory (typically some region of virtual memory); which includes the executable code, process-specific data (input and output), a call stack (to keep track of active subroutines and/or other events), and a heap to hold intermediate computation data generated during run time.
+* Operating system descriptors of resources that are allocated to the process, such as file descriptors (Unix terminology) or handles (Windows), and data sources and sinks.
+* Security attributes, such as the process owner and the process' set of permissions (allowable operations).
+* Processor state (context), such as the content of registers and physical memory addressing. The state is typically stored in computer registers when the process is executing, and in memory otherwise.
+____
+
+[quote, Thread (computing), https://en.wikipedia.org/wiki/Thread_(computing)]
+____
+In computer science, a thread of execution is the smallest sequence of programmed instructions that can be managed independently by a scheduler, which is typically a part of the operating system. The implementation of threads of processes differs between operating systems, but in most cases, a thread is a component of a process. Multiple threads can exist within one process, executing concurrently and sharing resources such as memory, while different processes do not share these resources. In particular the threads of a process share its executable code and the values of its dynamically allocated variables and non-thread-local global variables at any given time.
+____
+
+[TIP]
+====
+Memory address space is isolated amongst processes but shared amongst threads of the process.
+====
+
+=== Interfaces and Classes
+
+It defines class `Thread` to represent a thread of execution in a program and defines interface `Runnable` to represent a sequence of instruction. The `Thread` is the unit which is managed by the scheduler, `Runnable` is just a sequence of instruction, it's not executable until assign to a certain `Thread`.
+
+[plantuml]
+....
+@startuml
+skinparam backgroundColor #EEEBDC
+package "java.lang" {
+    interface Runnable {
+        +run()
+    }
+    class Thread {
+        {static} +activeCount(): int
+        {static} +currentThread(): Thread
+        {static} +dumpStack()
+        {static} +enumerate(tarray: Thread[]): int
+        {static} +getAllStackTraces(): Map<Thread, StackTraceElement[]>
+        {static} +getDefaultUncaughtExceptionHandler(): Thread.UncaughtExceptionHandler
+        {static} +holdsLock(obj: Object): boolean
+        {static} +interrupted(): boolean
+        {static} +yield()
+        +getId(): long
+        +getName(): String
+        +getPriority(): int
+        +getStackTrace(): StackTraceElement[]
+        +getState(): Thread.State
+        +getThreadGroup(): ThreadGroup
+        +getUncaughtExceptionHandler(): Thread.UncaughtExceptionHandler
+        +interrupt()
+        +isAlive(): boolean
+        +isDaemon(): boolean
+        +isInterrupted(): boolean
+        +join()
+        +join(millis: long)
+        +join(millis: long, nanos: int)
+        +start()
+    }
+    Runnable <|-- Thread: implements
+}
+@enduml
+....
+
+=== Thread Lifecycle
+
+[plantuml, thread-state]
+....
+@startuml
+skinparam backgroundColor #EEEBDC
+[*] -> NEW: new thread
+NEW -> RUNNABLE: start()
+RUNNABLE -> TERMINATED: complete
+RUNNABLE --> WAITING: wait(), join()
+WAITING --> RUNNABLE: notify(), notifyAll()
+RUNNABLE --> BLOCKED: waiting for lock
+BLOCKED --> RUNNABLE: lock acquired
+RUNNABLE --> TIMED_WAITING: sleep(), wait(), join()
+TIMED_WAITING --> RUNNABLE: notify(), notifyAll(), time elapsed
+@enduml
+....
+
+It defines six states for Thread:
+
+. **NEW** a newly created thread that has not yet started the execution.
+. **RUNNABLE** either running or ready for execution. The execution resource, likes CPU time is allocated by scheduler, user code cannot control it. What user code can do is that make thread ready for execution.
+. **WAITING** waiting for some other thread to perform a particular action without any timelimit. Invoking `Object.wait(), Thread.join()` will transit thread to this state, and invoking `Object.notify(), Object.notifyAll()` will transit thread state to **RUNNABLE**.
+. **TIMED_WAITING** waiting for some other thread to perform a specific action for a specified period. Invoking `Object.wait(long timeout), Object.wait(long timeour, int nanos)` will transit thread to this state, and invoking `Object.notify(), Object.notifyAll()` or timeout will transit thread state to **RUNNABLE**.
+. **BLOCKED** waiting to acquire a lock to enter or re-enter a synchronized block/method.
+. **TERMINATED** has completed its execution.
+
+=== Synchronization
+
+The Java programming language provides two basic synchronization idioms: synchronized methods and synchronized statements.
+
+[quote, Intrinsic Locks and Synchronization, https://docs.oracle.com/javase/tutorial/essential/concurrency/locksync.html]
+____
+Synchronization is built around an internal entity known as the intrinsic lock or monitor lock. (The API specification often refers to this entity simply as a "monitor".) Intrinsic locks play a role in both aspects of synchronization: enforcing exclusive access to an object's state and establishing happens-before relationships that are essential to visibility.
+
+Every object has an intrinsic lock associated with it. By convention, a thread that needs exclusive and consistent access to an object's fields has to acquire the object's intrinsic lock before accessing them, and then release the intrinsic lock when it's done with them. A thread is said to own the intrinsic lock between the time it has acquired the lock and released the lock. As long as a thread owns an intrinsic lock, no other thread can acquire the same lock. The other thread will block when it attempts to acquire the lock.
+____
+
+[quote, Intrinsic Locks and Synchronization, https://docs.oracle.com/javase/tutorial/essential/concurrency/locksync.html]
+____
+Recall that a thread cannot acquire a lock owned by another thread. 'but a thread can acquire a lock that is already owns. Allowing a thread to acquire the same lock more than once enables reentrant synchronization. This describes a situation where synchronized code, directly or indirectly, invokes a method that also contains synchronized code, and both sets of code use the same lock. Without reentrant synchronization, synchronized code would have to take many additional precautions to avoid having a thread cause itself to block.
+____
+
+=== Lock
+
+[quote, Lock Objects, https://docs.oracle.com/javase/tutorial/essential/concurrency/newlocks.html]
+____
+Lock objects work very much like the implicit locks used by synchronized code. As with implicit locks, only one thread can own a Lock object at a time. Lock objects also support a `wait/notify` mechanism, through their associated Condition objects.
+
+The biggest advantage of Lock objects over implicit locks is their ability to back out of an attempt to acquire a lock. The `tryLock` method backs out if the lock is not available immediately or before a timeout expires (is specified). The `lockInterruptibly` method backs out if another thread sends an interrupted before the lock is acquired.
+____
+
+=== Thread Pool
+
+[quote, Thread pool, https://en.wikipedia.org/wiki/Thread_pool]
+____
+In computer programming, a thread pool is a software design pattern for archieving concurrency of execution in a computer program. Often also called a replicated wrokers or worker-crew model, a thread pool maintains multiple threads waiting for tasks to be allocated for concurrent execution by the supervising program. By maintaining a pool of threads, the model increases performance and avoids latency in execution due to frequent creation and destruction of threads for short-live tasks. The number of available threads is tuned to the computing resources available to the program, such as a parallel task queue after completion of execution.
+____
+
+Most of the executor implementations in `java.util.concurrent` use thread pools, which consist of worker threads. Through factory methods in `java.util.concurrent.Executors`, developer can create thread pool easily.
+
+[plantuml, Executors]
+....
+@startuml
+package "java.util.concurrent" {
+    class Executors {
+        {static} +newCachedThreadPool(): ExecutorService
+        {static} +newFixedThreadPool(nThreads: int): ExecutorService
+        {static} +newScheduledThreadPool(corePoolSize: int): ScheduledExecutorService
+        {static} +newSingleThreadExecutor(): ExecutorService
+        {static} +newSingleThreadScheduledExecutor(): ScheduledExecutorService
+        {static} +newWorkStealingPool(): ExecutorService
+    }
+}
+@enduml
+....
+
+=== Fork/Join Framework
+
+[quote, Fork/Join, https://docs.oracle.com/javase/tutorial/essential/concurrency/forkjoin.html]
+____
+The fork/join framework is an implementation of the `ExecutorService` interface that helps you take advantage of multiple processors. It is designed for work that can be broken into smaller pieces recursively. The goal is to use all the available processing power to enhance the performance of your application.
+____
+
+As a developer, you should write code that performs a segment of the work. The code should:
+
+* resolve work directly if it is small enough
+* split work into two or more pieces
+* invoke the pieces and wait for the results
+
+Fork/Join framework holds the recursive work segments in a stack. Developer should push new pieces of work into the stack by invoking `fork()`, and wait for the results by invoking `join()`.
+
+
+=== Java Memory Model
+
+[quote, Java memory model, https://en.wikipedia.org/wiki/Java_memory_model]
+____
+The **Java memory model** decribes how threads in the Java programming language interact through memory. Together with the description of single-threaded execution of code, the memory model provides the semantics of the Java programming language.
+
+The Java programming language and platform provide thread capabilities. Synchronization between threads is notoriously difficult for developers; this difficulty is compounded because Java applications can run on a wide range of processors and operating systems. To be able to draw conclusions about a program's behavior, Java's designers decided they had to clearify define possible behaviors of all Java programms.
+
+On modern platforms, code is frequently not executed in the order it was written. It is reordered by the compiler, the processor and the memory subsystem to achieve maximum performance. On multiprocessor architectures, individual processors may have their own local caches that are out of sync with main memory. It is generally undesirable to require threads to remain perfectly in sync with one another because this would be too costly from a performance point of view. This means that at any given time, different threads may see different values for the same shared data.
+____
+
+== Memory Management in the Java HotSpot(TM) Virtual Machine
+
+[quote, Generational Collection, https://www.oracle.com/technetwork/java/javase/memorymanagement-whitepaper-150215.pdf]
+____
+When a technique called generational collection is used, memory is divided into gnenerations, that is, separate pools holding objects of different ages. For example, the most widely-used configuration has two generations: one for young objects and one for old objects.
+
+Different algorithms cna be used to perform garbage collection in the different generations, each algorithm optimized based on commonly observed characteristics for that particular generation. Generational garbage collection exploits the following observations, known as the weak generational hypotheisi, regarding applications written in several programming languages, including the Java programming language:
+
+* Most allocated objects are not referenced (considered live) for long, that is, they die young.
+* Few references from older to younger ojbects exist.
+
+Young generation collections occur relatively frequently and are efficient and fast because they young generation space is usually small and likely to contain a lot of objects that are no longer referenced.
+
+Objects that survive some number of young generation collections are eventually promoted, or tenured, to the old generation. This generation is typucally larger than the young generation and its occupancy grows more slowly. As a result, old generation collections are infrequent, but take significantly longer to complete.
+
+The garbage collection algorithm chosen for a young generation typucally puts a premium on speed, since young generation collections are frequent. On the other hand, the old generation is typucally managed by an algorithm that is more space efficient, because the old generation takes up most of the heap and old generation algorithms have to work well with low garbage densities.
+____
+
+== JVM Tuning
+
+TBD
+
+== Reference
+
+* https://en.wikipedia.org/wiki/Object-oriented_programming[]
+* https://en.wikipedia.org/wiki/Functional_programming[]
+* https://docs.oracle.com/javase/8/docs/technotes/guides/collections/[]
+* https://en.wikipedia.org/wiki/Process_(computing)[]
+* https://en.wikipedia.org/wiki/Thread_(computing)[]
+* https://docs.oracle.com/javase/8/docs/api/java/lang/Thread.State.html[]
+* https://docs.oracle.com/javase/specs/jls/se8/html/jls-17.html[Java Language Specification, Java SE 8 Edition, Chapter 17. Threads and Locks]
+* https://www.edureka.co/blog/interview-questions/java-interview-questions/[100+ Java Interview Questions You Must Prepare in 2021]
