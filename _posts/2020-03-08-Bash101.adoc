@@ -1,0 +1,323 @@
+= Bash 101
+:layout: post
+:page-category: tutorial
+:page-tags: [bash, linux, script]
+:icons: font
+:source-highlighter: rouge
+
+
+== Overview
+
+[quote, Unix shell, https://en.wikipedia.org/wiki/Unix_shell]
+____
+A Unix shell is a command-line interpreter or shell that provides a command line user interface for Unix-like operating systems. The shell is both an interactive command language and a scripting language, and is used by the operating system to control the execution of the system using shell scripts.
+____
+
+== Hello World
+
+.hello_world.sh
+[source, bash]
+....
+include::bash101/hello_world.sh[]
+....
+[source, bash]
+....
+chmod a+x ./hello_world.sh
+bash-3.2$ ./hello_world.sh
+Your Name? Mike
+Hello World Mike!
+bash-3.2$
+....
+
+== Programming Paradigm
+
+Bash script is an imperative, procedural, scripting programming language.
+
+=== Procedural Programming
+
+[quote, Procedural Programming, https://en.wikipedia.org/wiki/Procedural_programming]
+____
+Procedural programming is a programming paradigm, derived from structured programming,[citation needed] based on the concept of the procedure call. Procedures, also known as routines, subroutines, or functions, simply contain a series of computational steps to be carried out.
+____
+
+The essence procedural programming is Data and Procedure.
+
+Bash implements Data in Variable, Procedure in Function.
+
+==== Variables
+
+[quote, https://www.tldp.org/LDP/abs/html/untyped.html]
+____
+Unlike many other programming languages, Bash does not segregate its variables by "type." Essentially, Bash variables are character strings, but, depending on context, Bash permits arithmetic operations and comparisons on variables. The determining factor is whether the value of a variable contains only digits.
+____
+
+Basically, Bash is dynamic typing. Variable could be assigned any type of value. Additionally, it does implicitly type conversion based on context.
+
+[source, bash]
+....
+bash-3.2$ a=12 # assign integer value to variable a
+bash-3.2$ echo $a # variable a is referring integer value
+12
+bash-3.2$ a=string # assign string value to vairable a
+bash-3.2$ echo $a # variable a is referring string value
+string
+bash-3.2$ b=23 # assign integer value to variable a
+bash-3.2$ echo $a+$b # convert integer value to string value implicitly when add string by integer
+string+23
+....
+
+===== Variable Assignment and Substitution
+
+TBD
+
+==== Variable Kind
+
+Int bash, there are three kinds of variables:
+
+* Local Variables, variables visible only within a code block or function
+* Environment Variables, variables which affect the behavior of the shell and user interface
+* Positional Variables, arguments passed to the script from the command line: `$0, $1, $2, $3 ...`
+
+==== Value Type
+
+Bash built in value types:
+
+* numeric
+* string
+* array
+
+===== Numeric
+
+TBD
+
+===== String
+
+TBD
+
+===== Array
+
+TBD
+
+=== Function
+
+Function is defined by keyword `function`. It can not define arguments in function signature, but it is still able to pass and refer arguments. Arguments could be referred by positional variables `$1, $2, $3, ...` in function scope. The positional variable `$0` is function name, arguments start at `$1`. Function is not able to return actual value, but it could simulate **return** by `echo`.
+
+Function example:
+
+[source, bash]
+....
+include::bash101/function.sh[]
+....
+
+
+== Control Flow
+
+
+=== Branching
+
+There are two approaches to implement branching in Bash script:
+
+* if/then
+* case
+
+==== if/then
+
+if/then is a two way branching (if/then is called **test** most time). The form of if/then is:
+
+[source, bash]
+....
+if [ condition ]
+then
+    command
+else
+   command
+fi
+....
+
+If condition is `true`, it executes `then` branch; if condition is `false`, it executes `else` branch. For example:
+
+[source, bash]
+....
+include::bash101/branching.sh[lines=3..8]
+....
+
+if/then could nest if/then, for example:
+
+[source, bash]
+....
+include::bash101/branching.sh[lines=10..18]
+....
+
+==== case
+
+case is a multiple branching. The form is:
+
+[source, bash]
+....
+case "$variable" in
+
+condition1)
+command1
+;;
+
+condition2)
+command2
+;;
+
+esac
+....
+
+Example:
+
+[source, bash]
+....
+include::bash101/branching.sh[lines=20..32]
+....
+
+
+=== Loops
+
+A loop is a block code that iterates a list of commands as long as the loop control condition is ture.
+
+There are three approaches to implement loop in Bash script:
+
+* for loop
+* while
+* until
+
+==== for loop
+
+The form of *for loop* is:
+
+[source, bash]
+....
+for arg in [list]
+do
+  commands
+done
+....
+
+During each pass through the loop, arg takes on the value of each successive variable in the list.
+
+For example:
+
+[source, bash]
+....
+include::bash101/loops.sh[lines=3..7]
+....
+
+**for loop** also could inerate array:
+
+[source, bash]
+....
+include::bash101/loops.sh[lines=9..14]
+....
+
+
+==== while
+
+The form of **while** is:
+
+[source, bash]
+....
+while [ condition ]
+do
+  commands
+done
+....
+
+This construct tests a condition on the top of loop, and keeps loop as long as that condition is **true**.
+
+For example:
+
+[source, bash]
+....
+include::bash101/loops.sh[lines=16..27]
+....
+
+==== until
+
+The form of **until** is:
+
+[source, bash]
+....
+until [ condition ]
+do
+  commands
+done
+....
+
+This construct tests for a condition on the top of a loop, and keeps loop as long as that condition is **false**.
+
+For example:
+
+[source, bash]
+....
+include::bash101/loops.sh[lines=29..40]
+....
+
+== Tests
+
+If file exists?
+
+[source, bash]
+....
+include::bash101/tests.sh[lines=3..10]
+....
+
+If file older than?
+
+TBD
+
+Has file been changed recently?
+
+TBD
+
+== Batch Text Editing
+
+Bash itself is not capable of batck test editing. It's commonly implemented by comandline tools **sed** and **awk**.
+
+=== Sed
+
+[quote]
+____
+Sed is a non-interactive stream editor. It receives text input, whether from stdin or from a file, performs certain operations on specified lines of the input, one line at a time, then outputs the result to stdout or to a file.
+____
+
+=== Awk
+
+[quote]
+____
+Awk is a full-featured text processing language with a syntax reminiscent of C. While it possesses an extensive set of operators and capabilities, we will cover only a few of these here - the ones most useful in shell scripts.
+
+Awk breaks each line of input passed to it into fields. By default, a field is a string of consecutive characters delimited by whitespace, though there are options for changing this. Awk parses and operates on each separate field. This makes it ideal for handling structured text files -- especially tables -- data organized into consistent chunks, such as rows and columns.
+____
+
+=== Batch Replace
+
+.example.txt
+....
+include::bash101/example.txt[]
+....
+
+Replace all 'earns' by 'losts'.
+
+[source, bash]
+....
+sed 's/earns/losts/g' example.txt
+....
+
+....
+It losts 1,000 in Q1, totally 5,000 in this year.
+It losts 1,500 in Q2, totally 5,000 in this year.
+It losts 1,750 in Q3, totally 5,000 in this year.
+It losts 750 in Q4, totally 5,000 in this year.
+....
+
+=== List Recent Changed Files
+
+TBD
+
+== Reference
+
+* https://www.tldp.org/LDP/abs/html/index.html[Advanced Bash-Scripting Guide]

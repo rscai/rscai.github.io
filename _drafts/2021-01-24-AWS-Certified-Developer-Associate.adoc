@@ -1,0 +1,1075 @@
+= AWS Certified Developer Associate
+:layout: post
+:page-category: spring-boot
+:page-tags: [spring-boot, spring, spring-data, repository-pattern]
+:source-highlighter: rouge
+:icons: font
+:kroki-fetch-diagram:
+:imagesdir: .asciidoctor/diagram
+
+== Overview
+
+=== AWS Certifications
+
+image::https://d1.awsstatic.com/Train%20&%20Cert/Certification%20Page%20Images/AWS-Certification-Current-Roadmap-May2019.36b629c3b9be6da400a13e6cf1a4f9f4ef680f70.png[]
+
+Foundational::
+**Six months** of fundamental AWS Cloud and Industry knowledge
+
+* Cloud Practioner
+
+Associate::
+**One year** of experience solving problems and implementing solutions using the AWS Cloud
+
+* Solutions Architect Associate
+* SysOps Administrator Assosicate
+* Developer Associate
+
+Professional::
+**Two years** of comprehensive experience designing, operating, and troubleshooting solutions using the AWS Cloud
+
+* Solutions Architect professional
+* DevOps Engineer Professional
+
+Specialty::
+Technical AWS Cloud experience in the Specialty domain as specified in the **exam guide**
+
+* Advanced Networking Specialty
+* Data Analytics Specialty
+* Database Specialty
+* Machine Learning Specialty
+* Security Specialty 
+
+[cols="a,a,a"]
+|===
+|Certification|Abilities Validated by the Certification|Recommended Knowledge and Experience
+
+|link:https://aws.amazon.com/certification/certified-cloud-practitioner/[Cloud Practitioner]
+|
+* Define what the AWS Cloud is and the basic global infrastructure
+* Describe basic AWS Cloud architectural principles
+* Describe the AWS Cloud value proposition
+* Describe key services on the AWS platform and their common use cases (for example, compute and analytics)
+* Describe basic security and compliance aspects of the AWS platform and the shared security model
+* Define the billing, account management, and pricing models
+* Identify sources of documentation or technical assistance (for example, whitepapers or support tickets)
+* Describe basic/core characteristics of deploying and operating in the AWS Cloud
+|
+* We recommand candidates have at least six months of experience with the AWS Cloud in any role, including technical, managerial, sales, purchasing, or financial
+* Candidates should have a basic understanding of IT services and their uses in the AWS Cloud platform
+
+|link:https://aws.amazon.com/certification/certified-solutions-architect-associate/[Solutions Architect - Associate]
+|
+* Effectively demostrate knowledge of how to architect and deploy secure and robust applications on AWS technologies
+* Define a solution using architectural design principles based on customer requirements
+* Provide implementation guidance based on best practices to the organization throughout the life cycle of the project
+|
+* Hands-on experience using compute, networking, storage, and database AWS services
+* Hands-on experience with AWS deployment and management services
+* Ability to identify and define technical requirements for an AWS-based application
+* Ability to identify which AWS services meet a given technical requirement
+* Knowledge of recommended best practices for building secure and reliable applications on the AWS platform
+* An understanding of the basic architectural principles of building on the AWS Cloud
+* An understanding of the AWS global infrastructure
+* An understanding of network technologies as they relate to AWS
+* An understanding of security features and tools that AWS provides and how they relate to trandidtional services
+
+|link:https://aws.amazon.com/certification/certified-sysops-admin-associate/[SysOps Administrator - Associate]
+|
+* Deploy, manage, and operate scalable, highly available, and fault-tolerant systems on AWS
+* Implement and control the flow of data to and from AWS
+* Select the appropriate AWS service based on compute, data, or security requirements
+* Identify appropriate use of AWS operational best practices
+* Estimate AWS usage costs and identify operational cost control mechanisms
+* Migrate on-premises workloads to AWS
+|
+* Understanding of the AWS tenets-architecting for the cloud
+* Hands-on experience with the AWS CLI and SDKs/API tools
+* Understanding of network technologies as they relate to AWS
+* Understanding of security concepts with hands-on experience in implementing security controls and compliance requirements
+* Understanding of virtualization technology
+* Monitoring and auditing systems experience
+* Knowledge of networking concepts (e.g., DNS, TCP/IP, and firewalls)
+* Ability to translate architectural requirements
+
+|link:https://aws.amazon.com/certification/certified-developer-associate/[Developer - Associate]
+|
+* Demonstrate an understanding of core AWS services, uses, and basic AWS architecture best practices
+* Demonstrate proficiency in developing, and debugging cloud-based applications using AWS
+|
+* In-depth knowledge of at least one high-level programming language
+* Understanding of core AWS services, uses, and basic AWS architecture best practices
+* proficiency in developing, deploying, and debugging cloud-based applications using AWS
+* Ability to use the AWS service APIs, AWS CLI, and SDKs to write applications
+* Ability to identify key features of AWS services
+* Understanding of the AWS shared responsibility model
+* Understanding of application lifecycle management
+* Ability to use a CI/CD pipeline to deploy applications on AWS
+* Ability to use or interact with AWS services
+* Ability to apply a basic understanding of cloud-native applications to write code
+* Ability to write code using AWS security best practices (e.g., not using secret and access keys in the code, instead using IAM roles)
+* Ability to author, maintain, and debug code modules on AWS
+* Proficiency writing code for serverless applications
+* Understanding of the use of containers in the development process
+
+|link:https://aws.amazon.com/certification/certified-solutions-architect-professional/[Solutions Architect - Professional]
+|
+* Design and deploy dynamically scalable, highly available, fault-tolerant, and reliable applications on AWS
+* Select appropriate AWS services to design and deploy an application based on given requirements
+* Migrate complex, multi-tier applications on AWS
+* Design and deploy enterprise-wide scalable operations on AWS
+* Implement cost-control strategies
+|
+* Two or more years of hands-on eperience designing and deploying cloud architecture on AWS
+* Ability to evaluate cloud application requirements and make architectural recommendations for implementation, deployment, and provisioning applications on AWS
+* Familiarity with AWS CLI, AWS APIs, AWS CloudFormation templates, the AWS Billing Console, and the AWS Management Console
+* Explain and apply the five pillars of the AWS Well-Architected Framework
+* Design a hybrid architecture using key AWS technologies (e.g., VPN, AWS Direct Connect)
+* Ability to provide best practice guidance on the architectural design across multiple applications and projects of the enterprise
+* Familiarity with a scripting language
+* Familiarity with Windows and Linux environemtns
+* Map business objectives to application/architecture requirements
+* Architect a continuous integration and deployment process
+
+|link:https://aws.amazon.com/certification/certified-devops-engineer-professional/[DevOps Engineer - Professional]
+|
+* Implement and manage continuous delivery systems and methodologies on AWS
+* Implement and automate security controls, governance processes, and compliance validation
+* Define and deploy monitoring, metrics, and logging systems on AWS
+* Implement systems that are highly available, scalable, and self-healing on the AWS platform
+* Design, manage, and maintain tools to automate operational processes
+|
+* Experience developing code in at least one high-level programming language
+* Experience building highly automated infrastructures
+* Experience administering operating systems
+* Understanding of modern development and operations processes and methodologies 
+
+|link:https://aws.amazon.com/certification/certified-advanced-networking-specialty/[Advanced Networking - Specialty]
+|
+* Design, develop, and deploy cloud-based solutions using AWS
+* Implement core AWS services according to basic architecture best practices
+* Design and maintain network architecture for all AWS services
+* Leverage tools to automate AWS networking tasks
+|
+* We recommend candidates hold an AWS Certified Cloud Practitioner or a current Associate-level certification: AWS Certified Solutions Architect - Associate, AWS Certified Developer - Associate or AWS Certified SysOps Administrator - Associate
+* Advanced knowledge of AWS networking concepts and technologies
+* Minimum five years hands-on experience architecting and implementing network solutions
+* Advanced networking architectures and interconnectivity options (e.g., IP VPN, MPLS/VPLS)
+* Networking technologies whithin the OSI model, and how they affect implementation decisions
+* Development of automation scripts and tools
+* CIDR and sub-netting (IPv4 and IPv6)
+* IPv6 transition challenges
+* Generic solutions for network security features, including WAF, IDS, IPS, DDoS protection, and Economic Denial of Service/Substainability (EDoS)
+
+|link:https://aws.amazon.com/certification/certified-data-analytics-specialty/[Data Analytics - Specialty]
+|
+* Define AWS data analytics services and understand how they integrate with each other
+* Explain how AWS data analytics services fit in the data life cycle of collection, storage, processing, and visualization
+|
+* At least 5 years of experience with data analytics technologies
+* At least 2 years of hands-on experience working with AWS
+* Experience and expertise working with AWS services to design, build, secure, and maintain analytics solutions
+
+|link:https://aws.amazon.com/certification/certified-database-specialty/[Database - Specialty]
+|
+* Understand and differentiate the key features of AWS database services
+* Anallyze needs and requirements to recommend and design appropriate database solutions using AWS services
+|
+* At least 5 years of experience with database technologies
+* At least 2 years of hands-on experience working on AWS
+* Experience and expertise working with on-premises and AWS-Cloud-based relational and nonrelational databases
+
+|link:https://aws.amazon.com/certification/certified-machine-learning-specialty/[Machine Learning - Specialty]
+|
+* Select and justify the appropriate ML approach for a given business problem
+* Identify appropriate AWS services to implement ML solutions
+* Design and implement scalable, cost-optimized, reliable, and secure ML solutions
+|
+* 1-2 years of experience developing, architecting, or running ML/deep learning workloads on the AWS Cloud
+* The ability to express the intuition behind basic ML algorithms
+* Experience performing basic hyperparameter optimization
+* Experience with ML and deep learning frameworks
+* The ability to follow model-training best practices
+* The ability to follow deployment and operational best practices
+
+|link:https://aws.amazon.com/certification/certified-security-specialty/[Security - Specialty]
+|
+* An understanding of specialized data classifications and AWS data protection mechanisms
+* An understanding of data encryption methods and WAS mechanisms to implement them
+* An understanding of secure internet protocols nad WAS mechanisms to implement them
+* A working knowledge of AWS security services and features of services to provide a secure production environment
+* Competency gained from two or more years of production deployment experience using AWS security services and features
+* Ability to make tradeoff decisions with regard to cost, security, and deployment complexity given a set of application requirements
+* An understanding of security operations and risk
+|
+* At least two years of hands-on experience securing AWS workloads
+* Security controls for workloads on AWS
+* A minimum of five years of IT security experience designing and implementing security solutions
+|===
+
+==== Cloud Practitioner
+
+TBD
+
+==== Solutions Architect Associate
+
+TBD
+
+==== SysOps Administrator Associate
+
+TBD
+
+==== Developer Associate
+
+* Security, Identity and Compliance
+** AWS Identity & Access management (IAM)
+** Amazon Cognito
+** AWS Organizations
+** AWS CloudTrail
+** AWS Key Management Service (KMS)
+** AWS Certificate Manager
+** AWS Secrets Manager
+* Compute
+** Amazon Elastic Compute Cloud (EC2)
+** Amazon EC2 Spot
+** Amazon EC2 Autoscaling
+** Amazon Elastick Beanstalk
+** AWS Lambda
+* Storage
+** Amazon Simple Storage Service (S3)
+** Amazon Elastic File System (EFS)
+** Amazon Elastic Block Store (EBS)
+* Database
+** Amazon Aurora
+** Amazon RDS
+** Amazon DynamoDB
+** Amazon ElasticCache
+* Networking & Content Delivery
+** Amazon VPC
+** Amazon CloudFront
+** Amazon Route 53
+** Amazon Elastic Load Blanacing (ELB)
+** Amazon API Gateway
+* Application Integration
+** AWS Step Functions
+** Amazon EventBridge
+** Amazon Simple Notification Service (SNS)
+** Amazon Simple Queue Service (SQS)
+** Amazon AppSync
+** AWS Amplify
+* Containers
+** Amazon Elastic Container Service (ECS)
+** Amazon Elastic Container Registry (ECR)
+** Amazon Elastic Kubernates Service (EKS)
+** AWS Fargate
+* Monitoring
+** Amazon CloudWatch
+* Developer Tools
+** AWS CodeBuild
+** AWS CodeCommit
+** AWS CodeDeploy
+** AWS CodePipeline
+** AWS CodeStar
+** AWS Command Line Interface
+** AWS X-Ray
+* Analytics
+** Amazon Athena
+** Amazon Kinesis
+** AWS Glue
+* Business Applications
+** Amazon Simple Email Service (SES)
+
+== Region and Availablility Zones (AZ)
+
+Each region has many availability zones.
+
+Each availibility zone is decrete datacenter.
+
+AWS services are available on region level. It should check region table for region/service availability matrix.
+
+== IAM (Identity and Access Management)
+
+Concept:
+
+* Users
+* Groups
+* Roles
+
+User is a representation of physical person.
+
+Group is a group of users.
+
+Role is a representation of application, and it always is granted to compute resources.
+
+
+Root account should never be used or shared.
+
+MFA (Multi Factor Authentication) is recommended.
+
+=== Hand On
+
+* [x] Protect root account
+** [x] Delete root access keys
+** [x] Activate MFA on root account
+** [x] Create group administrator to manage admin permission
+** [x] Create admin account and add to group administrator in order to delegate of root account
+* [x] Create group and user for daily development and operation activity
+** [x] Create group devops to hold job functions DatabaseAdministor, PowerUserAccess, NetworkAdministrator and SystemAdministrator (it's almost responsibility of DevOps)
+** [x] Create developer user and assign to group devops
+** [x] Access AWS CLI via access key
+
+== Renting virtual machines (EC2)
+
+Security group is a rule set of network access which attached to EC2 instances.Security Group is locked down to region/VPC conbination, it's not able to share over region/VPC combinations.
+
+Key pair is RSA private/public key pair, user uses it as SSH credential for accessing EC2 instance.
+
+It allocates private IP and public IP to each running EC2 instance. Private IP is static, but public IP is dynamic. It can make public IP static by Elastic IP service.
+
+User data will be executed when EC2 instance first time start, best use case is that installing and updating required software.
+
+Elastic Network Interface is used to allocate private IP address to EC2 instance.
+
+=== Hand On
+
+* [ ] Create EC2 instance and access it
+** [x] Create security group DevWebGroup which allow SSH (tcp 22) and HTTP (tcp 80) inbound network traffic
+** [x] Create key pair dev-keypair
+** [x] Create t2.micro EC2 instance with AMI Linux 2
+** [x] Access EC2 instance via SSH
+** [x] Install Apache
++
+[source, shell]
+----
+#!/bin/bash -xe
+exec > >(tee /var/log/user-data.log|logger -t user-data -s 2>/dev/console) 2>&1
+# switch to root account
+sudo su
+
+# update yum package 
+yum update -y
+
+# install Apache HTTP server
+yum install -y httpd.x86_64
+
+# start Apache http server
+systemctl start httpd.service
+systemctl enable httpd.service
+
+# create example index html
+echo "Hello World from $HOSTNAME" > /var/www/html/index.html
+
+curl localhost:80
+----
+** [x] Setup Elastic IP
+* [x] Create EC2 instance with User Data
+* [x] Create Elastic Network Interface and assign to EC2 instance.
+
+== Elastic Load Balancing (ELB) and Auto Scaling Groups (ASG)
+
+AWS offers three kinds of load balancer:
+
+* Classic Load Balancer, supports HTTP, HTTPS and TCP
+* Application Load Balancer, supports HTTP, HTTPs and WebSocket
+* Network Load Balancer, supports TCP, TLS and UDP
+
+Recommended to use Application and Network Load Balancers.
+
+Load Balancer can handle internal and external traffic.
+
+Load balancer should be configured with separate Security Group, and application security group can treat load balancer as a trusted source.
+
+Application load balancer forward client IP, port and protocol by X-Forwarded-* headers.
+
+Application load balancer cause about 400 ms latency, Network load balancer cause about 100 ms latency.
+
+Network load balancer route TCP and UDP traffic transparently, it means that downstream service likely communicate with remote client directly, the traffic control (Security Group) must be applied on downstream service.
+
+Server Name Indication works for Application Load Balancer and Network Balancer but Classic Load Balancer.
+
+Connection Draining (which named Deregistration Delay for Target Group, ALB and NLB) is the time to complete "in-flight requests" while the instance is de-registering or unhealthy.
+
+ASG have the following attributes:
+
+* A launch configuration
+** AMI + Instance Type
+** EC2 User Data
+** EBS Volumes
+** Security Groups
+** SSH Key Pair
+* Min Size/Max Size/Initial Capacity
+* Network + Subnets Information
+* Load Balancer Information
+* Scaling Policies
+
+=== Hands On
+
+* [ ] 创建 Classic load balancer
+** [x] 创建 Security Group web-lb-sg 接受所有 HTTP 和 HTTPS 流量
+** [x] 创建 Security Group internal-web-sg 仅接受 SSH 和来自 web-lb-sg 的 HTTP 流量
+** [x] 创建三個 EC2 实例，並安装 Apache
++
+[source, shell]
+----
+#!/bin/bash -xe
+exec > >(tee /var/log/user-data.log|logger -t user-data -s 2>/dev/console) 2>&1
+
+# update yum package 
+yum update -y
+
+# install Apache HTTP server
+yum install -y httpd.x86_64
+
+# start Apache http server
+systemctl start httpd.service
+systemctl enable httpd.service
+
+# create example index html
+echo "Hello World from $HOSTNAME" > /var/www/html/index.html
+----
+** [x] 创建 Classic load balancer clb-a
+* [x] 创建 Application load balancer alb-a, 按请求路径转發
+* [x] 创建 Network load balancer
+** [x] 创建 Security Group boundary-web-sg 接受所有 SSH，HTTP 和 HTTPS 流量
+** [x] 將 Security Group boundary-web-sg 赋给三個 EC2 实例
+** [x] 创建 Network load balancer nbl-a
+* [x] 创建 ASG asg-a
+** [x] 创建 Launch Configuration internal-web-dev-nano
++
+[source, shell]
+----
+#!/bin/bash -xe
+exec > >(tee /var/log/user-data.log|logger -t user-data -s 2>/dev/console) 2>&1
+
+# update yum package 
+yum update -y
+
+# install php
+yum install -y php.x86_64
+
+# install Apache HTTP server
+yum install -y httpd.x86_64
+
+# start Apache http server
+systemctl start httpd.service
+systemctl enable httpd.service
+
+# create phpinfo.php
+echo "<?php phpinfo(); ?>" > /var/www/html/phpinfo.php
+
+# create cost-cpu.php
+cat > /var/www/html/cost-cpu.php<< EOF
+<?php
+\$result = 0;
+\$limit = 1000000;
+for (\$x = 1; \$x <= \$limit; \$x++) {
+    \$result = 3 * \$x;	
+}
+
+echo "The result is \$result";
+?>
+EOF
+----
+** [x] 创建 Application load balancer alb-b
+** [x] 创建 ASG asg-a，配置以 CPU 使用率 50% 为目标的 Scaling Policy, 並附到 Application load balancer alb-b
+** [x] 测试 scale out/scale in
+
+== EBS and EFS
+
+EBS Volumes come in 4 types: (from Highest to Lowest IO performance)
+
+* IOI (SSD)
+* GP2 (SSD)
+* STI (HDD)
+* SCI (HDD)
+
+Only IOI and GP2 can be attached as root volumes.
+
+EBS volumes are characterized in:
+
+* Size
+* Throughput
+* IOPS (I/O Ops Per Sec)
+
+EFS can be shared across AZs.
+
+
+=== Hands On
+
+* [ ] 添加卷到 EC2 实例
+** [x] 创建 EC2 实例，以 GP2 卷为 root volume，添加 IO1、GP2、ST1 和 SC1 卷各一
+** [x] 格式化 IO1, GP2, ST1 和 SC1 卷，並分別手动挂载至 `/io1, /gp2, /st1, /sc1`
++
+[source, shell]
+----
+# list volumes
+lsblk
+
+# get information about a specific device
+sudo file -s /dev/xvdf
+
+# get information about all attched volumes
+sudo lsblk -f
+
+# create filesystem (format) on a specific device
+sudo mkfs -t ext4 /dev/xvdf
+
+# mount device to path
+sudo mount /dev/xvdf /data
+
+# unmount device
+sudo unmount /data
+----
+** [x] 通过 `/etc/fstab` 配置自动挂载
+* [ ] 使用 EFS
+** [x] 创建 Security Group efs-sg，允许来自 Security Group internal-web-sg 的 NFS 访问
+** [x] 在两个 AZ a 和 b 分別创建两個 EC2 实例，並套用 Security Group internal-web-sg
+** [x] 创建 EFS efs-dev，並套用 Security Group efs-sg
+** [x] 將 efs-dev 挂载至两個 EC2 实例的 `/efs`
++
+[source, shell]
+----
+sudo yum install -y amazon-efs-utils
+
+sudo mount -t efs fs-12345678:/ efs
+----
+
+== RDS and Aurora and ElastiCache
+
+=== RDS Security
+
+Encryption has to be defined at launch time.
+
+Transparent Data Encryption (TDE) is available for Oracle and SQL Server.
+
+=== Hands On
+
+* [x] 创建 MySQL 数据库
+** [x] 创建 Security Group mysql-dev-sg
+** [x] 创建 MySQL 数据库
+** [x] 用 VS Code 访问 MySQL 数据库
+* [ ] 创建 Mysql 兼容的，读写分离的 Aurora 数据库
+** [x] 创建 Aurora 数据库
+** [x] 连接 write instance
++
+[source, sql]
+----
+CREATE TABLE test (
+    id INT NOT NULL AUTO_INCREMENT,
+    name VARCHAR(50) NOT NULL,
+    PRIMARY KEY (id)
+);
+
+INSERT INTO test(name) values('Test1');
+----
+** [x] 连接 read instance
++
+[source, sql]
+----
+INSERT INTO test(name) VALUES('Test2');
+----
+* [ ] 创建 Redis Cache
+** [x] 创建 subnet group cache-dev-subnet-group
+** [x] 创建 Redis
+* [x] 创建 Memcached
+
+== Route 53
+
+Route 53 is used for load balancing, traffic split and failover amongs regions.
+
+Route 53 supports record types:
+
+* A, points to IP address
+* CNAME, points to another host name (only non root hostname)
+* Alias, points to AWS resource
+
+Routing Policies:
+
+* Simple
+* Weighted
+* Latency
+* Failover
+* Geolocation
+* Multivalue Answer
+
+== VPC
+
+* VPC is regional resource
+* Subnet is Availability Zone resource
+* Public subnet can be accessed from internet
+* Private subnet cannot be accessed from internet
+* Public subnet connect to internet through Internet Gateway
+* Private subnet connect to Internet Gateway through NAT Gateway in Public subnet
+* Network ACL (NACL) is firewall which be attached at the subnet level
+* Security Group is firewall which be attached at EC2 instance and ENI
+
+== S3
+
+Bucket name is globally unique.
+
+Versioning is enabled on bucket level.
+
+S3 Security consists of:
+
+* Used based
+* Resource based
+
+=== Hands On
+
+* [ ] 使用 Bucket 存储文件
+** [x] 创建 Bucket rscai-ray-test-a
+** [x] 上传图片
+** [x] 开启 Versioning
+** [x] 上传新版本图片，然後回复到前一个版本的图片
+** [x] 删除图片，然後回复
+** [x] 加密上传图片
+** [x] 设置 Bucket 级別默认加密
+* [x] 设置 Bucket Policy
+** [x] 使用 Policy 生成器生成 Deny 无加密的 Object 上传
++
+[source, http]
+----
+x-amz-server-side-encryption
+----
+** [x] 测试 Deny Policy
+* [ ] 运行静态网站
+** [x] 创建 Bucket rscai-ray-test-b，允许 Public Access，添加匿名读访问 Policy (Hosting website 的 Bucket 不能启用 server side encryption)
+** [x] 上传 index.html, error.html, cat.jpg
+** [x] 创建 Bucket rscai-ray-test-c，允许 Public Access，添加匿名读访问 Policy
+** [x] 上传 extra.html 至 rscai-ray-test-c
+** [x] 修改 index.html，从 rscai-ray-test-c 加载 extra.html
+** [x] 在 rscai-ray-test-c 上设置 CORS
++
+[source, json]
+----
+[
+    {
+        "AllowedHeaders": [
+            "Authorization"
+        ],
+        "AllowedMethods": [
+            "GET"
+        ],
+        "AllowedOrigins": [
+            "http://rscai-ray-test-b.s3-website-ap-southeast-1.amazonaws.com"
+        ],
+        "ExposeHeaders": [],
+        "MaxAgeSeconds": 3000
+    }
+]
+----
+
+== CLI
+
+Role is used for granting a set of Policy to AWS resources, likes EC2 instance, Lambda functions.
+
+AWS offers Policy Generator (https://awspolicygen.s3.amazonaws.com/policygen.html) to help user creating policy. And offers Policy Simulator (https://policysim.aws.amazon.com/) to help user test policy.
+
+AWS CLI offers Dry Run feature.
+
+AWS CLI response encoded message if failed, which can be decoded by STS decode-authentication-message API (https://docs.aws.amazon.com/cli/latest/reference/sts/decode-authorization-message.html).
+
+EC2 metadata can be accessed through URL http://169.254.169.254/latest/meta-data/ from EC2 instance.
+
+AWS CLI offers profile feature, in which user is able to configure multiple accounts on one machine.
+
+AWS CLI offers STS get-session-token API, in which user is able to obtain temporarily token for MFA protected API.
+
+AWS Limits (Quotas)
+
+* API Rate limits
+* Service Quota
+
+The CLI will look for credential in order:
+
+. Command line options
+. Environment variables
+. CLI credential file
+. CLI configuration file
+. Container credentials
+. EC2 instance profile credentials
+
+== Advanced S3 & Athena
+
+S3 offers storage classes:
+
+* S3 Standard
+* S3 Intelligent-Tiering
+* S3 Standard-IA
+* S3 One Zone-IA
+* S3 Glacier
+* S3 Glacier Deep Archive
+
+link::https://aws.amazon.com/s3/storage-classes/[Performance across the S3 Storage Classes]
+
+Lifecycle Rules are used for moving objects between storage cleaases automatically based on object age. Additionally Lifecycle Rules can delete object after some time.
+Lifecycle Rules can be applied on specific prefix or tags.
+
+S3 performance is impacted by KMS limitation. S3 request KMS GenerateDataKey API once for each upload, and request KMS Decrypt API once for each download.
+
+Multi-Part upload is recommended for files larger than 100 MB, and mandatory for files larger than 5 GB.
+
+S3 Byte-Range Fetches can be used to speeding up download.
+=== Hands On
+
+* [ ] 日志和副本
+** [ ] 创建 Bucket rscai-ray-test-origin
+** [ ] 创建 Bucket rscai-ray-test-log
+** [ ] 创建 Bucket rscai-ray-test-replica
+** [ ] 上传文件至 Bucket rscai-ray-test-origin
+* [ ] Presign URL
++
+[source, shell]
+----
+aws s3 presign s3://<bucket>/<object> --region <region> --expires-in <seconds> 
+
+# set S3 signature version
+aws configure set default.s3.signature_version s3v4
+----
+* [ ] 在 Bucket rscai-ray-test-log 中设置 Lifecycle Rule, 将30天以上的移至 Standard-IA，将90天以上的移至 Glacier，将180天以上的移至 Glacier Deep Archive，将360天以上的删除。
+
+== CloudFront
+
+CloudFront is a Content Delivery Network (CDN) service.
+The origin of CDN can be S3 Bucket or any other HTTP services.
+CloudFront forward request to origin over public Internet, therefore the origin must be accessable from CloudFront (Edge location).
+CloudFront offers Geo Restriction (using 3rd party Geo-IP database).
+It should make origin Bucket private, and grant access to CloudFront by Policy.
+It can invalidate CloudFront cache manually in case of deployed new version of static content.
+
+
+== ECS, ECR & Fargate - Docker in AWS
+
+AWS offers three choices to manage Docker:
+
+* ECS
+* Fargate
+* EKS
+
+Most ECS related configuration must be configured manually thorugh `/etc/ecs/ecs.config` (https://docs.aws.amazon.com/AmazonECS/latest/developerguide/ecs-agent-config.html).
+
+ECS Task definition is used to define how to deploy Docker image, is equavelent to DeploymentConfig of OpenShift. 
+
+ALB is only allowed to be configured when created ECS Service.
+
+ECR is a private Docker Image repository.
+
+.AWS CLI login command
+[source, shell]
+----
+# AWS CLI v1
+$(aws ecr get-login --no-include-email --region <region>)
+
+# AWS CLI v2
+aws ecr get-login-password --region <region> | docker login --username AWS --password-stdin <xxxx>.dkr.<region>.amazonaws.com
+----
+
+ECS Task defines resource requirements, likes CPU, memory and port. ECS Task Placement is the process that finding EC2 instance which satisfy these resource requirements. And developer is allow to define a task placement strategy and task placement constraints to assist ECS Platform.
+
+ECS Task Placement Strategies:
+
+* Binpack (cost saving)
+* Random
+* Spread
+
+ECS Task Placement Constraints:
+
+* distinctInstance
+* memberOf
+
+ECS Service Scaxling != EC2 Auto Scaling. Ecs Service Scaling only scale Docker container, but EC2 Auto Scaling scale EC2 instance.
+
+
+* [ ] 用公共 Docker Image 布属 ECS
+** [ ] 创建 Security Group ecs-alb-sg，允许所有 HTTP 流量
+** [ ] 创建 Security Group ecs-ec2-sg，允许所有 SSH 和来自 ecs-alb-sg 的 TCP 流量
+** [ ] 创建 ECS Cluster ecs-test-a
+** [ ] 创建 ECS Task Defintion httpd-test-a，使用 `httpd:2.4`，且映射容器端口 80 至动态宿主端口
+** [ ] 创建 Application Load Balancer ecs-alb-a
+** [ ] 创建 ECS Service service-test-a，使用 2 副本，並配置 ALB ecs-alb-a
+* [ ] 用私有 Docker Image 布属 ECS
+** [ ] 创建 ECR 仓库 demo
+** [ ] 构建 Docker Image 並 push 至 ECR 仓库 demo
+** [ ] 创建新版本的 ECS Task Definition httpd-test，使用私有 Docker Image
+* [ ] 使用 Fargate 管理 ECS Cluster
+** [ ] 创建 Fargate Cluster fargate-test-a
+** [ ] 创建 Task Definition httpd-test-b，使用私有 Docker Image
+** [ ] 在 fargate-test-a 中创建 Service service-test-b，並连接 ALB ecs-alb-a
+
+
+
+== Elastic Beanstalk
+
+Beanstalk is an AWS managed application solution, which offers solutions for:
+
+* Web application
+* Worker application
+
+In Web application solution, it integrates TBD
+
+In Web application solution, it integrates TBD
+
+The top resource group of Beanstalk is `Application`, each application can hold many and various `Environment`.
+
+Beanstalk manages the deployment, it offers options:
+
+* All at once (cause downtime)
+* Rolling
+* Rolling with additional batches
+* Immutable
+
+AWS offers Elastic Beanstalk specific CLI which named EB CLI.
+
+Elastic Beanstalk environment actually is implemented by  CloudFormation which defines AWS resources, likes load balancer, auto scaling group, and so on.
+
+Elastic Beanstalk supports Single Docker and Multi Docker platforms. When chose Single Docker platform, Elastic Beanstalk will not create ECS cluster, but will when chose Multi Docker platform.
+
+=== Hands On
+
+REST service with Aurora DB.
+
+TBD
+
+== CI/CD
+
+|===
+| |Code|Build|Test|Deploy|Provision
+
+|CodeCommit
+|Y
+|
+|
+|
+|
+
+|CodeBuild
+|
+|Y
+|Y
+|
+|
+
+|CodeDeploy
+|
+|
+|
+|Y
+|
+
+|CloudFormation
+|
+|
+|
+|
+|Y
+
+|Elastic Beanstalk
+|
+|
+|
+|Y
+|Y
+|===
+
+CodeCommit responds to code version control.
+
+CodeBuild responds to build and package.
+
+CodeDeploy responds to deploy code on services.
+
+CodePipeline responds to orchestrate CI/CD. A pipeline is made of stages, each stage consists of sequential actions or parallel actions. Stages share data through **artifact**.
+
+== CloudFormation
+
+With CloudFormation, developer is able to maintain and change infrastructure as code.
+
+Template components:
+
+* Resources
+* Parametrs
+* Mappings
+* Outputs
+* Conditionals
+* Metadata
+
+Resource types udentifiers are of the form: `AWS::aws-product-name::data-type-name`. The reference information of all AWS resource and property types that are supported by AWS CloudFormation can be found on https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-template-resource-type-ref.html[].
+
+Parameters are typed. Parameters can be controlled by all these settings:
+
+* Type
+** String
+** Number
+** CommaDelimitedList
+** List<Type>
+** AWS Parameter
+* Description
+* Constraints
+* ConstraintDescription (String)
+* Min/MaxLength
+* Min/MaxValue
+* Defaults
+* AllowedValues (array)
+* AllowedPattern (regexp)
+* NoEcho (Boolean)
+
+Parameters are referred by `Fn::Ref` function. For example:
+
+[source, yaml]
+----
+properties:
+  VpcId: !Ref MyVPC
+----
+
+AWS offers us pseudo parameters in any CloudFormation template, which can be used at any time and are enabled by default.
+
+Mappings are maps of constant values.
+
+Outputs supports output runtime generated value as variables which can be referred in other place of template. Outputs can be referred by `Fn::ImportValue` function.
+
+Intrinsic function (logical) which can be used in Conditions:
+
+* `Fn::And`
+* `Fn::Equals`
+* `Fn::If`
+* `Fn::Not`
+* `Fn::Not`
+* `Fn::Or`
+
+
+== Monitoring & Audit: CloudWatch, X-Ray & CloudTrail
+
+* CloudWatch
+** Metrics
+** Logs
+** Events
+** Alarms
+* X-Ray
+** Troubleshooting
+** Distributed tracing
+* CloudTrail
+** API call monitoring
+** AWS resources changes auditing
+
+It requires CloudWatch SDK in order to send application logs.
+
+CloudWatch Unified Agent support system level metrics, likes CPU, memory, etc. out-of-box.
+
+It requires X-Ray daemon, X-Ray SDK and code modification in order to integrate X-Ray.
+
+== Integration & Messaging: SQS, SNS & Kinesis
+
+SQS is unlimited throughput. It persistents messages. It requires SDK in order to send message to SQS.
+
+Messages of FIFO queu is grouped by message group id.
+
+SNS offers producer (almost one producer) consumer (almost many consumers) integration pattern for AWS services and other services. SNS does not persistent notifications.
+
+SNS cannot sent message to SQS FIFO queue (AWS limitation).
+
+Kinesis is a managed alternative to Apache Kafka.
+
+Kinesis Streams::
+low latency streaming ingest at scale
+
+Kinesis Analytics::
+perform real-time analytics on streams using SQL
+
+Kinesis Firehose::
+load streams into S3, Redshift, ElasticSearch ...
+
+Each shard is be read by only one Kinesis Comsumer Library (KCL) instance.
+
+== Serverless: Lambda
+
+Lambda integrations:
+
+* storage:
+** DynamoDB
+** S3
+* computation
+** Lambda
+* messaging
+** SNS
+** SQS
+* routing
+** API Gateway
+** CloudFront
+* Monitoring
+** CloudWatch
+* authentication
+** Cognito
+
+
+Lambda can be exposed as HTTP endpoint through Application Load Balancer (ALB) and API Gateway.
+
+== Serverless: DynamoDB
+
+TBD
+
+== Serverless: API Gateway
+
+TBD
+
+== Serverless: SAM - Serverless Application Model
+
+TBD
+
+== Cognito: Congnito User Pools, Cognito Identity Pools & Cognito Sync
+
+TBD
+
+== Other Serverless: Step Functions & AppSync
+
+TBD
+
+== Advanced Identity
+
+TBD
+
+== AWS Security & Encryption: KMS, Encryption SDK, SSM Parameter Store, IAM & STS
+
+TBD
+
+== AWS Other Services
+
+TBD
+
+
+== Test
+
+[gnuplot]
+....
+#
+# Show use of pseudodata mechanism '+' to use plot styles with more than 
+# one relevant value per x coordinate. In this example we use the style
+# "filledcurves" to show the difference between two analytic functions.
+# This corresponds to the specification of multiple columns in the 
+# 'using' option for input from data files.
+# 
+#
+approx_1(x) = x - x**3/6
+approx_2(x) = x - x**3/6 + x**5/120 
+approx_3(x) = x - x**3/6 + x**5/120 - x**7/5040
+
+label1 = "x - {x^3}/3!"
+label2 = "x - {x^3}/3! + {x^5}/5!"
+label3 = "x - {x^3}/3! + {x^5}/5! - {x^7}/7!"
+
+#
+set termoption enhanced
+save_encoding = GPVAL_ENCODING
+set encoding utf8
+#
+set title "Polynomial approximation of sin(x)"
+set key Left center top reverse
+set xrange [ -3.2 : 3.2 ]
+set xtics ("-π" -pi, "-π/2" -pi/2, 0, "π/2" pi/2, "π" pi)
+set format y "%.1f"
+set samples 500
+set style fill solid 0.4 noborder
+
+plot '+' using 1:(sin($1)):(approx_1($1)) with filledcurve title label1 lt 3, \
+     '+' using 1:(sin($1)):(approx_2($1)) with filledcurve title label2 lt 2, \
+     '+' using 1:(sin($1)):(approx_3($1)) with filledcurve title label3 lt 1, \
+     sin(x) with lines lw 1 lc rgb "black"
+....

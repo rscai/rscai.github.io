@@ -1,0 +1,262 @@
+= API Testing by Spring MVC Test Framework
+:layout: post
+:page-category: spring-boot
+:page-tags: [spring-boot, spring, spring-mvc, test, api]
+:source-highlighter: rouge
+:icons: font
+
+== What is API Testing
+
+[quote, API testing, https://en.wikipedia.org/wiki/API_testing]
+____
+API testing is a type of software testing that invovles testing application programming interfaces (APIs) directly and as part of integration testing to determine if they meet expectations for functionality, reliability, performance, and security. Since APIs lack a GUI, API testing is performed at the message layer. API testing is now considered ciritcal for autmating testing because APIs now serve as the primary interface to application logic and because GUI tests are difficult to maintain with the short release cycles and frequent changes commonly used with Agile software development and DevOps.
+____
+
+== What is RESTful
+
+[quote, Representational state transfer, https://en.wikipedia.org/wiki/Representational_state_transfer]
+____
+Representational state transfer (REST) is a software architectural style that defines a set of constraints to be used for creating Web Services. Web services that conform to the REST architectural style, called RESTful Web services allow the requesting systems to access and manipulate textual representations of Web resources by using a uniform and predefined set of stateless oerations. Other kinds of Web services, such as SOAP Web services, expose their own arbitrary sets of operations.
+
+"Web resources" were first defined on the World Wid Web as documents or files identified by their URLs. However, today they have a much more generic and abstract definition that encompasses every thing, entity, or action that can be identified, named, addressed, handled, or performed, in any way whatsoever, on the Web. In a RESTful Web service, requests made to a resource's URI will elicit a response with a payload formatted in HTML, XML, JSON, or some other format. The response can confirm that some alteration has been made to the resource state, and the response can provide hypertext links to other related resources. When HTTP is used, as is most common, the operations (HTTP methods) available are GET, HEAD, POST, PUT, PATCH, DELETE, CONNECT, OPTIONS and TRACE.
+
+By using a stateless protocol and standard operations, RESTful systems aim for fast performance, reliability, and the ability to grow by reusing components that can be managed and updated without affecting the system as a whole, even while it is running.
+____
+
+== Spring MVC Application
+
+Spring MVC is the most popular framework to build RESTful Web services in Java world, at least till now.
+
+[quote, Spring Web MVC, https://docs.spring.io/spring/docs/current/spring-framework-reference/web.html#spring-web]
+____
+Spring Web MVC is the original web framework built on the Servlet API and has been included in the Spring Framework from the very beginning. The formal name, "Spring Web MVC", comes from the name of its source module (`spring-webmvc`), but it is more commonly known as "Spring MVC".
+____
+
+The core of Spring MVC is `DispatcherServlet`. `DispatcherServlet` is an implementation of `HttpServlet`, which intercept all incoming request and dispatch to **controller**. As it is a **Servlet**, `DispatcherServlet` is running inside a **Servlet Container**. Servlet container handles HTTP communication, listen on port, receive request package and convert to `HttpServletRequest` object, convert `HttpServletResponse` object which return by controller (actually it is rendered by **View**) and send to client application. 
+[plantuml]
+....
+@startuml
+node "Server" {
+     frame "ServletContainer" {
+           interface HTTP
+           [dispatcherServlet] - HTTP
+           [dispatcherServlet] --> [controller]: dispatch request
+     }
+}
+node "Client" {
+     [application]
+}
+
+HTTP <- [application]: request/response
+@enduml
+....
+
+The URI to controller method mappings are declared by annotations. For example,
+
+.ProductController.java
+[source, java]
+....
+@RestController
+@RequestMapping("products")
+public class ProductController {
+    ...
+    @PostMapping
+    public Product create(@RequestBody Product entity) {
+        ...
+    }
+    @PutMapping("{id}")
+    public Product update(@PathVariable("id") String id, @RequestBody Product entity) {
+        ...
+    }
+    @DeleteMapping("{id}")
+    public void delete(@PathVariable("id") String id) {
+        ...
+    }
+    @GetMapping("{id}")
+    public void getOne(@PathVariable("id") String id) {
+        ...
+    }
+    ...
+}
+....
+
+It declares CRUD RESTful API against resource `Product`:
+
+.CRUD RESTful API
+|===
+|URI Pattern|HTTP Method|Description
+
+|/products
+|POST
+|create new product entity
+
+|/products/{id}
+|PUT
+|update the existed product which with id `id`
+
+|/products/{id}
+|DELETE
+|delete the existed product which with id `id`
+
+|/products/{id}
+|GET
+|get the existed product which with id `id`
+|===
+
+== Spring MVC Test Framework
+
+[quote]
+____
+The Spring MVC Test framework provides first class support for testing Spring MVC code with a fluent API that you can use with JUnit, TestNG, or any other testing framework. It is built on the Servlet API mock objects from the spring-test module and, hence, does not use a running Servlet container. It uses the DispatcherServlet to provide full Spring MVC runtime behavior and provides support for loading actual Spring configuration with the TestContext framework in addition to a standalone mode, in which you can manually instantiate controllers and test them one at a time.
+____
+
+Spring Boot scan and assemble MockMvc, controllers, DispatcherServlet and other beans. MockMvc is invoking `doService` of DispatcherServlet for mocking HTTP request processing directly. Test case is able to perform request on DispatcherServelt through MockMvc.
+
+
+[plantuml]
+....
+node "Server" {
+     frame "process" {
+           [test case]
+           [MockMvc]
+           interface HTTP
+           [dispatcherServlet] - HTTP
+           [dispatcherServlet] --> [controller]: dispatch request
+           [test case] --> [MockMvc]: perform()
+           [MockMvc] --> [dispatcherServlet]: doService(request,response)
+     }
+}
+node "Client" #grey {
+     [application] #grey
+}
+
+HTTP <- [application]: request/response
+@enduml
+....
+
+
+== Configure Spring MVC Test
+
+Auto-Configuration is the remakrable feature offered by Spring Boot. Unexpectedly, Spring MVC Test framework offers auto-configuration of MockMvc. Annotation `@AutoConfigureMockMvc` enable MockMvc auto configuration.
+
+.ProductTest.java
+[source, java]
+----
+@ActiveProfiles({"test"})
+@RunWith(SpringRunner.class) // <1>
+@SpringBootTest(classes = CatalogApplication.class) // <2>
+@AutoConfigureMockMvc // <3>
+public class ProductTest {
+
+  private static final String ENDPOINT = "/products";
+  @Autowired
+  private MockMvc mvc; // <4>
+  @Autowired
+  private ObjectMapper objectMapper; 
+  ...
+----
+<1> run JUnit test case by `SpringRunner` which handle Spring context initialization, includes annotations scanning and bean assembling.
+<2> set root context for test case.
+<3> enable MockMvc auto-configuration.
+<4> inject MockMvc bean.
+
+== Performing Requests
+
+It can perform requests that use any HTTP method through MockMvc. For example:
+
+[source, java]
+----
+mockMvc.perform(post("/products")
+                  .contentType(MediaType.APPLICATION_JSON)
+                  .content(jsonContent));
+----
+
+MockMvc offers methods to specify each part of HTTP request.
+
+A well formed HTTP request consists of three parts:
+
+[source, bnf]
+....
+HTTP-message   = start-line
+                                  *( header-field CRLF )
+                                  CRLF
+                                  [ message-body ]
+
+start-line     = request-line / status-line
+
+request-line   = method SP request-target SP HTTP-version CRLF
+....
+
+HTTP protocol defines nine methods, but only seven of them are defined for application:
+
+* GET
+* POST
+* PUT
+* DELETE
+* PATCH
+* OPTIONS
+* HEAD
+
+It offers builder methods in `MockMvcRequestBuilders` to contruct corresponding `MockMvcRequestBuilder`. Application developer can specify each part of HTTP request through `MockMvcRequestBuilder`.
+
+Specify headers:
+
+[source, java]
+....
+mockMvc.perform(post("/products")
+                                  .accept(MediaType.APPLICATION_JSON)
+                                  .contentType(MediaType.APPLICATION_JSON)
+                                  .header("Custom-Header", "some value"));
+....
+
+Specify request body:
+
+[source, java]
+....
+mockMvc.perform(post("/products")
+                                  .content(jsonContent));
+....
+
+== Verify Responses
+
+MockMvc wrapper response as `ResultActions`. Application developer can verify each part of response through `ResultActions`.
+
+HTTP response message consists of three parts:
+
+[source, bnf]
+....
+HTTP-message   = start-line
+                                  *( header-field CRLF )
+                                  CRLF
+                                  [ message-body ]
+
+start-line     = request-line / status-line
+
+status-line = HTTP-version SP status-code SP reason-phrase CRLF
+....
+
+It offers tools to extract information from response, and verify them.
+
+Verify status code:
+
+[source, java]
+....
+mockMvc.perform(post("/products")
+                                  .content(jsonContent))
+                              .andExpect(status().isCreated());
+....
+
+Verify response body:
+
+[source, java]
+....
+mockMvc.perform(post("/products")
+                                  .content(jsonContent))
+                              .andExpect(jsonPath("$.title", is(title));
+....
+
+== Reference
+
+* https://en.wikipedia.org/wiki/Representational_state_transfer[Representational state transfer]
+* https://en.wikipedia.org/wiki/API_testing[API testing]
+* https://docs.spring.io/spring/docs/current/spring-framework-reference/testing.html#spring-mvc-test-framework[Spring MVC Test Framework]
