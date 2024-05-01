@@ -22,7 +22,7 @@ jobs:
       - name: Build with Jekyll
         run: | 
           bundle install 
-          jekyll build
+          bundle exec jekyll build
         #uses: actions/jekyll-build-pages@v1
         #with:
         #  source: ./
