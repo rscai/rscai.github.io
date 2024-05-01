@@ -1,6 +1,6 @@
 # Jekyll configuration
 
-title: Ray's Blog
+title: Personal
 description: Sr. Developer
 
 # Url is currently only used only for the RSS feed in feed.xml
@@ -11,11 +11,11 @@ description: Sr. Developer
 baseurl: 
 
 share:
-  facebook: true
-  twitter: true
-  gplus: true
+  facebook: false
+  twitter: false
+  gplus: false
   linkedin: true
-  pinterest: true
+  pinterest: false
   email: true
 
 social:
@@ -55,9 +55,11 @@ assets_path: "/assets"
 exclude: ['README.md', 'LICENSE','vendor']
 
 #theme: jekyll-theme-hacker
-remote_theme: pages-themes/midnight@v0.2.0
+remote_theme: pages-themes/hacker@v0.2.0
 plugins:
 - jekyll-remote-theme # add this line to the plugins list if you already have one
+
+show_downloads: false
 
 keep_files:
 - assets/generated_diagrams
